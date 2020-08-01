@@ -6,7 +6,7 @@ bash <(curl -s $repGitHub/01-install-Hadoop.sh)
 
 # 8.2.1	Configurer Apache Hadoop
 
-su - hadoop
+su - hdfs
 
 Les fichiers de configuration que on va modifier sont :
         •	hadoop-env.sh
