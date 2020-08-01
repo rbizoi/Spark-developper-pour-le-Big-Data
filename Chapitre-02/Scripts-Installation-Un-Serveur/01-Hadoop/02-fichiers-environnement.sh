@@ -15,6 +15,8 @@ export HADOOP_OPTS="-Djava.net.preferIPv4Stack=true \${HADOOP_OPTS}"
 export HADOOP_OS_TYPE=\${HADOOP_OS_TYPE:-\$(uname -s)}
 export CLASSPATH=\$CLASSPATH:\${HADOOP_HOME}/lib/*:.
 USER="\$(whoami)"
+export HADOOP_HEAPSIZE="1024"
+export HADOOP_NAMENODE_INIT_HEAPSIZE="-Xms1024m"
 export HADOOP_CLIENT_OPTS="-Xmx\${HADOOP_HEAPSIZE}m \$HADOOP_CLIENT_OPTS"
 export HADOOP_LOG_DIR=/var/log/hadoop/\$USER
 FIN_FICHIER
