@@ -14,14 +14,18 @@ chown -R hdfs:hadoop /usr/share/hadoop
 ls -al /usr/share/hadoop
 
 rm -Rf /var/log/hadoop
+rm -Rf /var/run/hadoop
 mkdir /var/log/hadoop
-chown -R hdfs:hadoop /var/log/hadoop
-ls -al /var/log/hadoop
+mkdir /var/run/hadoop
+chown -R hdfs:hadoop /var/*/hadoop
+ls -al /var/*/hadoop
 
 rm -Rf /var/log/yarn
+rm -Rf /var/run/yarn
 mkdir /var/log/yarn
-chown -R hdfs:hadoop /var/log/yarn
-ls -al /var/log/yarn
+mkdir /var/run/yarn
+chown -R hdfs:hadoop /var/*/yarn
+ls -al /var/*/yarn
 
 cat << FIN_FICHIER > /etc/profile.d/hadoop.sh
 #!/bin/bash
