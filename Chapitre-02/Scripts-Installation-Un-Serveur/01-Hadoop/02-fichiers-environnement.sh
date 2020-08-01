@@ -22,11 +22,16 @@ export CLASSPATH=\$CLASSPATH:\${HADOOP_HOME}/lib/*:.
 USER="\$(whoami)"
 export HADOOP_CLIENT_OPTS="-Xmx\${HADOOP_HEAPSIZE}m \$HADOOP_CLIENT_OPTS"
 export HADOOP_LOG_DIR=/var/log/hadoop/\$USER
+export HADOOP_PID_DIR=/var/run/hadoop/\$USER
 FIN_FICHIER
 
 cat <<FIN_FICHIER > $HADOOP_CONF_DIR/yarn-env.sh
 export JAVA_HOME=$JAVA_HOME/jre
-export HADOOP_LOG_DIR=/var/log/yarn/yarn
+USER="\$(whoami)"
+
+export HADOOP_LOG_DIR=/var/log/yarn/\$USER
+export HADOOP_PID_DIR=/var/run/yarn/\$USER
+
 export HADOOP_LIBEXEC_DIR=\${HADOOP_INSTALL}/libexec
 YARN_HEAPSIZE=250
 export YARN_RESOURCEMANAGER_HEAPSIZE=250
