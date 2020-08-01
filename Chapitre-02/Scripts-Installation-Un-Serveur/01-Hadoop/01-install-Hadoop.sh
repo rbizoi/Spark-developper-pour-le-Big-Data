@@ -5,22 +5,22 @@ if [ $USER != "root" ]; then
         exit -1
 fi
 
-wget https://downloads.apache.org/hadoop/common/hadoop-3.3.0/hadoop-3.3.0.tar.gz
-tar xzvf hadoop-3.3.0.tar.gz
-rm hadoop-3.3.0.tar.gz
-mv hadoop-3.3.0 hadoop
-mv hadoop /usr/share
-chown -R hdfs:hadoop /usr/share/hadoop
+#wget https://downloads.apache.org/hadoop/common/hadoop-3.3.0/hadoop-3.3.0.tar.gz
+#tar xzvf hadoop-3.3.0.tar.gz
+#rm hadoop-3.3.0.tar.gz
+#mv hadoop-3.3.0 hadoop
+#mv hadoop /usr/share
+chown -R hadoop:hdfs /usr/share/hadoop
 ls -al /usr/share/hadoop
 
 rm -Rf /var/log/hadoop
 mkdir /var/log/hadoop
-chown -R hdfs:hadoop /var/log/hadoop
+chown -R hadoop:hdfs /var/log/hadoop
 ls -al /var/log/hadoop
 
 rm -Rf /var/log/yarn
 mkdir /var/log/yarn
-chown -R hdfs:hadoop /var/log/yarn
+chown -R hadoop:hdfs /var/log/yarn
 ls -al /var/log/yarn
 
 cat << FIN_FICHIER > /etc/profile.d/hadoop.sh
