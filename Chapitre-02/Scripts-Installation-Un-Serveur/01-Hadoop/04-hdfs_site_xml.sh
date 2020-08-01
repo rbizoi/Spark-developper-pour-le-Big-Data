@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [ $USER != "hadoop" ]; then
-        echo "Le script doit être exécuté en tant qu'utilisateur: hadoop"
+if [ $USER != "hdfs" ]; then
+        echo "Le script doit être exécuté en tant qu'utilisateur: hdfs"
         exit -1
 fi
 
@@ -186,7 +186,7 @@ cat <<FIN_FICHIER > $HADOOP_HOME/etc/hadoop/hdfs-site.xml
 
     <property>
       <name>dfs.permissions.superusergroup</name>
-      <value>hdfs</value>
+      <value>hadoop</value>
     </property>
 
     <property>
