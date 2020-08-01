@@ -57,9 +57,3 @@ mkdir -p /u01/hadoop/hdfs/datanode
 mkdir -p /u01/hadoop/hdfs/nodemanager
 mkdir -p /u01/hadoop/hdfs/recovery
 chown -R hdfs:hadoop /u01/hadoop
-
-
-for nom in "hdfs" "hive" "zookeeper" "spark" "kafka" "zeppelin"
-do
-    `echo -e "$pass\n$pass"|passwd $nom`
-done
