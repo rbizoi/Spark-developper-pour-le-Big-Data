@@ -25,6 +25,7 @@ ls -al /var/log/yarn
 
 cat << FIN_FICHIER > /etc/profile.d/hadoop.sh
 #!/bin/bash
+export PDSH_RCMD_TYPE=ssh
 export HADOOP_INSTALL=/usr/share/hadoop
 export HADOOP_HOME=\$HADOOP_INSTALL
 export HADOOP_CONF_DIR=\$HADOOP_HOME/etc/hadoop
