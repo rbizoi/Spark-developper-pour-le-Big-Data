@@ -11,17 +11,17 @@ rm hadoop-3.3.0.tar.gz
 mv hadoop-3.3.0 hadoop
 mv hadoop /usr/share
 chown -R hdfs:hadoop /usr/share/hadoop
-ls /usr/share/hadoop
+ls -al /usr/share/hadoop
 
 rm -Rf /var/log/hadoop
 mkdir /var/log/hadoop
 chown -R hdfs:hadoop /var/log/hadoop
-ll /var/log/hadoop
+ls -al /var/log/hadoop
 
 rm -Rf /var/log/yarn
 mkdir /var/log/yarn
 chown -R hdfs:hadoop /var/log/yarn
-ll /var/log/yarn
+ls -al /var/log/yarn
 
 cat << FIN_FICHIER > /etc/profile.d/hadoop.sh
 #!/bin/bash
