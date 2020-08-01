@@ -186,7 +186,7 @@ cat <<FIN_FICHIER > $HADOOP_HOME/etc/hadoop/hdfs-site.xml
 
     <property>
       <name>dfs.permissions.superusergroup</name>
-      <value>hadoop</value>
+      <value>hdfs</value>
     </property>
 
     <property>
