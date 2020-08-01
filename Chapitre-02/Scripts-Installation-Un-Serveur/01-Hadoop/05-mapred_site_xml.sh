@@ -16,7 +16,7 @@ cat <<FIN_FICHIER > $HADOOP_HOME/etc/hadoop/mapred-site.xml
 
        <property>
          <name>mapreduce.cluster.administrators</name>
-         <value>hadoop</value>
+         <value>hdfs</value>
        </property>
 
        <property>
