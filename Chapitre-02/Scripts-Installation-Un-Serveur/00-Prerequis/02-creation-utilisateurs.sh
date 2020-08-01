@@ -57,13 +57,19 @@ mkdir -p /u01/hadoop/hdfs/recovery
 chown -R hdfs:hadoop /u01/hadoop
 
 cat <<FIN_FICHIER > /tmp/copy_cle.sh
-shpass -p "CoursSPARK#" ssh-copy-id `hostname -f`
+sshpass -p "CoursSPARK#" ssh-copy-id `hostname -f`
+ssh `hostname -f` date
+ssh jupiter date
 FIN_FICHIER
 chmod 777 /tmp/copy_cle.sh
 
 for nom in "hdfs" "hive" "zookeeper" "spark" "kafka" "zeppelin"
 do
-  `su -c /tmp/copy_cle.sh - $nom`
+cat <<FIN_FICHIER > /home/$nom/.ssh/config
+StrictHostKeyChecking no
+FIN_FICHIER
+`chown $nom:hadoop /home/$nom/.ssh/config`
+`su -c /tmp/copy_cle.sh - $nom`
 done
 
 rm /tmp/copy_cle.sh
