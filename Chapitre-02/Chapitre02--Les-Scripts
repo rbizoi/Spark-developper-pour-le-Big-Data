@@ -132,33 +132,37 @@ mkdir -p /u01/hadoop/hdfs/recovery
 chown -R hdfs:hadoop /u01/hadoop
 
 #-----------------------------------------------------------------------------------------------
+CoursSPARK#
 
-su - hdfs
+su - hadoop
 /usr/bin/ssh-keygen -t rsa -f ~/.ssh/id_rsa -N '' -P ''
-/usr/bin/ssh-copy-id -i ~/.ssh/id_rsa.pub jupiter
+/usr/bin/ssh-copy-id -i ~/.ssh/id_rsa.pub jupiter.olimp.fr
 ssh jupiter date
+exit
 su - hive
 /usr/bin/ssh-keygen -t rsa -f ~/.ssh/id_rsa -N '' -P ''
-/usr/bin/ssh-copy-id -i ~/.ssh/id_rsa.pub jupiter
+/usr/bin/ssh-copy-id -i ~/.ssh/id_rsa.pub jupiter.olimp.fr
 ssh jupiter date
 exit
 su - spark
 /usr/bin/ssh-keygen -t rsa -f ~/.ssh/id_rsa -N '' -P ''
-/usr/bin/ssh-copy-id -i ~/.ssh/id_rsa.pub jupiter
+/usr/bin/ssh-copy-id -i ~/.ssh/id_rsa.pub jupiter.olimp.fr
 ssh jupiter date
 exit
 su - kafka
 /usr/bin/ssh-keygen -t rsa -f ~/.ssh/id_rsa -N '' -P ''
-/usr/bin/ssh-copy-id -i ~/.ssh/id_rsa.pub jupiter
+/usr/bin/ssh-copy-id -i ~/.ssh/id_rsa.pub jupiter.olimp.fr
 ssh jupiter date
 exit
 su - zookeeper
 /usr/bin/ssh-keygen -t rsa -f ~/.ssh/id_rsa -N '' -P ''
-/usr/bin/ssh-copy-id -i ~/.ssh/id_rsa.pub jupiter
+/usr/bin/ssh-copy-id -i ~/.ssh/id_rsa.pub jupiter.olimp.fr
 ssh jupiter date
 exit
 su - zeppelin
 /usr/bin/ssh-keygen -t rsa -f ~/.ssh/id_rsa -N '' -P ''
-/usr/bin/ssh-copy-id -i ~/.ssh/id_rsa.pub jupiter
-ssh jupiter date
-exit
+/usr/bin/ssh-copy-id -i ~/.ssh/id_rsa.pub jupiter.olimp.fr
+
+
+cat /home/*/.ssh/authorized_keys \
+             |grep @jupiter.olimp.fr
