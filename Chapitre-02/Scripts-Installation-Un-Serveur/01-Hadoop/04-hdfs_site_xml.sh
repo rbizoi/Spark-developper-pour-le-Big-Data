@@ -191,7 +191,7 @@ cat <<FIN_FICHIER > $HADOOP_HOME/etc/hadoop/hdfs-site.xml
 
     <property>
       <name>dfs.cluster.administrators</name>
-      <value>hadoop</value>
+      <value>hdfs</value>
     </property>
 
     <property>
