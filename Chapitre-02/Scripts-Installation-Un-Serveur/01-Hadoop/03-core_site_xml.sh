@@ -52,7 +52,7 @@ cat <<FIN_FICHIER > $HADOOP_HOME/etc/hadoop/core-site.xml
 
     <property>
       <name>hadoop.http.staticuser.user</name>
-      <value>hadoop</value>
+      <value>hdfs</value>
     </property>
 
     <property>
