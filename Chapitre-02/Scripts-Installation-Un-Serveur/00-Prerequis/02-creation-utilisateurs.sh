@@ -24,11 +24,22 @@ do
    ((nrid++))
 done
 
+
+cat <<FIN_FICHIER > /tmp/init_cle.sh
+cat /dev/zero | /usr/bin/ssh-keygen -t rsa -f ~/.ssh/id_rsa -N '' -P ''
+FIN_FICHIER
+
 pass=CoursSPARK#
 for nom in "hdfs" "hive" "zookeeper" "spark" "kafka" "zeppelin"
 do
     `echo -e "$pass\n$pass"|passwd $nom`
+    `cp /tmp/init_cle.sh /home/$nom/init_cle.sh`
+    `chmod 777 /home/$nom/init_cle.sh`
+    `su -c /home/$nom/init_cle.sh - $nom`
+     rm /home/$nom/init_cle.sh
 done
+
+rm /tmp/init_cle.sh
 
 for nom in "hive" "zookeeper" "spark" "kafka" "zeppelin"
 do
@@ -46,3 +57,9 @@ mkdir -p /u01/hadoop/hdfs/datanode
 mkdir -p /u01/hadoop/hdfs/nodemanager
 mkdir -p /u01/hadoop/hdfs/recovery
 chown -R hdfs:hadoop /u01/hadoop
+
+
+for nom in "hdfs" "hive" "zookeeper" "spark" "kafka" "zeppelin"
+do
+    `echo -e "$pass\n$pass"|passwd $nom`
+done
