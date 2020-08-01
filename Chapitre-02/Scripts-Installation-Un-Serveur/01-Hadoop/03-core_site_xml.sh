@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [ $USER != "hdfs" ]; then
-        echo "Le script doit être exécuté en tant qu'utilisateur: hdfs"
+if [ $USER != "hadoop" ]; then
+        echo "Le script doit être exécuté en tant qu'utilisateur: hadoop"
         exit -1
 fi
 
@@ -52,7 +52,7 @@ cat <<FIN_FICHIER > $HADOOP_HOME/etc/hadoop/core-site.xml
 
     <property>
       <name>hadoop.http.staticuser.user</name>
-      <value>hdfs</value>
+      <value>hadoop</value>
     </property>
 
     <property>
