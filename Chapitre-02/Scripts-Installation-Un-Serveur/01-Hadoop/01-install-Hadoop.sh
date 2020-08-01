@@ -5,11 +5,11 @@ if [ $USER != "root" ]; then
         exit -1
 fi
 
-#wget https://downloads.apache.org/hadoop/common/hadoop-3.3.0/hadoop-3.3.0.tar.gz
-#tar xzvf hadoop-3.3.0.tar.gz
-#rm hadoop-3.3.0.tar.gz
-#mv hadoop-3.3.0 hadoop
-#mv hadoop /usr/share
+wget https://downloads.apache.org/hadoop/common/hadoop-3.3.0/hadoop-3.3.0.tar.gz
+tar xzvf hadoop-3.3.0.tar.gz
+rm hadoop-3.3.0.tar.gz
+mv hadoop-3.3.0 hadoop
+mv hadoop /usr/share
 chown -R hadoop:hdfs /usr/share/hadoop
 ls -al /usr/share/hadoop
 
