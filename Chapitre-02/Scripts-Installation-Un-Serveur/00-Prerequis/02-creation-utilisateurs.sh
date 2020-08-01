@@ -57,7 +57,7 @@ mkdir -p /u01/hadoop/hdfs/recovery
 chown -R hdfs:hadoop /u01/hadoop
 
 cat <<FIN_FICHIER > /tmp/copy_cle.sh
-cat /dev/zero | sshpass -p "CoursSPARK#" ssh-copy-id `hostname -f`
+cat /dev/zero | /usr/bin/sshpass -p "CoursSPARK#" /usr/bin/ssh-copy-id `hostname -f`
 cat /dev/zero | ssh `hostname -f` date
 cat /dev/zero | ssh jupiter date
 FIN_FICHIER
