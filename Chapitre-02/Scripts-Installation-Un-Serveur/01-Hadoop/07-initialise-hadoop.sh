@@ -15,3 +15,5 @@ hdfs dfs -mkdir /user/hive
 hdfs dfs -ls -R /
 jps
 start-yarn.sh
+jps
+hdfs dfsadmin -report
