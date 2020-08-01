@@ -28,15 +28,13 @@ done
 cat <<FIN_FICHIER > /tmp/init_cle.sh
 cat /dev/zero | /usr/bin/ssh-keygen -t rsa -f ~/.ssh/id_rsa -N '' -P ''
 FIN_FICHIER
+chmod 777 /tmp/init_cle.sh
 
 pass=CoursSPARK#
 for nom in "hdfs" "hive" "zookeeper" "spark" "kafka" "zeppelin"
 do
     `echo -e "$pass\n$pass"|passwd $nom`
-    `cp /tmp/init_cle.sh /home/$nom/init_cle.sh`
-    `chmod 777 /home/$nom/init_cle.sh`
-    `su -c /home/$nom/init_cle.sh - $nom`
-     rm /home/$nom/init_cle.sh
+    `su -c /tmp/init_cle.sh - $nom`
 done
 
 rm /tmp/init_cle.sh
@@ -57,3 +55,15 @@ mkdir -p /u01/hadoop/hdfs/datanode
 mkdir -p /u01/hadoop/hdfs/nodemanager
 mkdir -p /u01/hadoop/hdfs/recovery
 chown -R hdfs:hadoop /u01/hadoop
+
+cat <<FIN_FICHIER > /tmp/copy_cle.sh
+shpass -p "CoursSPARK#" ssh-copy-id `hostname -f`
+FIN_FICHIER
+chmod 777 /tmp/copy_cle.sh
+
+for nom in "hdfs" "hive" "zookeeper" "spark" "kafka" "zeppelin"
+do
+  `su -c /tmp/copy_cle.sh - $nom`
+done
+
+rm /tmp/copy_cle.sh
