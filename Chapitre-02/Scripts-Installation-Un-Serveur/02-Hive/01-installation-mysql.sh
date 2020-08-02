@@ -7,52 +7,75 @@ fi
 
 systemctl status mysql
 
-mot_de_passe=CoursSPARK#
-mysql_secure_installation <<FIN_FICHIER
-y
-2
-${mot_de_passe}
-${mot_de_passe}
-y
-y
-y
-y
-y
-FIN_FICHIER
-
 sed -i -e "s/127.0.0.1/0.0.0.0/g" /etc/mysql/mysql.conf.d/mysqld.cnf
 cat /etc/mysql/mysql.conf.d/mysqld.cnf  | grep bind-address
 
 systemctl restart mysql
 
+mot_de_passe=CoursSPARK#
 
-mysql -e "SET PASSWORD FOR root@localhost = PASSWORD('CoursSPARK#');FLUSH PRIVILEGES;"
 
 
-#!/bin/bash
-dpkg -s expect 2> /dev/null
-if [ $? == 0 ] ; then :
-else apt-get install -y expect
-fi
-MYSQL_ROOT_PASSWORD=""
-SECURE_MYSQL=$(expect -c "
-set timeout 10
-spawn mysql_secure_installation
-expect \"Enter current password for root (enter for none):\"
-send \"${MYSQL_ROOT_PASSWORD}\r\"
-expect \"Change the root password?\"
-send \"n\r\"
-expect \"Remove anonymous users?\"
-send \"y\r\"
-expect \"Disallow root login remotely?\"
-send \"y\r\"
-expect \"Remove test database and access to it?\"
-send \"y\r\"
-expect \"Reload privilege tables now?\"
-send \"y\r\"
-expect EOF
-")
-echo ${SECURE_MYSQL}
-New password:
-Re-enter new password:
-Do you wish to continue with the password provided?(Press y|Y for Yes, any other key for No) :
+
+
+
+cat << FIN_FICHIER > create-metastore.mysql.sql
+ALTER USER root@localhost IDENTIFIED BY 'CoursSPARK#';
+
+DROP USER IF EXISTS 'spark'@'%';
+DROP USER IF EXISTS 'spark'@localhost;
+DROP DATABASE IF EXISTS metastore;
+
+CREATE DATABASE metastore;
+
+CREATE USER 'spark'@'localhost' IDENTIFIED BY 'CoursSPARK3#20';
+CREATE USER 'spark'@'%' IDENTIFIED BY 'CoursSPARK3#20';
+
+REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'spark'@'localhost';
+REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'spark'@'%';
+
+GRANT ALL PRIVILEGES ON metastore.* TO 'spark'@'localhost';
+GRANT ALL PRIVILEGES ON metastore.* TO 'spark'@'%';
+
+FLUSH PRIVILEGES;
+
+USE metastore;
+
+SOURCE $HIVE_HOME/scripts/metastore/upgrade/mysql/hive-schema-2.3.0.mysql.sql
+
+FIN_FICHIER
+
+mysql --user=spark --password=CoursSPARK# < create-metastore.mysql.sql > create-metastore.mysql.txt
+
+cat create-metastore.mysql.txt
+
+cat << FIN_FICHIER > verifie-metastore.mysql.sql
+USE metastore;
+
+SHOW DATABASES;
+
+SELECT schema_name
+FROM information_schema.schemata
+WHERE schema_name = 'metastore';
+
+--select Host,
+--        User,
+--        Select_priv,
+--        Insert_priv ,
+--        Update_priv ,
+--        Delete_priv ,
+--        Create_priv ,
+--        Drop_priv
+--from mysql.user;
+
+
+SHOW TABLES FROM metastore ;
+SHOW GRANTS FOR spark;
+
+FIN_FICHIER
+
+
+mysql --user=spark --password=CoursSPARK# < verifie-metastore.mysql.sql > verifie-metastore.mysql.txt
+
+
+cat verifie-metastore.mysql.txt
