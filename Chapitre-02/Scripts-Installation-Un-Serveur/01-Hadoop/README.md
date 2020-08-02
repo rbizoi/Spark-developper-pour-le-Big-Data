@@ -27,6 +27,4 @@ bash <(curl -s $repGitHub/06-yarn_site_xml.sh)
 
 # 8.2.2	Démarer Apache Hadoop
 
-bash <(curl -s $repGitHub/06-yarn_site_xml.sh)
-
 bash <(curl -s $repGitHub/07-initialise-hadoop.sh)
