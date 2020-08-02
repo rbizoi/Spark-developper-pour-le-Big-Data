@@ -8,7 +8,8 @@ fi
 cd ~
 
 
-#wget ...
+wget https://edef4.pcloud.com/cfZbVwv0ZIqIWJZvQYZZ76Qm37Z2ZZRR5ZZydJMU7Zp7ZJ7Z2ZuZqZ47ZTZtZaZQ7ZrZhZDZNZuFKRQgDk125Ch3HX85t2opvYmm5k/zeppelin-0.9.0-SNAPSHOT.tar.gz
+
 tar xzvf zeppelin-0.9.0-SNAPSHOT.tar.gz
 mv zeppelin-0.9.0-SNAPSHOT zeppelin
 rm zeppelin-0.9.0-SNAPSHOT.tar.gz
