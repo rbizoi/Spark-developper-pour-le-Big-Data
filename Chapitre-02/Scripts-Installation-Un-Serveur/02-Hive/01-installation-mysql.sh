@@ -19,17 +19,21 @@ wget https://raw.githubusercontent.com/rbizoi/Spark-developper-pour-le-Big-Data/
 
 cat << FIN_FICHIER > create-metastore.mysql.sql
 ALTER USER root@localhost IDENTIFIED BY '[CoursSPARK#]';
+FLUSH PRIVILEGES;
+
 DROP USER IF EXISTS 'spark'@'%';
 DROP USER IF EXISTS 'spark'@localhost;
 DROP DATABASE IF EXISTS metastore;
 CREATE DATABASE metastore;
+
 CREATE USER 'spark'@'localhost' IDENTIFIED BY '[CoursSPARK#]';
 CREATE USER 'spark'@'%' IDENTIFIED BY '[CoursSPARK#]';
-REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'spark'@'localhost';
-REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'spark'@'%';
+
 GRANT ALL PRIVILEGES ON metastore.* TO 'spark'@'localhost';
 GRANT ALL PRIVILEGES ON metastore.* TO 'spark'@'%';
+
 FLUSH PRIVILEGES;
+
 USE metastore;
 SOURCE ~/hive-schema-2.3.0.mysql.sql
 FIN_FICHIER
@@ -60,7 +64,7 @@ SHOW GRANTS FOR spark;
 
 FIN_FICHIER
 
-mysql --user=spark --password="CoursSPARK#" --database=metastore < verifie-metastore.mysql.sql
+mysql --user=spark --password='[CoursSPARK#]' --database=metastore < verifie-metastore.mysql.sql
 
 rm create-metastore.mysql.sql
 rm verifie-metastore.mysql.sql
