@@ -33,7 +33,7 @@ USE metastore;
 SOURCE ~/hive-schema-2.3.0.mysql.sql
 FIN_FICHIER
 
-mysql --user=spark --password=CoursSPARK# < create-metastore.mysql.sql > create-metastore.mysql.txt
+mysql --user=root --password=CoursSPARK# < create-metastore.mysql.sql > create-metastore.mysql.txt
 
 cat create-metastore.mysql.txt
 
