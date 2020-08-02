@@ -28,3 +28,18 @@ bash <(curl -s $repGitHub/06-yarn_site_xml.sh)
 # 8.2.2	Démarer Apache Hadoop
 
 bash <(curl -s $repGitHub/07-initialise-hadoop.sh)
+
+
+
+cat <<FIN_FICHIER > create_repertoires_run.sh
+sudo rm -Rf /var/run/hadoop
+sudo mkdir /var/run/hadoop
+sudo chown -R hdfs:hadoop /var/run/hadoop
+ls -al /var/run/hadoop
+
+sudo rm -Rf /var/run/yarn
+sudo mkdir /var/run/yarn
+sudo chown -R hdfs:hadoop /var/run/yarn
+
+ls -al /var/run/yarn
+FIN_FICHIER
