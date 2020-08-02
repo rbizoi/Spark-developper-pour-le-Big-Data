@@ -22,7 +22,7 @@ cat <<FIN_FICHIER > $HIVE_HOME/conf/hive-site.xml
 
   <property>
     <name>javax.jdo.option.ConnectionPassword</name>
-    <value>CoursSPARK#</value>
+    <value>CoursSPARK3#</value>
   </property>
 
   <property>
