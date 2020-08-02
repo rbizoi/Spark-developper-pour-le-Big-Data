@@ -52,3 +52,30 @@ export ZK_HOME=/usr/share/zookeeper
 export ZK_HOSTS=`hostname -f`:2181
 export PATH=\$ZK_HOME/bin:\$PATH
 FIN_FICHIER
+
+cat <<FIN_FICHIER > /etc/systemd/system/zookeeper.service
+[Unit]
+Description=Zookeeper Daemon
+Documentation=http://zookeeper.apache.org
+Requires=network.target
+After=network.target
+
+[Service]
+Type=forking
+WorkingDirectory=/usr/share/zookeeper
+User=zookeeper
+Group=hadoop
+ExecStart=/usr/share/zookeeper/bin/zkServer.sh start /usr/share/zookeeper/conf/zoo.cfg
+ExecStop=/usr/share/zookeeper/bin/zkServer.sh stop /usr/share/zookeeper/conf/zoo.cfg
+ExecReload=/usr/share/zookeeper/bin/zkServer.sh restart /usr/share/zookeeper/conf/zoo.cfg
+TimeoutSec=30
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+FIN_FICHIER
+
+systemctl start zookeeper
+systemctl enable zookeeper
+
+netstat -plnt | grep 2181
