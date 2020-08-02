@@ -17,6 +17,6 @@ y
 FIN_FICHIER
 
 sed -i -e "s/127.0.0.1/0.0.0.0/g" /etc/mysql/mysql.conf.d/mysqld.cnf
-cat /etc/mysql/mysql.conf.d/mysqld.cnf  |grep bind-address
+cat /etc/mysql/mysql.conf.d/mysqld.cnf  | grep bind-address
 
 systemctl restart mysql
