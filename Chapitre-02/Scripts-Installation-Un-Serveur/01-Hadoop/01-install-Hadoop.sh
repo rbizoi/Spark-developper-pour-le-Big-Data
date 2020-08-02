@@ -5,6 +5,8 @@ if [ $USER != "root" ]; then
         exit -1
 fi
 
+cd ~
+
 wget https://downloads.apache.org/hadoop/common/hadoop-3.3.0/hadoop-3.3.0.tar.gz
 tar xzvf hadoop-3.3.0.tar.gz
 rm hadoop-3.3.0.tar.gz
