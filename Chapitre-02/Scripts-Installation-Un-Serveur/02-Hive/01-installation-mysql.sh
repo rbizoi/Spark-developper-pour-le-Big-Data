@@ -62,5 +62,5 @@ FIN_FICHIER
 
 mysql --user=spark --password="CoursSPARK#" --database=metastore < verifie-metastore.mysql.sql
 
-rm *.sql
-rm *.txt
+rm create-metastore.mysql.sql
+rm verifie-metastore.mysql.sql
