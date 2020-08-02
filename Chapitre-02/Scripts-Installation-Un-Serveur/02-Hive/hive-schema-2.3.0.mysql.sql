@@ -735,7 +735,7 @@ CREATE TABLE IF NOT EXISTS `TYPE_FIELDS` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Table `MASTER_KEYS` for classes [org.apache.hadoop.hive.metastore.model.MMasterKey]
-CREATE TABLE IF NOT EXISTS `MASTER_KEYS` 
+CREATE TABLE IF NOT EXISTS `MASTER_KEYS`
 (
     `KEY_ID` INTEGER NOT NULL AUTO_INCREMENT,
     `MASTER_KEY` VARCHAR(767) BINARY NULL,
@@ -832,7 +832,7 @@ CREATE INDEX `CONSTRAINTS_PARENT_TABLE_ID_INDEX` ON KEY_CONSTRAINTS (`PARENT_TBL
 -- ----------------------------
 -- Transaction and Lock Tables
 -- ----------------------------
-SOURCE hive-txn-schema-2.3.0.mysql.sql;
+--SOURCE hive-txn-schema-2.3.0.mysql.sql;
 
 -- -----------------------------------------------------------------
 -- Record schema version. Should be the last step in the init script
