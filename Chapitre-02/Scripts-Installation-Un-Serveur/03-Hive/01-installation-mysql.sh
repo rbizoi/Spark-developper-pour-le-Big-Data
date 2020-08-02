@@ -36,15 +36,15 @@ FIN_FICHIER
 mysql --user=root --password='[CoursSPARK#]' < create-metastore.mysql.sql > create-metastore.mysql.txt
 
 cat << FIN_FICHIER > verifie-metastore.mysql.sql
-select '-----------------------------------------';
+select '------------------------------------------';
 SHOW DATABASES;
-select '-----------------------------------------';
+select '------------------------------------------';
 SELECT schema_name
 FROM information_schema.schemata
 WHERE schema_name = 'metastore';
-select '-----------------------------------------';
+select '------------------------------------------';
 SHOW TABLES FROM metastore ;
-select '-----------------------------------------';
+select '------------------------------------------';
 SHOW GRANTS FOR spark;
 FIN_FICHIER
 
