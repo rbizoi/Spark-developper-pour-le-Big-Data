@@ -34,6 +34,7 @@ SOURCE ~/hive-schema-2.3.0.mysql.sql
 FIN_FICHIER
 
 mysql --user=root < create-metastore.mysql.sql > create-metastore.mysql.txt
+cat create-metastore.mysql.txt
 
 cat << FIN_FICHIER > verifie-metastore.mysql.sql
 select '------------------------------------------';
@@ -58,7 +59,12 @@ select '------------------------------------------';
 SHOW GRANTS FOR spark;
 FIN_FICHIER
 
-mysql --user=spark --password='CoursSPARK3#' --database=metastore < verifie-metastore.mysql.sql > verifie-metastore.mysql.localhost.txt
-mysql --host=jupiter.olimp.fr --user=spark --password='CoursSPARK3#' --database=metastore < verifie-metastore.mysql.sql > verifie-metastore.mysql.jupiter.txt
+mysql --user=root < verifie-metastore.mysql.sql > verifie-metastore.mysql.txt
 
-cat verifie-metastore.mysql.jupiter.txt
+#mysql --user=spark --password='CoursSPARK3#' --database=metastore < verifie-metastore.mysql.sql > verifie-metastore.mysql.localhost.txt
+#mysql --host=jupiter.olimp.fr --user=spark --password='CoursSPARK3#' --database=metastore < verifie-metastore.mysql.sql > verifie-metastore.mysql.jupiter.txt
+
+cat verifie-metastore.mysql.txt
+rm create-metastore.mysql.sql
+rm create-metastore.mysql.txt
+rm verifie-metastore.mysql.txt
