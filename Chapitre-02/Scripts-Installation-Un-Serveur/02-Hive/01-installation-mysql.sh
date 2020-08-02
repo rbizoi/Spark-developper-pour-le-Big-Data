@@ -20,51 +20,37 @@ wget https://raw.githubusercontent.com/rbizoi/Spark-developper-pour-le-Big-Data/
 cat << FIN_FICHIER > create-metastore.mysql.sql
 ALTER USER root@localhost IDENTIFIED BY '[CoursSPARK#]';
 FLUSH PRIVILEGES;
-
 DROP USER IF EXISTS 'spark'@'%';
 DROP USER IF EXISTS 'spark'@localhost;
 DROP DATABASE IF EXISTS metastore;
 CREATE DATABASE metastore;
-
 CREATE USER 'spark'@'localhost' IDENTIFIED BY '[CoursSPARK#]';
 CREATE USER 'spark'@'%' IDENTIFIED BY '[CoursSPARK#]';
-
 GRANT ALL PRIVILEGES ON metastore.* TO 'spark'@'localhost';
 GRANT ALL PRIVILEGES ON metastore.* TO 'spark'@'%';
-
 FLUSH PRIVILEGES;
-
 USE metastore;
 SOURCE ~/hive-schema-2.3.0.mysql.sql
 FIN_FICHIER
 
-mysql --user=root --password='[CoursSPARK#]' < create-metastore.mysql.sql
+mysql --user=root --password='[CoursSPARK#]' < create-metastore.mysql.sql > create-metastore.mysql.txt
 
 cat << FIN_FICHIER > verifie-metastore.mysql.sql
-USE metastore;
-
+select '-----------------------------------------';
 SHOW DATABASES;
-
+select '-----------------------------------------';
 SELECT schema_name
 FROM information_schema.schemata
 WHERE schema_name = 'metastore';
-
-select Host,
-        User,
-        Select_priv,
-        Insert_priv ,
-        Update_priv ,
-        Delete_priv ,
-        Create_priv ,
-        Drop_priv
-from mysql.user;
-
+select '-----------------------------------------';
 SHOW TABLES FROM metastore ;
+select '-----------------------------------------';
 SHOW GRANTS FOR spark;
-
 FIN_FICHIER
 
-mysql --user=spark --password='[CoursSPARK#]' --database=metastore < verifie-metastore.mysql.sql
+mysql --user=spark --password='[CoursSPARK#]' --database=metastore < verifie-metastore.mysql.sql > verifie-metastore.mysql.localhost.txt
+mysql --host=jupiter.olimp.fr --user=spark --password='[CoursSPARK#]' --database=metastore < verifie-metastore.mysql.sql > verifie-metastore.mysql.jupiter.txt
+
+cat verifie-metastore.mysql.jupiter.txt
 
 rm create-metastore.mysql.sql
-rm verifie-metastore.mysql.sql
