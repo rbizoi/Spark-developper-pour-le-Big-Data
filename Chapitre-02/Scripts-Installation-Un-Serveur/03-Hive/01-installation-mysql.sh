@@ -52,5 +52,3 @@ mysql --user=spark --password='[CoursSPARK#]' --database=metastore < verifie-met
 mysql --host=jupiter.olimp.fr --user=spark --password='[CoursSPARK#]' --database=metastore < verifie-metastore.mysql.sql > verifie-metastore.mysql.jupiter.txt
 
 cat verifie-metastore.mysql.jupiter.txt
-
-rm create-metastore.mysql.sql
