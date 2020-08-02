@@ -21,9 +21,11 @@ ALTER USER root@localhost IDENTIFIED BY 'CoursSPARK#';
 DROP USER IF EXISTS 'spark'@'%';
 DROP USER IF EXISTS 'spark'@localhost;
 DROP DATABASE IF EXISTS metastore;
+
+CREATE USER 'spark'@'localhost' IDENTIFIED BY '[CoursSPARK#]';
+CREATE USER 'spark'@'%' IDENTIFIED BY '[CoursSPARK#]';
+
 CREATE DATABASE metastore;
-CREATE USER 'spark'@'localhost' IDENTIFIED BY 'CoursSPARK#';
-CREATE USER 'spark'@'%' IDENTIFIED BY 'CoursSPARK#';
 REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'spark'@'localhost';
 REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'spark'@'%';
 GRANT ALL PRIVILEGES ON metastore.* TO 'spark'@'localhost';
@@ -61,6 +63,6 @@ SHOW GRANTS FOR spark;
 
 FIN_FICHIER
 
-mysql --user=spark --password="CoursSPARK#" < verifie-metastore.mysql.sql > verifie-metastore.mysql.txt
+mysql --user=spark --password="CoursSPARK#" --database=metastore < verifie-metastore.mysql.sql > verifie-metastore.mysql.txt
 
 cat verifie-metastore.mysql.txt
