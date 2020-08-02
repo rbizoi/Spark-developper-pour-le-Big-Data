@@ -15,10 +15,7 @@ mv zeppelin-0.9.0-SNAPSHOT zeppelin
 rm zeppelin-0.9.0-SNAPSHOT.tar.gz
 sudo mv zeppelin /usr/share
 
-cp $ZEPPELIN_HOME/conf/zeppelin-site.xml.template $ZEPPELIN_HOME/conf/zeppelin-site.xml
-
-
-
+bash <(curl -s https://raw.githubusercontent.com/rbizoi/Spark-developper-pour-le-Big-Data/master/Chapitre-02/Scripts-Installation-Un-Serveur/04-Zookeeper/02-zeppelin_site_xml.sh)
 
 sudo chown -R zeppelin:hadoop /usr/share/zeppelin
 ll /usr/share/zeppelin
