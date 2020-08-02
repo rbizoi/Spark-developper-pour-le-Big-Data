@@ -48,6 +48,9 @@ cat <<FIN_FICHIER > $SPARK_HOME/conf/slaves
 jupiter.olimp.fr
 FIN_FICHIER
 
+
+
+
 sudo chown -R spark:hadoop /usr/share/spark
 ls -al /usr/share/spark
 
