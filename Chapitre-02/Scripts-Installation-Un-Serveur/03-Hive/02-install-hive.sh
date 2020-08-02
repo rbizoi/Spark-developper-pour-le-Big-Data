@@ -23,13 +23,21 @@ FIN_FICHIER
 cat <<FIN_FICHIER > $HIVE_HOME/conf/hive-env.sh
 export HADOOP_HOME=/usr/share/hadoop
 export HIVE_CONF_DIR=/usr/share/hive/conf
-export CLASSPATH=\$CLASSPATH:\${HIVE_HOME}/lib/*:.
 FIN_FICHIER
 
 export HIVE_HOME=/usr/share/hive
+export SPARK_HOME=/usr/share/spark
+
+bash <(curl -s $repGitHub/03-hive_site_xml.sh)
+
 wget https://cdn.mysql.com//Downloads/Connector-J/mysql-connector-java-8.0.20.tar.gz
 tar -xvzf mysql-connector-java-8.0.20.tar.gz
 cp mysql-connector-java-8.0.20/mysql-connector-java-8.0.20.jar $HIVE_HOME/lib
+cp mysql-connector-java-8.0.20/mysql-connector-java-8.0.20.jar $SPARK_HOME/lib
+cp $HIVE_HOME/conf/hive-site.xml $SPARK_HOME/conf/hive-site.xml
+cp $HIVE_HOME/conf/hive-env.sh $SPARK_HOME/conf/hive-env.sh
+chown -R spark:hadoop $SPARK_HOME
+chown -R hive:hadoop $HIVE_HOME
 rm mysql-connector-java-8.0.20.tar.gz
 rm -Rf mysql-connector-java-8.0.20
 
