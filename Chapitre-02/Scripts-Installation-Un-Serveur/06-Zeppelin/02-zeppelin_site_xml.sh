@@ -17,12 +17,12 @@ cat <<FIN_FICHIER > $ZEPPELIN_HOME/conf/zeppelin-site.xml
 
     <property>
       <name>zeppelin.server.port</name>
-      <value>9995</value>
+      <value>9999</value>
     </property>
 
     <property>
       <name>zeppelin.server.ssl.port</name>
-      <value>9995</value>
+      <value>9999</value>
     </property>
 
     <property>
@@ -172,7 +172,7 @@ cat <<FIN_FICHIER > $ZEPPELIN_HOME/conf/zeppelin-site.xml
 
     <property>
       <name>zeppelin.notebook.default.owner.username</name>
-      <value></value>
+      <value>spark</value>
     </property>
 
     <property>
