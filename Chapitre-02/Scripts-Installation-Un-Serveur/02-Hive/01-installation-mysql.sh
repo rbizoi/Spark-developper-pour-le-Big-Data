@@ -34,9 +34,7 @@ USE metastore;
 SOURCE ~/hive-schema-2.3.0.mysql.sql
 FIN_FICHIER
 
-mysql --user=root --password='[CoursSPARK#]' < create-metastore.mysql.sql > create-metastore.mysql.txt
-
-cat create-metastore.mysql.txt
+mysql --user=root --password='[CoursSPARK#]' < create-metastore.mysql.sql
 
 cat << FIN_FICHIER > verifie-metastore.mysql.sql
 USE metastore;
@@ -62,6 +60,7 @@ SHOW GRANTS FOR spark;
 
 FIN_FICHIER
 
-mysql --user=spark --password="CoursSPARK#" --database=metastore < verifie-metastore.mysql.sql > verifie-metastore.mysql.txt
+mysql --user=spark --password="CoursSPARK#" --database=metastore < verifie-metastore.mysql.sql
 
-cat verifie-metastore.mysql.txt
+rm *.sql
+rm *.txt
