@@ -67,4 +67,6 @@ mysql --user=root < verifie-metastore.mysql.sql > verifie-metastore.mysql.txt
 cat verifie-metastore.mysql.txt
 rm create-metastore.mysql.sql
 rm create-metastore.mysql.txt
+rm verifie-metastore.mysql.sql
 rm verifie-metastore.mysql.txt
+rm hive-schema-2.3.0.mysql.sql
