@@ -5,7 +5,7 @@ if [ $USER != "root" ]; then
         exit -1
 fi
 
-mysql_secure_installation <<FIN_FICHIER
+mysql_secure_installation<<FIN_FICHIER
 
 y
 CoursSPARK#
