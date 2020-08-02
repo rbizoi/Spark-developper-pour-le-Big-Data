@@ -21,7 +21,7 @@ done
 
 cd ~/donnees
 
-wget https://donneespubliques.meteofrance.fr/donnees_libres/Txt/Synop/Archive/postesSynop.csv
+wget https://donneespubliques.meteofrance.fr/donnees_libres/Txt/Synop/postesSynop.csv
 wget https://donneespubliques.meteofrance.fr/donnees_libres/Txt/Synop/postesSynop.json
 wget https://donneespubliques.meteofrance.fr/client/document/doc_parametres_synop_168.pdf
 
