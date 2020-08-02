@@ -31,7 +31,7 @@ GRANT ALL PRIVILEGES ON metastore.* TO 'spark'@'localhost';
 GRANT ALL PRIVILEGES ON metastore.* TO 'spark'@'%';
 FLUSH PRIVILEGES;
 USE metastore;
-SOURCE hive-schema-2.3.0.mysql.sql
+SOURCE ~/hive-schema-2.3.0.mysql.sql
 FIN_FICHIER
 
 mysql --user=root --password='[CoursSPARK#]' < create-metastore.mysql.sql > create-metastore.mysql.txt
