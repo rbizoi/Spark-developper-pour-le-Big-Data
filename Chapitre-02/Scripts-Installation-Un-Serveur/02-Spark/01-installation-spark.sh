@@ -5,6 +5,8 @@ if [ $USER != "root" ]; then
         exit -1
 fi
 
+cd ~
+
 wget https://downloads.apache.org/spark/spark-3.0.0/spark-3.0.0-bin-hadoop3.2.tgz
 tar xzvf spark-3.0.0-bin-hadoop3.2.tgz
 rm -f spark-3.0.0-bin-hadoop3.2.tgz
@@ -48,9 +50,6 @@ cat <<FIN_FICHIER > $SPARK_HOME/conf/slaves
 jupiter.olimp.fr
 FIN_FICHIER
 
-
-
-
 sudo chown -R spark:hadoop /usr/share/spark
 ls -al /usr/share/spark
 
@@ -59,3 +58,10 @@ sudo mkdir /var/log/spark
 sudo mkdir /var/run/spark
 sudo chown -R spark:hadoop /var/*/spark
 ls -al /var/*/spark
+
+
+su - spark
+
+hdfs dfs -mkdir /spark-jars
+hdfs dfs -put $SPARK_HOME/jars/* /spark-jars
+hdfs dfs -ls /spark-jars
