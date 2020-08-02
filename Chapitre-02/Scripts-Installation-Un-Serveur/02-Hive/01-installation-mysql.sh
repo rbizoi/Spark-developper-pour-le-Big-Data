@@ -12,13 +12,6 @@ cat /etc/mysql/mysql.conf.d/mysqld.cnf  | grep bind-address
 
 systemctl restart mysql
 
-mot_de_passe=CoursSPARK#
-
-
-
-
-
-
 cat << FIN_FICHIER > create-metastore.mysql.sql
 ALTER USER root@localhost IDENTIFIED BY 'CoursSPARK#';
 
