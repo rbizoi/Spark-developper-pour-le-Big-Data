@@ -18,7 +18,7 @@ export PYSPARK_PYTHON=/bin/python3
 #export PYSPARK_DRIVER_PYTHON=python3
 export PYSPARK_DRIVER_PYTHON=jupyter
 export PYSPARK_DRIVER_PYTHON_OPTS='notebook'
-export PATH=$SPARK_HOME/bin:$SPARK_HOME/sbin:$PATH
+export PATH=\$SPARK_HOME/bin:\$SPARK_HOME/sbin:\$PATH
 FIN_FICHIER
 
 export SPARK_HOME=/usr/share/spark
@@ -55,4 +55,4 @@ sudo rm -Rf /var/*/spark
 sudo mkdir /var/log/spark
 sudo mkdir /var/run/spark
 sudo chown -R spark:hadoop /var/*/spark
-ll /var/*/spark
+ls -al /var/*/spark
