@@ -14,8 +14,8 @@ cat /etc/mysql/mysql.conf.d/mysqld.cnf  | grep bind-address
 
 systemctl restart mysql
 
-wget https://raw.githubusercontent.com/rbizoi/Spark-developper-pour-le-Big-Data/master/Chapitre-02/Scripts-Installation-Un-Serveur/02-Hive/hive-schema-2.3.0.mysql.sql
-wget https://raw.githubusercontent.com/rbizoi/Spark-developper-pour-le-Big-Data/master/Chapitre-02/Scripts-Installation-Un-Serveur/02-Hive/hive-txn-schema-2.3.0.mysql.sql
+wget https://raw.githubusercontent.com/rbizoi/Spark-developper-pour-le-Big-Data/master/Chapitre-02/Scripts-Installation-Un-Serveur/03-Hive/hive-schema-2.3.0.mysql.sql
+wget https://raw.githubusercontent.com/rbizoi/Spark-developper-pour-le-Big-Data/master/Chapitre-02/Scripts-Installation-Un-Serveur/03-Hive/hive-txn-schema-2.3.0.mysql.sql
 
 cat << FIN_FICHIER > create-metastore.mysql.sql
 ALTER USER root@localhost IDENTIFIED BY '[CoursSPARK#]';
