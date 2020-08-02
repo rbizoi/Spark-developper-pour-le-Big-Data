@@ -46,9 +46,53 @@ spark.eventLog.dir hdfs://`hostname -f`:8020/spark-history/
 spark.eventLog.enabled true
 FIN_FICHIER
 
+
+cat <<FIN_FICHIER > $SPARK_HOME/conf/spark-defaults.conf
+spark.serializer                     org.apache.spark.serializer.KryoSerializer
+spark.io.compression.lz4.blockSize   128kb
+#--------------------------------------------------------------------------------
+spark.yarn.jars                      hdfs:///spark-jars
+spark.yarn.am.cores                  1
+#--------------------------------------------------------------------------------
+spark.master yarn
+spark.driver.memory                  1g
+spark.executor.memory                2g
+spark.executor.cores                 1
+spark.executor.instances             2
+spark.default.parallelism            2
+#--------------------------------------------------------------------------------
+spark.eventLog.dir hdfs:///spark-history/
+spark.eventLog.enabled true
+#--------------------------------------------------------------------------------
+spark.history.fs.cleaner.enabled     true
+spark.history.fs.cleaner.interval    7d
+spark.history.fs.cleaner.maxAge      90d
+spark.history.fs.logDirectory        hdfs:///spark-history/
+FIN_FICHIER
+
 cat <<FIN_FICHIER > $SPARK_HOME/conf/slaves
 jupiter.olimp.fr
 FIN_FICHIER
+
+cp $SPARK_HOME/conf/log4j.properties $SPARK_HOME/conf/log4j.properties.sav
+cat <<FIN_FICHIER > $SPARK_HOME/conf/log4j.properties
+log4j.rootCategory=ERROR, console
+log4j.appender.console=org.apache.log4j.ConsoleAppender
+log4j.appender.console.target=System.err
+log4j.appender.console.layout=org.apache.log4j.PatternLayout
+log4j.appender.console.layout.ConversionPattern=%d{yy/MM/dd HH:mm:ss} %p %c{1}: %m%n
+log4j.logger.org.apache.spark.repl.Main=WARN
+log4j.logger.org.sparkproject.jetty=WARN
+log4j.logger.org.sparkproject.jetty.util.component.AbstractLifeCycle=ERROR
+log4j.logger.org.apache.spark.repl.SparkIMain\$exprTyper=INFO
+log4j.logger.org.apache.spark.repl.SparkILoop\$SparkILoopInterpreter=INFO
+log4j.logger.org.apache.parquet=ERROR
+log4j.logger.parquet=ERROR
+log4j.logger.org.apache.hadoop.hive.metastore.RetryingHMSHandler=FATAL
+log4j.logger.org.apache.hadoop.hive.ql.exec.FunctionRegistry=ERROR
+FIN_FICHIER
+
+
 
 sudo chown -R spark:hadoop /usr/share/spark
 ls -al /usr/share/spark
