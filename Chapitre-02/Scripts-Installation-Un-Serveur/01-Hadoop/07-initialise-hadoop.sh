@@ -12,7 +12,6 @@ hdfs dfs -mkdir /user
 hdfs dfs -mkdir /user/hdfs
 hdfs dfs -mkdir /user/spark
 hdfs dfs -mkdir /user/hive
-hdfs dfs -mkdir /spark-history
 hdfs dfs -ls -R /
 jps
 start-yarn.sh
