@@ -17,7 +17,7 @@ systemctl restart mysql
 wget https://raw.githubusercontent.com/rbizoi/Spark-developper-pour-le-Big-Data/master/Chapitre-02/Scripts-Installation-Un-Serveur/02-Hive/hive-schema-2.3.0.mysql.sql
 
 cat << FIN_FICHIER > create-metastore.mysql.sql
-ALTER USER root@localhost IDENTIFIED BY 'CoursSPARK#';
+ALTER USER root@localhost IDENTIFIED BY '[CoursSPARK#]';
 DROP USER IF EXISTS 'spark'@'%';
 DROP USER IF EXISTS 'spark'@localhost;
 DROP DATABASE IF EXISTS metastore;
@@ -33,7 +33,7 @@ USE metastore;
 SOURCE ~/hive-schema-2.3.0.mysql.sql
 FIN_FICHIER
 
-mysql --user=root --password="CoursSPARK#" < create-metastore.mysql.sql > create-metastore.mysql.txt
+mysql --user=root --password='[CoursSPARK#]' < create-metastore.mysql.sql > create-metastore.mysql.txt
 
 cat create-metastore.mysql.txt
 
