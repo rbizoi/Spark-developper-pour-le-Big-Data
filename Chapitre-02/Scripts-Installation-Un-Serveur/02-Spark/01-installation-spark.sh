@@ -67,3 +67,5 @@ hdfs dfs -put $SPARK_HOME/jars/* /spark-jars
 hdfs dfs -ls /spark-jars
 
 $SPARK_HOME/sbin/start-all.sh
+
+exit
