@@ -15,6 +15,7 @@ cat /etc/mysql/mysql.conf.d/mysqld.cnf  | grep bind-address
 systemctl restart mysql
 
 wget https://raw.githubusercontent.com/rbizoi/Spark-developper-pour-le-Big-Data/master/Chapitre-02/Scripts-Installation-Un-Serveur/02-Hive/hive-schema-2.3.0.mysql.sql
+wget https://raw.githubusercontent.com/rbizoi/Spark-developper-pour-le-Big-Data/master/Chapitre-02/Scripts-Installation-Un-Serveur/02-Hive/hive-txn-schema-2.3.0.mysql.sql
 
 cat << FIN_FICHIER > create-metastore.mysql.sql
 ALTER USER root@localhost IDENTIFIED BY '[CoursSPARK#]';
@@ -30,7 +31,7 @@ GRANT ALL PRIVILEGES ON metastore.* TO 'spark'@'localhost';
 GRANT ALL PRIVILEGES ON metastore.* TO 'spark'@'%';
 FLUSH PRIVILEGES;
 USE metastore;
-SOURCE ~/hive-schema-2.3.0.mysql.sql
+SOURCE hive-schema-2.3.0.mysql.sql
 FIN_FICHIER
 
 mysql --user=root --password='[CoursSPARK#]' < create-metastore.mysql.sql > create-metastore.mysql.txt
