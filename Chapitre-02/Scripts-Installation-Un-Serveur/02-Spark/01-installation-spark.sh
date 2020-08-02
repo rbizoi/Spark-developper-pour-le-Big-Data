@@ -58,14 +58,3 @@ sudo mkdir /var/log/spark
 sudo mkdir /var/run/spark
 sudo chown -R spark:hadoop /var/*/spark
 ls -al /var/*/spark
-
-su - spark
-
-hdfs dfs -mkdir /spark-jars
-hdfs dfs -mkdir /spark-history
-hdfs dfs -put $SPARK_HOME/jars/* /spark-jars
-hdfs dfs -ls /spark-jars
-
-$SPARK_HOME/sbin/start-all.sh
-
-exit
