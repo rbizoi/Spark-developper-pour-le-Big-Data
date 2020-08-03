@@ -47,15 +47,15 @@ spark.io.compression.lz4.blockSize   128kb
 spark.yarn.jars                      hdfs:///spark-jars
 spark.yarn.am.cores                  1
 #--------------------------------------------------------------------------------
-spark.master yarn
+spark.master                         yarn
 spark.driver.memory                  1g
 spark.executor.memory                2g
 spark.executor.cores                 1
 spark.executor.instances             2
 spark.default.parallelism            2
 #--------------------------------------------------------------------------------
-spark.eventLog.dir hdfs:///spark-history/
-spark.eventLog.enabled true
+spark.eventLog.dir                   hdfs:///spark-history/
+spark.eventLog.enabled               true
 #--------------------------------------------------------------------------------
 spark.history.fs.cleaner.enabled     true
 spark.history.fs.cleaner.interval    7d
