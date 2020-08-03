@@ -27,9 +27,6 @@ export SPARK_HOME=/usr/share/spark
 
 cat <<FIN_FICHIER > $SPARK_HOME/conf/spark-env.sh
 #!/usr/bin/env bash
-SPARK_EXECUTOR_MEMORY="2G"
-SPARK_DRIVER_MEMORY="1024M"
-export SPARK_DAEMON_MEMORY=1024m
 USER="\$(whoami)"
 SPARK_IDENT_STRING=\$USER
 SPARK_NICENESS=0
