@@ -31,8 +31,8 @@ USER="\$(whoami)"
 SPARK_IDENT_STRING=\$USER
 SPARK_NICENESS=0
 export SPARK_MASTER_PORT=7077
-export SPARK_MASTER_WEBUI_PORT=8082
-export SPARK_WORKER_WEBUI_PORT=8081
+export SPARK_MASTER_WEBUI_PORT=8081
+export SPARK_WORKER_WEBUI_PORT=8082
 export SPARK_LOG_DIR=/var/log/spark/\$USER
 export SPARK_PID_DIR=/var/run/spark/\$USER
 FIN_FICHIER
@@ -50,6 +50,7 @@ spark.executor.memory                2g
 spark.executor.cores                 1
 spark.executor.instances             2
 spark.default.parallelism            2
+spark.deploy.defaultCores            4
 #--------------------------------------------------------------------------------
 spark.eventLog.dir                   hdfs:///spark-history/
 spark.eventLog.enabled               true
