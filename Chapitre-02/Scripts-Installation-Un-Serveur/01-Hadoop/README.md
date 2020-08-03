@@ -2,7 +2,7 @@
 
 repGitHub=https://raw.githubusercontent.com/rbizoi/Spark-developper-pour-le-Big-Data/master/Chapitre-02/Scripts-Installation-Un-Serveur/01-Hadoop
 
-bash <(curl -s $repGitHub/01-install-Hadoop.sh)
+bash <(curl -s $repGitHub/01-installation-Hadoop.sh)
 
 # 8.2.1	Configurer Apache Hadoop
 
