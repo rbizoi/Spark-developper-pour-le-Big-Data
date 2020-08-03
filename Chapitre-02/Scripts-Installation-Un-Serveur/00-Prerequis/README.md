@@ -7,7 +7,7 @@ repGitHub=https://raw.githubusercontent.com/rbizoi/Spark-developper-pour-le-Big-
 ## 8.1.4.	L'installation du langage R
 
 
-bash <(curl -s $repGitHub/01-systme-exploitation.sh)
+bash <(curl -s $repGitHub/01-systeme-exploitation.sh)
 
 ## 8.1.5.	La création des utilisateurs
 
