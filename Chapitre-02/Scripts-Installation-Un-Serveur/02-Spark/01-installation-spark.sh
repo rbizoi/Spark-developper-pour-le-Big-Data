@@ -41,13 +41,6 @@ export SPARK_PID_DIR=/var/run/spark/\$USER
 FIN_FICHIER
 
 cat <<FIN_FICHIER > $SPARK_HOME/conf/spark-defaults.conf
-spark.master yarn
-spark.eventLog.dir hdfs://`hostname -f`:8020/spark-history/
-spark.eventLog.enabled true
-FIN_FICHIER
-
-
-cat <<FIN_FICHIER > $SPARK_HOME/conf/spark-defaults.conf
 spark.serializer                     org.apache.spark.serializer.KryoSerializer
 spark.io.compression.lz4.blockSize   128kb
 #--------------------------------------------------------------------------------
