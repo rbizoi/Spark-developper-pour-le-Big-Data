@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cat <<FIN_FICHIER > $HIVE_HOME/conf/hive-site.xml
+cat <<FIN_FICHIER > $SPARK_HOME/conf/hive-site.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
