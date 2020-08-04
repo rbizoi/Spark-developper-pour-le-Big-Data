@@ -166,3 +166,19 @@ su - zeppelin
 
 cat /home/*/.ssh/authorized_keys \
              |grep @jupiter.olimp.fr
+
+
+echo "Les variables prérequis système"
+env | grep -E "JAVA_HOME|JRE_HOME|M2_HOME|MAVEN|MAVEN_OPTS|PATH"
+echo "Les variables Hadoop"
+env | grep -E "PDSH_RCMD_TYPE|HADOOP_HOME|HADOOP_CONF_DIR|HADOOP_YARN_HOME"
+echo "Les variables SPARK"
+env | grep -E "SPARK_HOME|PYSPARK_PYTHON|PYSPARK_DRIVER_PYTHON|PYSPARK_DRIVER_PYTHON_OPTS"
+echo "Les variables HIVE"
+env | grep -E "HIVE_HOME|HIVE_CONF_DIR"
+echo "Les variables Zookeeper"
+env | grep -E "ZOOKEEPER_HOME|ZOOKEEPER_HOSTS"
+echo "Les variables Kafka"
+env | grep -E "KAFKA_HOME|KAFKA_MANAGER_HOME"
+echo "Les variables Zeppelin"
+env | grep -E "ZEPPELIN_HOME"
