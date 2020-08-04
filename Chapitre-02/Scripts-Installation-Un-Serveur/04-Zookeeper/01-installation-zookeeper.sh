@@ -13,7 +13,18 @@ rm -f apache-zookeeper-3.6.1-bin.tar.gz
 mv apache-zookeeper-3.6.1-bin zookeeper
 mv zookeeper /usr/share
 
-cat <<FIN_FICHIER > /usr/share/zookeeper/conf/zoo.cfg
+
+cat << FIN_FICHIER > /etc/profile.d/zookeeper.sh
+#!/bin/bash
+# Configuration Zookeeper
+export ZOOKEEPER_HOME=/usr/share/zookeeper
+export ZOOKEEPER_HOSTS=`hostname -f`:2181
+export PATH=\$ZOOKEEPER_HOME/bin:\$PATH
+FIN_FICHIER
+
+export ZOOKEEPER_HOME=/usr/share/zookeeper
+
+cat <<FIN_FICHIER > $ZOOKEEPER_HOME/conf/zoo.cfg
 tickTime=2000
 dataDir=/var/zookeeper
 dataLogDir=/var/log/zookeeper
@@ -45,14 +56,6 @@ sudo chown -R zookeeper:hadoop /var/zookeeper
 ll /var/zookeeper
 ll /var/log/zookeeper
 
-cat << FIN_FICHIER > /etc/profile.d/zookeeper.sh
-#!/bin/bash
-# Configuration Zookeeper
-export ZK_HOME=/usr/share/zookeeper
-export ZK_HOSTS=`hostname -f`:2181
-export PATH=\$ZK_HOME/bin:\$PATH
-FIN_FICHIER
-
 cat <<FIN_FICHIER > /etc/systemd/system/zookeeper.service
 [Unit]
 Description=Zookeeper Daemon
@@ -65,9 +68,9 @@ Type=forking
 WorkingDirectory=/usr/share/zookeeper
 User=zookeeper
 Group=hadoop
-ExecStart=/usr/share/zookeeper/bin/zkServer.sh start /usr/share/zookeeper/conf/zoo.cfg
-ExecStop=/usr/share/zookeeper/bin/zkServer.sh stop /usr/share/zookeeper/conf/zoo.cfg
-ExecReload=/usr/share/zookeeper/bin/zkServer.sh restart /usr/share/zookeeper/conf/zoo.cfg
+ExecStart=$ZOOKEEPER_HOME/bin/zkServer.sh start $ZOOKEEPER_HOME/conf/zoo.cfg
+ExecStop=$ZOOKEEPER_HOME/bin/zkServer.sh stop $ZOOKEEPER_HOME/conf/zoo.cfg
+ExecReload=$ZOOKEEPER_HOME/bin/zkServer.sh restart $ZOOKEEPER_HOME/conf/zoo.cfg
 TimeoutSec=30
 Restart=on-failure
 
