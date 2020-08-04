@@ -26,13 +26,13 @@ FIN_FICHIER
 export SPARK_HOME=/usr/share/spark
 
 cat <<FIN_FICHIER > $SPARK_HOME/conf/spark-env.sh
-#!/usr/bin/env bash
+#!/bin/bash
 USER="\$(whoami)"
 SPARK_IDENT_STRING=\$USER
 SPARK_NICENESS=0
 export SPARK_MASTER_PORT=7077
-export SPARK_MASTER_WEBUI_PORT=8080
-export SPARK_WORKER_WEBUI_PORT=8081
+export SPARK_MASTER_WEBUI_PORT=8081
+export SPARK_WORKER_WEBUI_PORT=8082
 export SPARK_LOG_DIR=/var/log/spark/\$USER
 export SPARK_PID_DIR=/var/run/spark/\$USER
 FIN_FICHIER
@@ -60,9 +60,9 @@ spark.history.fs.cleaner.maxAge      90d
 spark.history.fs.logDirectory        hdfs:///spark-history/
 #--------------------------------------------------------------------------------
 spark.deploy.defaultCores            4
-spark.deploy.recoveryMode            ZOOKEEPER
-spark.deploy.zookeeper.url           `hostname -f`:2181
-spark.deploy.zookeeper.dir           /spark
+#spark.deploy.recoveryMode            ZOOKEEPER
+#spark.deploy.zookeeper.url           `hostname -f`:2181
+#spark.deploy.zookeeper.dir           /spark
 FIN_FICHIER
 
 cat <<FIN_FICHIER > $SPARK_HOME/conf/slaves
