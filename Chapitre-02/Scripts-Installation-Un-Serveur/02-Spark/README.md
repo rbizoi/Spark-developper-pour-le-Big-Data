@@ -15,6 +15,17 @@ pyspark   --master spark://jupiter.olimp.fr:7077
 spark-sql   --master spark://jupiter.olimp.fr:7077
 
 
+start-thriftserver.sh --master spark://jupiter.olimp.fr:7077
+$SPARK_HOME/bin/beeline
+!connect jdbc:hive2://localhost:10000 spark
+
+show databases;
+use cours_spark;
+show tables;
+select * from meteomensuelle;
+!quit
+
+
 # Controle installation Apache Spark
 
 bash <(curl -s $repGitHub/import-meteo.sh)
