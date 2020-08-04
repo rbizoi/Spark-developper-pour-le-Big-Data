@@ -13,6 +13,16 @@ rm -f kafka_2.12-2.5.0.tgz
 mv kafka_2.12-2.5.0 kafka
 mv kafka /usr/share
 
+cat << FIN_FICHIER > /etc/profile.d/kafka.sh
+#!/bin/bash
+# Configuration Zookeeper
+export KAFKA_HOME=/usr/share/kafka
+#export KAFKA_MANAGER_HOME=/usr/share/kafka-manager
+export PATH=\$KAFKA_HOME/bin:\$PATH
+FIN_FICHIER
+
+export KAFKA_HOME=/usr/share/kafka
+
 cat <<FIN_FICHIER > $KAFKA_HOME/config/zookeeper.properties
 tickTime=2000
 dataDir=/var/zookeeper
@@ -81,11 +91,11 @@ After=zookeeper.service
 
 [Service]
 Type=forking
-WorkingDirectory=/usr/share/kafka
+WorkingDirectory=$KAFKA_HOME
 User=kafka
 Group=hadoop
-ExecStart=/usr/share/kafka/bin/kafka-server-start.sh -daemon /usr/share/kafka/config/server.properties
-ExecStop=/usr/share/kafka/bin/kafka-server-stop.sh
+ExecStart=$KAFKA_HOME/bin/kafka-server-start.sh -daemon $KAFKA_HOME/config/server.properties
+ExecStop=$KAFKA_HOME/bin/kafka-server-stop.sh
 TimeoutSec=30
 Restart=on-failure
 
