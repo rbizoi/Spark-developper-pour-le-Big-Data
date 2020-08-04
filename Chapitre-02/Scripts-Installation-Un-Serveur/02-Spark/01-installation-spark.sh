@@ -50,7 +50,6 @@ spark.executor.memory                2g
 spark.executor.cores                 1
 spark.executor.instances             2
 spark.default.parallelism            2
-spark.deploy.defaultCores            4
 #--------------------------------------------------------------------------------
 spark.eventLog.dir                   hdfs:///spark-history/
 spark.eventLog.enabled               true
@@ -59,6 +58,11 @@ spark.history.fs.cleaner.enabled     true
 spark.history.fs.cleaner.interval    7d
 spark.history.fs.cleaner.maxAge      90d
 spark.history.fs.logDirectory        hdfs:///spark-history/
+#--------------------------------------------------------------------------------
+spark.deploy.defaultCores            4
+spark.deploy.recoveryMode            ZOOKEEPER
+spark.deploy.zookeeper.url           `hostname -f`:2181
+spark.deploy.zookeeper.dir           /spark
 FIN_FICHIER
 
 cat <<FIN_FICHIER > $SPARK_HOME/conf/slaves
