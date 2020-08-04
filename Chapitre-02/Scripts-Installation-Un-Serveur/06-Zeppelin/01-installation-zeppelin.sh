@@ -61,5 +61,7 @@ RemainAfterExit=yes
 WantedBy=multi-user.target
 FIN_FICHIER
 
+# uniquement si le clauster est demmaré autrement il faut attendre
+# il necessite la création des répértoires 
 systemctl start zeppelin
-systemctl enable zeppelin
+systemctl disable zeppelin
