@@ -43,3 +43,23 @@ zeppelin-daemon.sh restart
 zeppelin-daemon.sh stop
 
 sudo netstat -lnp | grep 9999
+
+cat <<FIN_FICHIER > /etc/systemd/system/zeppelin.service
+[Unit]
+Description=Apache Zeppelin daemon
+After=syslog.target network.target
+
+[Service]
+Type=oneshot
+User=zeppelin
+Group=hadoop
+ExecStart=$ZEPPELIN_HOME/bin/zeppelin-daemon.sh start
+ExecStop=$ZEPPELIN_HOME/bin/zeppelin-daemon.sh stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+FIN_FICHIER
+
+systemctl start zeppelin
+systemctl enable zeppelin
