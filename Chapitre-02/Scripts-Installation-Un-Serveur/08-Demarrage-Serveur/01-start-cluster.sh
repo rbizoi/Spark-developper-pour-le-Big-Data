@@ -41,3 +41,5 @@ sleep 60
 su -c /usr/share/hadoop/sbin/start-yarn.sh - hdfs
 sleep 5
 su -c /usr/share/spark/sbin/start-all.sh - spark
+sleep 5
+systemctl start zeppelin
