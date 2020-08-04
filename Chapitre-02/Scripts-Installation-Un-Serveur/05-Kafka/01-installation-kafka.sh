@@ -15,7 +15,7 @@ mv kafka /usr/share
 
 cat << FIN_FICHIER > /etc/profile.d/kafka.sh
 #!/bin/bash
-# Configuration Zookeeper
+# Configuration Kafka
 export KAFKA_HOME=/usr/share/kafka
 #export KAFKA_MANAGER_HOME=/usr/share/kafka-manager
 export PATH=\$KAFKA_HOME/bin:\$PATH
