@@ -83,11 +83,11 @@ log4j.logger.org.apache.hadoop.hive.metastore.RetryingHMSHandler=FATAL
 log4j.logger.org.apache.hadoop.hive.ql.exec.FunctionRegistry=ERROR
 FIN_FICHIER
 
-sudo chown -R spark:hadoop /usr/share/spark
+chown -R spark:hadoop /usr/share/spark
 ls -al /usr/share/spark
 
-sudo rm -Rf /var/*/spark
-sudo mkdir /var/log/spark
-sudo mkdir /var/run/spark
-sudo chown -R spark:hadoop /var/*/spark
+rm -Rf /var/*/spark
+mkdir /var/log/spark
+mkdir /var/run/spark
+chown -R spark:hadoop /var/*/spark
 ls -al /var/*/spark
