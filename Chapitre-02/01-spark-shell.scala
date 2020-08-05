@@ -15,3 +15,4 @@ val donneesStations = spark.read.format("csv").
 
 val donneesS = donneesStations.withColumn("Ville",
                    sqlfV(donneesStations("Ville")))
+:q
