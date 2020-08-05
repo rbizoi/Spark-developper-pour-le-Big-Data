@@ -14,45 +14,47 @@ La structure de la machine virtuelle.<br>
 
 <img src="https://github.com/rbizoi/Spark-developper-pour-le-Big-Data/blob/master/Chapitre-01/images/M01.07.png" width="512">
 
-1.	      Le déluge de données	1
-2.	      Les systèmes de calcul distribué	2
-3.	      Le système de fichiers distribué Hadoop (HDFS)	2
-4.	      Le système de traitements MapReduce	4
-5.	      Les extensions MapReduce	5
-6.	      Le Big Data Analytique	6
-6.1.      	La découverte	6
-6.2.      	La préparation des données	6
-6.3.      	La conception du modèle	7
-6.4.      	La construction du modèle	7
-6.5.      	Les résultats	7
-6.6.      	La mise en production	8
-7.	      L’analyse de données en flux continu	8
-8.	      L’installation	9
-9.	      Les produits nécessaires	9
-10.	      Installer les prérequis	10
-10.1.   	La configuration du système d'exploitation	10
-10.2.   	L'installation de l'environnement Java	11
-10.3.   	L'installation du langage Python	12
-10.4.   	L'installation du langage R	12
-10.5.   	La création des utilisateurs	13
-10.6.   	La configuration automatique des prérequis	14
-11.	Installer Apache Hadoop	15
-12.	Installer Apache Spark	15
-12.1.	L'installation des fichiers	15
-12.2.	La configuration de l'environnement	17
-12.3.	Les environnements de commandes	18
-12.3.1.	L'environnement de commande Scala	18
-12.3.2.	L'environnement de commande Python	19
-12.3.3.	L'environnement de commande R	20
-12.4.	L'installation et intégration avec Apache Hadoop	20
-13.	Installer Apache Hive	24
-14.	Installer Apache Zookeeper	25
-15.	Installer Apache Kafka	26
-16.	Installer Apache Zeppelin	26
-17.	Configurer le démarrage et l'arrêt du cluster	26
-17.1.	Apache Hadoop	27
-17.2.	Jupyter Notebook	29
-17.3.	Apache Zeppelin	31
+<table>
+<tr><th>1.     </th><th>Le déluge de données                             </th></tr>
+<tr><th>2.     </th><th>Les systèmes de calcul distribué                 </th></tr>
+<tr><th>3.     </th><th>Le système de fichiers distribué Hadoop (HDFS)   </th></tr>
+<tr><th>4.     </th><th>Le système de traitements MapReduce              </th></tr>
+<tr><th>5.     </th><th>Les extensions MapReduce                         </th></tr>
+<tr><th>6.     </th><th>Le Big Data Analytique                           </th></tr>
+<tr><th>6.1.   </th><th>La découverte                                    </th></tr>
+<tr><th>6.2.   </th><th>La préparation des données                       </th></tr>
+<tr><th>6.3.   </th><th>La conception du modèle                          </th></tr>
+<tr><th>6.4.   </th><th>La construction du modèle                        </th></tr>
+<tr><th>6.5.   </th><th>Les résultats                                    </th></tr>
+<tr><th>6.6.   </th><th>La mise en production                            </th></tr>
+<tr><th>7.     </th><th>L’analyse de données en flux continu             </th></tr>
+<tr><th>8.     </th><th>L’installation                                   </th></tr>
+<tr><th>9.     </th><th>Les produits nécessaires                         </th></tr>
+<tr><th>10.    </th><th>Installer les prérequis                          </th></tr>
+<tr><th>10.1.  </th><th>La configuration du système d'exploitation       </th></tr>
+<tr><th>10.2.  </th><th>L'installation de l'environnement Java           </th></tr>
+<tr><th>10.3.  </th><th>L'installation du langage Python                 </th></tr>
+<tr><th>10.4.  </th><th>L'installation du langage R                      </th></tr>
+<tr><th>10.5.  </th><th>La création des utilisateurs                     </th></tr>
+<tr><th>10.6.  </th><th>La configuration automatique des prérequis       </th></tr>
+<tr><th>11.    </th><th>Installer Apache Hadoop                          </th></tr>
+<tr><th>12.    </th><th>Installer Apache Spark                           </th></tr>
+<tr><th>12.1.  </th><th>L'installation des fichiers                      </th></tr>
+<tr><th>12.2.  </th><th>La configuration de l'environnement              </th></tr>
+<tr><th>12.3.  </th><th>Les environnements de commandes                  </th></tr>
+<tr><th>12.3.1.</th><th>L'environnement de commande Scala                </th></tr>
+<tr><th>12.3.2.</th><th>L'environnement de commande Python               </th></tr>
+<tr><th>12.3.3.</th><th>L'environnement de commande R                    </th></tr>
+<tr><th>12.4.  </th><th>L'installation et intégration avec Apache Hadoop </th></tr>
+<tr><th>13.    </th><th>Installer Apache Hive                            </th></tr>
+<tr><th>14.    </th><th>Installer Apache Zookeeper                       </th></tr>
+<tr><th>15.    </th><th>Installer Apache Kafka                           </th></tr>
+<tr><th>16.    </th><th>Installer Apache Zeppelin                        </th></tr>
+<tr><th>17.    </th><th>Configurer le démarrage et l'arrêt du cluster    </th></tr>
+<tr><th>17.1.  </th><th>Apache Hadoop                                    </th></tr>
+<tr><th>17.2.  </th><th>Jupyter Notebook                                 </th></tr>
+<tr><th>17.3.  </th><th>Apache Zeppelin                                  </th></tr>
+</table>
 
 
 
