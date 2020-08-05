@@ -1,6 +1,6 @@
 # 8.2.	Installer Apache Hadoop
 
-repGitHub=https://raw.githubusercontent.com/rbizoi/Spark-developper-pour-le-Big-Data/master/Chapitre-02/Scripts-Installation-Un-Serveur/01-Hadoop
+repGitHub=https://raw.githubusercontent.com/rbizoi/Spark-developper-pour-le-Big-Data/master/Chapitre-01/Scripts-Installation-Un-Serveur/01-Hadoop
 
 bash <(curl -s $repGitHub/01-installation-Hadoop.sh)
 
@@ -17,7 +17,7 @@ Les fichiers de configuration que on va modifier sont :
         •	yarn-site.xml
 
 
-repGitHub=https://raw.githubusercontent.com/rbizoi/Spark-developper-pour-le-Big-Data/master/Chapitre-02/Scripts-Installation-Un-Serveur/01-Hadoop
+repGitHub=https://raw.githubusercontent.com/rbizoi/Spark-developper-pour-le-Big-Data/master/Chapitre-01/Scripts-Installation-Un-Serveur/01-Hadoop
 
 bash <(curl -s $repGitHub/02-fichiers-environnement.sh)
 bash <(curl -s $repGitHub/03-core_site_xml.sh)
