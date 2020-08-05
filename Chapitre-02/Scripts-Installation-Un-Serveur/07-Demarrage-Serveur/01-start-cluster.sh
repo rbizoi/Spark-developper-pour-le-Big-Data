@@ -44,5 +44,5 @@ su -c /usr/share/spark/sbin/start-all.sh - spark
 sleep 5
 systemctl start zeppelin
 
-#systemctl start zookeeper
-#systemctl start kafka
+systemctl start zookeeper
+systemctl start kafka
