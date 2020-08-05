@@ -35,6 +35,9 @@ if [ ! -d "$REPERTOIRE" ]; then
     chown -R zeppelin:hadoop /var/run/zeppelin
 fi
 
+systemctl start zookeeper
+
+systemctl start kafka
 
 su -c /usr/share/hadoop/sbin/start-dfs.sh - hdfs
 sleep 60
@@ -43,6 +46,3 @@ sleep 5
 su -c /usr/share/spark/sbin/start-all.sh - spark
 sleep 5
 systemctl start zeppelin
-
-systemctl start zookeeper
-systemctl start kafka
