@@ -1,4 +1,9 @@
+
+
 # Spark développer pour le Big Data
+<img src="https://github.com/rbizoi/Spark-developper-pour-le-Big-Data/blob/master/images/presentation.png" width="280">
+
+
 
 ## L'écosystème Big Data Analytique
 
