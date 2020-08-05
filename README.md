@@ -13,7 +13,7 @@ Une architecture de type Big Data Analytique doit permettre d'ingérer, consolid
 La structure de la machine virtuelle.<br>
 
 <img src="https://github.com/rbizoi/Spark-developper-pour-le-Big-Data/blob/master/Chapitre-01/images/M01.07.png" width="512">
-
+text-align: left;
 <table>
 <tr><th>1.     </th><th>Le déluge de données                             </th></tr>
 <tr><th>2.     </th><th>Les systèmes de calcul distribué                 </th></tr>
