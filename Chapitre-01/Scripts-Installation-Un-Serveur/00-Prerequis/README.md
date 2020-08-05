@@ -1,4 +1,4 @@
-repGitHub=https://raw.githubusercontent.com/rbizoi/Spark-developper-pour-le-Big-Data/master/Chapitre-02/Scripts-Installation-Un-Serveur/00-Prerequis
+repGitHub=https://raw.githubusercontent.com/rbizoi/Spark-developper-pour-le-Big-Data/master/Chapitre-01/Scripts-Installation-Un-Serveur/00-Prerequis
 
 # 8.1.	Installer les prérequis
 ## 8.1.1.	La configuration du système d'exploitation
