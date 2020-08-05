@@ -14,10 +14,9 @@ mv apache-cassandra-4.0-beta1 cassandra
 mv cassandra /usr/share
 
 
-https://websiteforstudents.com/how-to-install-apache-cassandra-on-ubuntu-20-04-18-04/
-
 
 https://websiteforstudents.com/how-to-install-apache-cassandra-on-ubuntu-20-04-18-04/
+
 
 wget -q -O - https://www.apache.org/dist/cassandra/KEYS | sudo apt-key add -
 sudo sh -c 'echo "deb http://www.apache.org/dist/cassandra/debian 311x main" > /etc/apt/sources.list.d/cassandra.sources.list'
@@ -27,6 +26,27 @@ sudo apt install cassandra
 nodetool status
 cqlsh
 
+
+https://www.osradar.com/install-apache-cassandra-ubuntu-20-04/
+
+sudo apt update
+sudo apt upgrade
+sudo apt install wget curl gnupg gnupg1 gnupg2
+wget https://www.apache.org/dist/cassandra/KEYS
+sudo apt-key add KEYS
+echo "deb http://www.apache.org/dist/cassandra/debian 311x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+echo "deb http://www.apache.org/dist/cassandra/debian 40x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+sudo apt update
+sudo apt install cassandra
+sudo systemctl status cassandra
+
+/etc/cassandra/cassandra.yaml
+cluster_name : ['cluster_name']
+seeds: ["ip_address", "ip_address"]
+storage_port :[port]
+
+
+sudo systemctl restart cassandra
 
 
 
