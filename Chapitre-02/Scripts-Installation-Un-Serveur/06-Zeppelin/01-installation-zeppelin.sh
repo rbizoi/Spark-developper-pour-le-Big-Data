@@ -7,7 +7,6 @@ fi
 
 cd ~
 
-
 wget https://edef4.pcloud.com/cfZbVwv0ZIqIWJZvQYZZ76Qm37Z2ZZRR5ZZydJMU7Zp7ZJ7Z2ZuZqZ47ZTZtZaZQ7ZrZhZDZNZuFKRQgDk125Ch3HX85t2opvYmm5k/zeppelin-0.9.0-SNAPSHOT.tar.gz
 tar xzvf zeppelin-0.9.0-SNAPSHOT.tar.gz
 mv zeppelin-0.9.0-SNAPSHOT zeppelin
@@ -27,22 +26,12 @@ sudo chown -R zeppelin:hadoop /var/*/zeppelin
 
 ll /var/*/zeppelin
 
-
 cat << FIN_FICHIER > /etc/profile.d/zeppelin.sh
 #!/bin/bash
 # Configuration Zeppelin
 export ZEPPELIN_HOME=/usr/share/zeppelin
 export PATH=\$ZEPPELIN_HOME/bin:\$PATH
 FIN_FICHIER
-
-
-zeppelin-daemon.sh start
-zeppelin-daemon.sh start
-zeppelin-daemon.sh status
-zeppelin-daemon.sh restart
-zeppelin-daemon.sh stop
-
-sudo netstat -lnp | grep 9999
 
 cat <<FIN_FICHIER > /etc/systemd/system/zeppelin.service
 [Unit]
@@ -55,6 +44,7 @@ User=zeppelin
 Group=hadoop
 ExecStart=$ZEPPELIN_HOME/bin/zeppelin-daemon.sh start
 ExecStop=$ZEPPELIN_HOME/bin/zeppelin-daemon.sh stop
+ExecReload=$ZEPPELIN_HOME/bin/zeppelin-daemon.sh restart
 RemainAfterExit=yes
 
 [Install]
@@ -62,6 +52,6 @@ WantedBy=multi-user.target
 FIN_FICHIER
 
 # uniquement si le clauster est demmaré autrement il faut attendre
-# il necessite la création des répértoires 
+# il necessite la création des répértoires
 systemctl start zeppelin
 systemctl disable zeppelin
