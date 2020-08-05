@@ -79,6 +79,6 @@ WantedBy=default.target
 FIN_FICHIER
 
 systemctl start zookeeper
-systemctl enable zookeeper
+systemctl disable zookeeper
 
 netstat -plnt | grep 2181
