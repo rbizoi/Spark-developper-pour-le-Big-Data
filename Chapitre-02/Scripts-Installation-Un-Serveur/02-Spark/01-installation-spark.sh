@@ -46,10 +46,10 @@ spark.yarn.am.cores                  1
 #--------------------------------------------------------------------------------
 spark.master                         yarn
 spark.driver.memory                  1g
-spark.executor.memory                2g
+spark.executor.memory                1g
 spark.executor.cores                 1
-spark.executor.instances             2
-spark.default.parallelism            2
+spark.executor.instances             1
+spark.default.parallelism            1
 #--------------------------------------------------------------------------------
 spark.eventLog.dir                   hdfs:///spark-history/
 spark.eventLog.enabled               true
