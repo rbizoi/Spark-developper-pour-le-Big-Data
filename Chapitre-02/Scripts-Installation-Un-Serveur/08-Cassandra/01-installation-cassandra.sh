@@ -12,3 +12,32 @@ tar xzvf apache-cassandra-4.0-beta1-bin.tar.gz
 rm -f apache-cassandra-4.0-beta1-bin.tar.gz
 mv apache-cassandra-4.0-beta1 cassandra
 mv cassandra /usr/share
+
+
+https://websiteforstudents.com/how-to-install-apache-cassandra-on-ubuntu-20-04-18-04/
+
+
+https://websiteforstudents.com/how-to-install-apache-cassandra-on-ubuntu-20-04-18-04/
+
+wget -q -O - https://www.apache.org/dist/cassandra/KEYS | sudo apt-key add -
+sudo sh -c 'echo "deb http://www.apache.org/dist/cassandra/debian 311x main" > /etc/apt/sources.list.d/cassandra.sources.list'
+sudo apt update
+sudo apt install cassandra
+
+nodetool status
+cqlsh
+
+
+
+
+
+https://www.howtoforge.com/how-to-install-and-use-mongodb-on-ubuntu-2004/
+
+apt-get install gnupg -y
+wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | apt-key add -
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-4.2.list
+apt-get update -y
+apt-get install mongodb-org -y
+systemctl start mongod
+systemctl enable mongod
+systemctl status mongod
