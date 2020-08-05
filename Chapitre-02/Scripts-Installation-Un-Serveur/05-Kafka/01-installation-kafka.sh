@@ -104,6 +104,6 @@ WantedBy=default.target
 FIN_FICHIER
 
 systemctl start kafka
-systemctl enable kafka
+systemctl disable kafka
 
 netstat -plnt | grep 9092
