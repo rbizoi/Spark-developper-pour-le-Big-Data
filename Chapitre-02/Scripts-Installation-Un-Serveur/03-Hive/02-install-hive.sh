@@ -9,7 +9,7 @@ cd ~
 
 export SPARK_HOME=/usr/share/spark
 
-cat <<FIN_FICHIER > $HIVE_HOME/conf/hive-env.sh
+cat <<FIN_FICHIER > $SPARK_HOME/conf/hive-env.sh
 export HADOOP_HOME=/usr/share/hadoop
 export HIVE_CONF_DIR=/usr/share/spark/conf
 FIN_FICHIER
