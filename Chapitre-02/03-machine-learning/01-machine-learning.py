@@ -5,7 +5,7 @@ from pyspark.ml.feature    import PCA, StandardScaler, VectorAssembler
 from pyspark.ml.linalg     import array
 
 
-donnees = spark.sql("select * from cours_spark.meteoMensuelle order by 1")
+donnees = spark.sql("select * from cours_spark.meteoMensuelle order by 1").cache()
 
 modelA = VectorAssembler().\
                 setInputCols(
@@ -30,6 +30,9 @@ modelKM = KMeans().setK(7).\
                    setFeaturesCol("vACP").\
                    setPredictionCol("vKM")
 
-modelPipe = Pipeline(stages=[modelA, modelN, modelACP, modelKM]).fit(donnees)
+modelPipe = Pipeline(stages=[modelA, modelN,
+              modelACP, modelKM]).fit(donnees)
 
-donneesKM.transform(donnees)
+donneesKM = modelPipe.transform(donnees)
+
+donneesKM.select("Ville","vKM").show(5)
