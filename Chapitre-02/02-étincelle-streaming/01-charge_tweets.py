@@ -7,12 +7,7 @@ import json
 
 from kafka import KafkaProducer
 
-access_token="2805078344-oWWMbHE0dWZ88Az1TMmu6HSSixNiU5Ve8Vr26XO"
-access_token_secret="9jSS05gIVsF8Q6fOuEdV0GcDqCIOGLQuteMdTOBO6dLnU"
-consumer_key="cmGaa6w8zv2YIPpWHaR52mKtG"
-consumer_secret="wDjQOhqgpraO3DKY95Vs5AFjV6FUNm5Cj5i6BWcGQfddUfui2E"
-
-producer = KafkaProducer(bootstrap_servers="localhost:9092")
+producer =  KafkaProducer ( bootstrap_servers = "localhost: 9092" )
 
 class StdOutListener(StreamListener):
 
