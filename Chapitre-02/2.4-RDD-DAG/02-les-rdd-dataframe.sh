@@ -28,5 +28,5 @@ schema = StructType([
 
 
 donneesStations = spark.createDataFrame(donnees, schema)
-donneesStations.show()
+donneesStations.show(3)
 exit()
