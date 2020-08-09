@@ -65,12 +65,19 @@ spark-shell \
 
 
 import org.apache.spark.sql.SparkSession
+
 def printConfigs(session: SparkSession) = {
-val mconf = session.conf.getAll
-for (k <- mconf.keySet) { println(s"${k} -> ${mconf(k)}") }
+  val mconf = session.conf.getAll
+  for (k <- mconf.keySet) {
+      if (k.matches("spark.executor.*"))
+           println(s"${k} -> ${mconf(k)}")
+    }
 }
 
 printConfigs(spark)
+
+
+
 
 spark.conf.set("spark.executor.cores",1)
 
