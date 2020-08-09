@@ -37,19 +37,16 @@ export SPARK_LOG_DIR=/var/log/spark/\$USER
 export SPARK_PID_DIR=/var/run/spark/\$USER
 FIN_FICHIER
 
+
+
 cat <<FIN_FICHIER > $SPARK_HOME/conf/spark-defaults.conf
 spark.serializer                     org.apache.spark.serializer.KryoSerializer
 spark.io.compression.lz4.blockSize   128kb
 #--------------------------------------------------------------------------------
 spark.yarn.jars                      hdfs:///spark-jars
-spark.yarn.am.cores                  1
 #--------------------------------------------------------------------------------
 spark.master                         yarn
-spark.driver.memory                  1g
-spark.executor.memory                1g
-spark.executor.cores                 1
-spark.executor.instances             1
-spark.default.parallelism            1
+spark.executor.cores                  1
 #--------------------------------------------------------------------------------
 spark.eventLog.dir                   hdfs:///spark-history/
 spark.eventLog.enabled               true
@@ -59,11 +56,34 @@ spark.history.fs.cleaner.interval    7d
 spark.history.fs.cleaner.maxAge      90d
 spark.history.fs.logDirectory        hdfs:///spark-history/
 #--------------------------------------------------------------------------------
-spark.deploy.defaultCores            4
-#spark.deploy.recoveryMode            ZOOKEEPER
-#spark.deploy.zookeeper.url           `hostname -f`:2181
-#spark.deploy.zookeeper.dir           /spark
 FIN_FICHIER
+
+#cat <<FIN_FICHIER > $SPARK_HOME/conf/spark-defaults.conf
+#spark.serializer                     org.apache.spark.serializer.KryoSerializer
+#spark.io.compression.lz4.blockSize   128kb
+##--------------------------------------------------------------------------------
+#spark.yarn.jars                      hdfs:///spark-jars
+##--------------------------------------------------------------------------------
+#spark.master                         yarn
+#spark.driver.memory                  1g
+#spark.executor.memory                1g
+#spark.executor.cores                 1
+##spark.executor.instances            1
+#spark.default.parallelism            8
+##--------------------------------------------------------------------------------
+#spark.eventLog.dir                   hdfs:///spark-history/
+#spark.eventLog.enabled               true
+##--------------------------------------------------------------------------------
+#spark.history.fs.cleaner.enabled     true
+#spark.history.fs.cleaner.interval    7d
+#spark.history.fs.cleaner.maxAge      90d
+#spark.history.fs.logDirectory        hdfs:///spark-history/
+##--------------------------------------------------------------------------------
+##spark.deploy.defaultCores            1
+##spark.deploy.recoveryMode           ZOOKEEPER
+##spark.deploy.zookeeper.url          `hostname -f`:2181
+##spark.deploy.zookeeper.dir          /spark
+#FIN_FICHIER
 
 cat <<FIN_FICHIER > $SPARK_HOME/conf/slaves
 jupiter.olimp.fr
