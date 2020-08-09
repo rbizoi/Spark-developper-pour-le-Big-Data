@@ -46,7 +46,9 @@ spark.io.compression.lz4.blockSize   128kb
 spark.yarn.jars                      hdfs:///spark-jars
 #--------------------------------------------------------------------------------
 spark.master                         yarn
-spark.executor.cores                  1
+spark.driver.memory                  1g
+spark.executor.cores                 1
+spark.executor.memory                1g
 #--------------------------------------------------------------------------------
 spark.eventLog.dir                   hdfs:///spark-history/
 spark.eventLog.enabled               true
