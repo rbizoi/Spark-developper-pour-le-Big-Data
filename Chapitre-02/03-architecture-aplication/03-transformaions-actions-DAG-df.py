@@ -14,12 +14,12 @@ spark.conf.get('spark.driver.memory'),\
       spark.conf.get('spark.executor.cores'),\
       spark.conf.get('spark.executor.memory')
 
-meteoDF00  = spark.read.format('csv') \
-      .option('sep',';')                   \
-      .option('mergeSchema', 'true')       \
-      .option('header','true')             \
-      .option('nullValue','mq')            \
-      .load('/user/spark/donnees/meteo.txt')   \
+meteoDF00  = spark.read.format('csv')         \
+      .option('sep',';')                      \
+      .option('mergeSchema', 'true')          \
+      .option('header','true')                \
+      .option('nullValue','mq')               \
+      .load('/user/spark/donnees/meteo.txt')  \
       .select('numer_sta', 'date', 't',
               'u', 'vv', 'pres') \
       .cache()
@@ -59,15 +59,13 @@ stationsDF00  = spark.read.format('csv') \
       .option('mergeSchema', 'true')       \
       .option('header','true')             \
       .option('nullValue','mq')            \
+      .option('inferSchema', 'true')          \
       .load('/user/spark/donnees/postesSynop.csv')   \
       .toDF('id','ville','latitude','longitude','altitude')\
       .cache()
 
 stationsDF01 = stationsDF00\
     .withColumn('ville',formatVilleUDF(stationsDF00['ville']))\
-    .withColumn('latitude',stationsDF00['latitude'].cast('double'))\
-    .withColumn('longitude',stationsDF00['longitude'].cast('double'))\
-    .withColumn('altitude',stationsDF00['altitude'].cast('int'))\
     .cache()
 
 stationsDF02 = stationsDF01.filter( stationsDF01.id < '08000').cache()
