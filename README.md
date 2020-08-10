@@ -21,40 +21,41 @@ La structure de la machine virtuelle.<br>
 <tr><th align="left">4.     </th><th align="left">Le système de traitements MapReduce              </th></tr>
 <tr><th align="left">5.     </th><th align="left">Les extensions MapReduce                         </th></tr>
 <tr><th align="left">6.     </th><th align="left">Le Big Data Analytique                           </th></tr>
-<tr><th align="left">6.1.   </th><th align="left">La découverte                                    </th></tr>
-<tr><th align="left">6.2.   </th><th align="left">La préparation des données                       </th></tr>
-<tr><th align="left">6.3.   </th><th align="left">La conception du modèle                          </th></tr>
-<tr><th align="left">6.4.   </th><th align="left">La construction du modèle                        </th></tr>
-<tr><th align="left">6.5.   </th><th align="left">Les résultats                                    </th></tr>
-<tr><th align="left">6.6.   </th><th align="left">La mise en production                            </th></tr>
+<tr><th align="left">6.1.   </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;La découverte                                    </th></tr>
+<tr><th align="left">6.2.   </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;La préparation des données                       </th></tr>
+<tr><th align="left">6.3.   </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;La conception du modèle                          </th></tr>
+<tr><th align="left">6.4.   </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;La construction du modèle                        </th></tr>
+<tr><th align="left">6.5.   </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;Les résultats                                    </th></tr>
+<tr><th align="left">6.6.   </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;La mise en production                            </th></tr>
 <tr><th align="left">7.     </th><th align="left">L’analyse de données en flux continu             </th></tr>
 <tr><th align="left">8.     </th><th align="left">L’installation                                   </th></tr>
 <tr><th align="left">9.     </th><th align="left">Les produits nécessaires                         </th></tr>
 <tr><th align="left">10.    </th><th align="left">Installer les prérequis                          </th></tr>
-<tr><th align="left">10.1.  </th><th align="left">La configuration du système d'exploitation       </th></tr>
-<tr><th align="left">10.2.  </th><th align="left">L'installation de l'environnement Java           </th></tr>
-<tr><th align="left">10.3.  </th><th align="left">L'installation du langage Python                 </th></tr>
-<tr><th align="left">10.4.  </th><th align="left">L'installation du langage R                      </th></tr>
-<tr><th align="left">10.5.  </th><th align="left">La création des utilisateurs                     </th></tr>
-<tr><th align="left">10.6.  </th><th align="left">La configuration automatique des prérequis       </th></tr>
+<tr><th align="left">10.1.  </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;La configuration du système d'exploitation       </th></tr>
+<tr><th align="left">10.2.  </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;L'installation de l'environnement Java           </th></tr>
+<tr><th align="left">10.3.  </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;L'installation du langage Python                 </th></tr>
+<tr><th align="left">10.4.  </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;L'installation du langage R                      </th></tr>
+<tr><th align="left">10.5.  </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;La création des utilisateurs                     </th></tr>
+<tr><th align="left">10.6.  </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;La configuration automatique des prérequis       </th></tr>
 <tr><th align="left">11.    </th><th align="left">Installer Apache Hadoop                          </th></tr>
 <tr><th align="left">12.    </th><th align="left">Installer Apache Spark                           </th></tr>
-<tr><th align="left">12.1.  </th><th align="left">L'installation des fichiers                      </th></tr>
-<tr><th align="left">12.2.  </th><th align="left">La configuration de l'environnement              </th></tr>
-<tr><th align="left">12.3.  </th><th align="left">Les environnements de commandes                  </th></tr>
-<tr><th align="left">12.3.1.</th><th align="left">L'environnement de commande Scala                </th></tr>
-<tr><th align="left">12.3.2.</th><th align="left">L'environnement de commande Python               </th></tr>
-<tr><th align="left">12.3.3.</th><th align="left">L'environnement de commande R                    </th></tr>
-<tr><th align="left">12.4.  </th><th align="left">L'installation et intégration avec Apache Hadoop </th></tr>
+<tr><th align="left">12.1.  </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;L'installation des fichiers                      </th></tr>
+<tr><th align="left">12.2.  </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;La configuration de l'environnement              </th></tr>
+<tr><th align="left">12.3.  </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;Les environnements de commandes                  </th></tr>
+<tr><th align="left">12.3.1.</th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L'environnement de commande Scala                </th></tr>
+<tr><th align="left">12.3.2.</th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L'environnement de commande Python               </th></tr>
+<tr><th align="left">12.3.3.</th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L'environnement de commande R                    </th></tr>
+<tr><th align="left">12.4.  </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;L'installation et intégration avec Apache Hadoop </th></tr>
 <tr><th align="left">13.    </th><th align="left">Installer Apache Hive                            </th></tr>
 <tr><th align="left">14.    </th><th align="left">Installer Apache Zookeeper                       </th></tr>
 <tr><th align="left">15.    </th><th align="left">Installer Apache Kafka                           </th></tr>
 <tr><th align="left">16.    </th><th align="left">Installer Apache Zeppelin                        </th></tr>
 <tr><th align="left">17.    </th><th align="left">Configurer le démarrage et l'arrêt du cluster    </th></tr>
-<tr><th align="left">17.1.  </th><th align="left">Apache Hadoop                                    </th></tr>
-<tr><th align="left">17.2.  </th><th align="left">Jupyter Notebook                                 </th></tr>
-<tr><th align="left">17.3.  </th><th align="left">Apache Zeppelin                                  </th></tr>
+<tr><th align="left">17.1.  </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;Apache Hadoop                                    </th></tr>
+<tr><th align="left">17.2.  </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;Jupyter Notebook                                 </th></tr>
+<tr><th align="left">17.3.  </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;Apache Zeppelin                                  </th></tr>
 </table>
+
 
 ## 02-L’architecture
 <table>
