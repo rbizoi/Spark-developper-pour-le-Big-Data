@@ -60,29 +60,30 @@ La structure de la machine virtuelle.<br>
 ## 02-L’architecture
 <table>
 <tr><th align="left">1.      </th><th align="left">Qu'est-ce que Spark ?                                 </th></tr>
-<tr><th align="left">1.1.    </th><th align="left">Spark SQL                                             </th></tr>
-<tr><th align="left">1.2.    </th><th align="left">Spark Streaming                                       </th></tr>
-<tr><th align="left">1.3.    </th><th align="left">Machine Learning                                      </th></tr>
-<tr><th align="left">1.4.    </th><th align="left">GraphX                                                </th></tr>
-<tr><th align="left">1.5.    </th><th align="left">Le Big Data Analytique Unifié                         </th></tr>
+<tr><th align="left">1.1.    </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;Spark SQL                                             </th></tr>
+<tr><th align="left">1.2.    </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;Spark Streaming                                       </th></tr>
+<tr><th align="left">1.3.    </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;Machine Learning                                      </th></tr>
+<tr><th align="left">1.4.    </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;GraphX                                                </th></tr>
+<tr><th align="left">1.5.    </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;Le Big Data Analytique Unifié                         </th></tr>
 <tr><th align="left">2.      </th><th align="left">L'architecture distribuée                             </th></tr>
-<tr><th align="left">2.1.    </th><th align="left">Spark Driver                                          </th></tr>
-<tr><th align="left">2.2.    </th><th align="left">Spark Session                                         </th></tr>
-<tr><th align="left">2.3.    </th><th align="left">Spark Manager                                         </th></tr>
-<tr><th align="left">2.4.    </th><th align="left">Spark Worker                                          </th></tr>
-<tr><th align="left">2.5.    </th><th align="left">Spark Executor                                        </th></tr>
-<tr><th align="left">2.6.    </th><th align="left">RDD et DAG                                            </th></tr>
-<tr><th align="left">2.6.1.  </th><th align="left">RDD                                                   </th></tr>
-<tr><th align="left">2.6.2.  </th><th align="left">Transformations                                       </th></tr>
-<tr><th align="left">2.6.3.  </th><th align="left">Actions                                               </th></tr>
-<tr><th align="left">2.6.4.  </th><th align="left">DAG                                                   </th></tr>
-<tr><th align="left">2.6.5.  </th><th align="left">La résolution des pannes                              </th></tr>
+<tr><th align="left">2.1.    </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;Spark Driver                                          </th></tr>
+<tr><th align="left">2.2.    </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;Spark Session                                         </th></tr>
+<tr><th align="left">2.3.    </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;Spark Manager                                         </th></tr>
+<tr><th align="left">2.4.    </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;Spark Worker                                          </th></tr>
+<tr><th align="left">2.5.    </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;Spark Executor                                        </th></tr>
+<tr><th align="left">2.6.    </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;RDD et DAG                                            </th></tr>
+<tr><th align="left">2.6.1.  </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RDD                                                   </th></tr>
+<tr><th align="left">2.6.2.  </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Transformations                                       </th></tr>
+<tr><th align="left">2.6.3.  </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Actions                                               </th></tr>
+<tr><th align="left">2.6.4.  </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DAG                                                   </th></tr>
+<tr><th align="left">2.6.5.  </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;La résolution des pannes                              </th></tr>
 <tr><th align="left">3.      </th><th align="left">L'architecture d'une application                      </th></tr>
-<tr><th align="left">3.1.    </th><th align="left">Spark Job                                             </th></tr>
-<tr><th align="left">3.2.    </th><th align="left">Spark Stage                                           </th></tr>
-<tr><th align="left">3.3.    </th><th align="left">Spark Task                                            </th></tr>
+<tr><th align="left">3.1.    </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;Spark Job                                             </th></tr>
+<tr><th align="left">3.2.    </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;Spark Stage                                           </th></tr>
+<tr><th align="left">3.3.    </th><th align="left">&nbsp;&nbsp;&nbsp;&nbsp;Spark Task                                            </th></tr>
 <tr><th align="left">4.      </th><th align="left">Transformations, Actions et DAG avec les DataFrames   </th></tr>
 </table>
+
 
 ## 03-La structure et les types de données
 
