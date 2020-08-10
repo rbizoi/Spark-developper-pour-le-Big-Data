@@ -21,12 +21,12 @@ La structure de la machine virtuelle.<br>
 <tr><th align="left">4.     </th><th align="left">Le système de traitements MapReduce              </th><th align="left"></th><th align="left"></th></tr>
 <tr><th align="left">5.     </th><th align="left">Les extensions MapReduce                         </th><th align="left"></th><th align="left"></th></tr>
 <tr><th align="left">6.     </th><th align="left">Le Big Data Analytique                           </th><th align="left"></th><th align="left"></th></tr>
-<tr><th align="left">6.1.   </th><th align="left"></th><th align="left"></th><th align="left">La découverte                                    </th></tr>
-<tr><th align="left">6.2.   </th><th align="left"></th><th align="left"></th><th align="left">La préparation des données                       </th></tr>
-<tr><th align="left">6.3.   </th><th align="left"></th><th align="left"></th><th align="left">La conception du modèle                          </th></tr>
-<tr><th align="left">6.4.   </th><th align="left"></th><th align="left"></th><th align="left">La construction du modèle                        </th></tr>
-<tr><th align="left">6.5.   </th><th align="left"></th><th align="left"></th><th align="left">Les résultats                                    </th></tr>
-<tr><th align="left">6.6.   </th><th align="left"></th><th align="left"></th><th align="left">La mise en production                            </th></tr>
+<tr><th align="left">6.1.   </th><th align="left"></th><th align="left">La découverte                                    </th><th align="left"></th></tr>
+<tr><th align="left">6.2.   </th><th align="left"></th><th align="left">La préparation des données                       </th><th align="left"></th></tr>
+<tr><th align="left">6.3.   </th><th align="left"></th><th align="left">La conception du modèle                          </th><th align="left"></th></tr>
+<tr><th align="left">6.4.   </th><th align="left"></th><th align="left">La construction du modèle                        </th><th align="left"></th></tr>
+<tr><th align="left">6.5.   </th><th align="left"></th><th align="left">Les résultats                                    </th><th align="left"></th></tr>
+<tr><th align="left">6.6.   </th><th align="left"></th><th align="left">La mise en production                            </th><th align="left"></th></tr>
 <tr><th align="left">7.     </th><th align="left"></th><th align="left"></th><th align="left">L’analyse de données en flux continu             </th></tr>
 <tr><th align="left">8.     </th><th align="left"></th><th align="left"></th><th align="left">L’installation                                   </th></tr>
 <tr><th align="left">9.     </th><th align="left"></th><th align="left"></th><th align="left">Les produits nécessaires                         </th></tr>
@@ -55,6 +55,7 @@ La structure de la machine virtuelle.<br>
 <tr><th align="left">17.2.  </th><th align="left"></th><th align="left"></th><th align="left">Jupyter Notebook                                 </th></tr>
 <tr><th align="left">17.3.  </th><th align="left"></th><th align="left"></th><th align="left">Apache Zeppelin                                  </th></tr>
 </table>
+
 ## 02-L’architecture
 <table>
 <tr><th align="left">1.      </th><th align="left">Qu'est-ce que Spark ?                                 </th></tr>
