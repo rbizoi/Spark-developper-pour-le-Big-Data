@@ -84,7 +84,6 @@ La structure de la machine virtuelle.<br>
 <tr><th align="left">4.      </th><th align="left">Transformations, Actions et DAG avec les DataFrames   </th></tr>
 </table>
 
-
 ## 03-La structure et les types de données
 
 ## 04-Les traitements et le flux de données
