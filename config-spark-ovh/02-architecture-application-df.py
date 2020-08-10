@@ -98,8 +98,11 @@ meteoDF05 = meteoDF04.groupBy('ville','annee')\
 
 meteoDF06 = meteoDF05.filter( stationsDF01.ville == 'Strasbourg-Entzheim').cache()
 
+meteoDF03.show(3)
 
-
+meteoDF06.select('annee','temperature',
+                 'humidite','visibilite','pression')\
+                 .show(25)
 
 
 
