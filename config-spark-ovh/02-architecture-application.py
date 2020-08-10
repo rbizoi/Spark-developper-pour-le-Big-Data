@@ -154,7 +154,7 @@ stationsDF00.\
 
 
 
-meteoDF01 = stationsDF00.select(
+meteo = stationsDF00.select(
                  meteoDataFrame['id'],
                  meteoDataFrame['ville'][0:4].cast('int') ,
                  meteoDataFrame['date'][5:2].cast('int'),
