@@ -1,8 +1,11 @@
 export PYSPARK_DRIVER_PYTHON=python3
 export PYSPARK_DRIVER_PYTHON_OPTS=''
-pyspark --master spark://jupiter.olimp.fr:7077
+pyspark --master spark://jupiter.olimp.fr:7077 \
+    --executor-cores 8 \
+    --executor-memory 20g
 
-spark.conf.set('spark.default.parallelism',1)
+
+spark.conf.set('spark.default.parallelism',8)
 spark.conf.get('spark.driver.memory'),\
       spark.conf.get('spark.executor.cores'),\
       spark.conf.get('spark.executor.memory'),\
@@ -15,7 +18,7 @@ from pyspark.sql.types import StructType, \
 from pyspark.sql.functions import avg,round
 
 def transformLigneMeteo(ligne):
-   champs = ligne.split(";")
+   champs = ligne.split(';')
    return ( str(champs[0]),
             (int(str(champs[1])[0:4]),
             int(str(champs[1])[4:6]),
@@ -26,7 +29,7 @@ def transformLigneMeteo(ligne):
             float(int(str(champs[20])) / 1000 )) )
 
 def transformLignePoste(ligne):
-    champs = ligne.split(";")
+    champs = ligne.split(';')
     return ( str(champs[0]),
             (str(champs[1]),
             float(champs[2]),
@@ -34,7 +37,7 @@ def transformLignePoste(ligne):
             int(champs[4])))
 
 donnees00 = spark.sparkContext. \
-       textFile('/user/spark/donnees/meteo.txt').\
+       textFile('/user/spark/donnees/meteo').\
        persist()
 
 donnees01 = donnees00.filter( lambda ligne :
@@ -76,7 +79,7 @@ donnees08 = donnees07.sortByKey().persist()
 
 donnees09 = donnees08.map(lambda ligne : tuple([ligne[0]] +
                            [x for x in ligne[1][0]] +
-                           [x for x in ligne[1][1]]) )
+                           [x for x in ligne[1][1]]) ).persist()
 
 schema = StructType([
             StructField('Id'           , StringType() , True),
@@ -93,16 +96,18 @@ schema = StructType([
             StructField('pression'     , FloatType()  , True)])
 
 donneesMeteo = spark.createDataFrame(donnees09, schema).cache()
-donneesMeteo12 = donneesMeteo.groupBy("ville").\
-                              pivot("mois").\
-                              agg(round(avg("temperature"),2)).\
-                              sort("ville").\
-                              toDF("Ville","Janvier","Février","Mars",
-                                   "Avril","Mai","Juin","Juillet","Août",
-                                   "Septembre","Octobre","Novembre","Décembre").\
-                              cache()
+donneesMeteo12 = donneesMeteo.groupBy('ville').\
+                      pivot('mois').\
+                      agg(round(avg('temperature'),2)).\
+                      sort('ville').\
+                      toDF('Ville','Jan','Fév','Mar',
+                      'Avr','Mai','Jun','Jul','Aoû',
+                      'Sep','Oct','Nov','Déc').\
+                      cache()
 
-spark.sql("use cours_spark")
-spark.sql("DROP TABLE IF EXISTS cours_spark.donneesMeteo12")
-donneesMeteo12.write.saveAsTable("donneesMeteo12")
-spark.sql("select * from cours_spark.donneesMeteo12 limit 10").show(10)
+#'Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'
+
+spark.sql('use cours_spark')
+spark.sql('DROP TABLE IF EXISTS cours_spark.donneesMeteo12')
+donneesMeteo12.write.saveAsTable('donneesMeteo12')
+spark.sql('select * from cours_spark.donneesMeteo12 limit 10').show(10)
