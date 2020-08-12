@@ -1,0 +1,18 @@
+
+
+
+
+data.strasbourg.eu
+
+
+# Localisation et occupation des stations de vélos en libre-service VELHOP
+curl https://data.strasbourg.eu/api/records/1.0/search/?dataset=stations-velhop&q=&facet=na | python -m json.tool
+
+# Parkings sur le territoire de l'Eurométropole
+curl https://data.strasbourg.eu/api/records/1.0/search/?dataset=parkings&q= | python -m json.tool
+
+
+
+
+
+curl -X GET --header 'Accept: application/json' 'https://data.strasbourg.eu/api/v2/catalog/metadata_templates' | python -m json.tool
