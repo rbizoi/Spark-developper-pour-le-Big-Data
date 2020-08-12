@@ -1,3 +1,6 @@
+//------------------------------------------------------------------
+// 1.1.5.	Création RDD
+//------------------------------------------------------------------
 import org.apache.spark.sql.SparkSession
 
 def printConfigs(session: SparkSession) = {
