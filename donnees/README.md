@@ -1,7 +1,35 @@
 https://raw.githubusercontent.com/rbizoi/Spark-developper-pour-le-Big-Data/master/donnees/livres
 
+https://opendata-reunion.edf.fr/explore/dataset/prod-electricite-temps-reel/information/?sort=date&dataChart=eyJxdWVyaWVzIjpbeyJjaGFydHMiOlt7InR5cGUiOiJsaW5lIiwiZnVuYyI6IkFWRyIsInlBeGlzIjoidG90YWwiLCJzY2llbnRpZmljRGlzcGxheSI6dHJ1ZSwiY29sb3IiOiIjNUU2MDYyIn0seyJ0eXBlIjoiYXJlYSIsImZ1bmMiOiJBVkciLCJ5QXhpcyI6Imh5ZHJhdWxpcXVlIiwic2NpZW50aWZpY0Rpc3BsYXkiOnRydWUsImNvbG9yIjoiIzAwNUJCQiJ9LHsidHlwZSI6ImFyZWEiLCJmdW5jIjoiQVZHIiwieUF4aXMiOiJ0aGVybWlxdWUiLCJzY2llbnRpZmljRGlzcGxheSI6dHJ1ZSwiY29sb3IiOiIjRkU1ODE1In0seyJ0eXBlIjoiYXJlYSIsImZ1bmMiOiJBVkciLCJ5QXhpcyI6ImJhZ2Fzc2VfY2hhcmJvbiIsInNjaWVudGlmaWNEaXNwbGF5Ijp0cnVlLCJjb2xvciI6IiM1MDlFMkYifSx7ImFsaWduTW9udGgiOnRydWUsInR5cGUiOiJhcmVhIiwiZnVuYyI6IkFWRyIsInlBeGlzIjoicGhvdG92b2x0YWlxdWVfYXZlY19zdG9ja2FnZSIsInNjaWVudGlmaWNEaXNwbGF5Ijp0cnVlLCJjb2xvciI6IiNGRkEwMkYifSx7InR5cGUiOiJhcmVhIiwiZnVuYyI6IkFWRyIsInlBeGlzIjoicGhvdG92b2x0YWlxdWUiLCJzY2llbnRpZmljRGlzcGxheSI6dHJ1ZSwiY29sb3IiOiIjRkZBMDJGIn0seyJ0eXBlIjoiYXJlYSIsImZ1bmMiOiJBVkciLCJ5QXhpcyI6ImVvbGllbiIsInNjaWVudGlmaWNEaXNwbGF5Ijp0cnVlLCJjb2xvciI6IiMwMDFBNzAifSx7ImFsaWduTW9udGgiOnRydWUsInR5cGUiOiJhcmVhIiwiZnVuYyI6IkFWRyIsInlBeGlzIjoiYmlvZ2F6Iiwic2NpZW50aWZpY0Rpc3BsYXkiOnRydWUsImNvbG9yIjoiI0JFRDYyRiJ9XSwieEF4aXMiOiJkYXRlIiwibWF4cG9pbnRzIjoiIiwidGltZXNjYWxlIjoiaG91ciIsInNvcnQiOiIiLCJzdGFja2VkIjoibm9ybWFsIiwiY29uZmlnIjp7ImRhdGFzZXQiOiJwcm9kLWVsZWN0cmljaXRlLXRlbXBzLXJlZWwiLCJvcHRpb25zIjp7InNvcnQiOiJkYXRlIn19fV0sInNpbmdsZUF4aXMiOnRydWUsImRpc3BsYXlMZWdlbmQiOnRydWUsImFsaWduTW9udGgiOnRydWV9
+
+https://dataratp.opendatasoft.com/page/temps-reel/
+
+https://data.strasbourg.eu/explore/?sort=modified
+
+https://www.cts-strasbourg.eu/fr/portail-open-data/
+
+https://data.strasbourg.eu/explore/dataset/bal_ems/download/?format=json&timezone=Europe/Berlin&lang=fr
 
 
+
+
+https://data.strasbourg.eu/explore/dataset/bal_ems/download/?format=json&timezone=Europe/Berlin&lang=fr
+
+--json
+
+Non-invasive Blood Pressure Estimation
+Vital signals and reference blood pressure values acquired from 26 subjects.
+https://www.kaggle.com/mkachuee/noninvasivebp
+
+Recipe Ingredients Dataset
+Use Recipe Ingredients to Categorize the Cuisine
+https://www.kaggle.com/kaggle/recipe-ingredients-dataset
+
+arXiv dataset and metadata of 1.7M+ scholarly papers across STEM
+https://www.kaggle.com/Cornell-University/arxiv
+
+
+-- csv
 
 OpenAddresses's goal is to connect the digital and physical worlds by sharing geographic coordinates, street names, house numbers and postal codes.
 https://www.kaggle.com/openaddresses/openaddresses-europe
@@ -10,8 +38,6 @@ Hard drive failure data and stats from 2019
 https://www.kaggle.com/jackywangkaggle/hard-drive-data-and-stats
 
 
-arXiv dataset and metadata of 1.7M+ scholarly papers across STEM
-https://www.kaggle.com/Cornell-University/arxiv
 
 
 MeteoNet North-West France
