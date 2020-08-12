@@ -4,26 +4,19 @@ https://raw.githubusercontent.com/rbizoi/Spark-developper-pour-le-Big-Data/maste
 
 
 OpenAddresses's goal is to connect the digital and physical worlds by sharing geographic coordinates, street names, house numbers and postal codes.
-
 https://www.kaggle.com/openaddresses/openaddresses-europe
 
 Hard drive failure data and stats from 2019
-
 https://www.kaggle.com/jackywangkaggle/hard-drive-data-and-stats
 
 
 arXiv dataset and metadata of 1.7M+ scholarly papers across STEM
-
 https://www.kaggle.com/Cornell-University/arxiv
-
 
 
 MeteoNet North-West France
 An Open Weather Dataset by METEO FRANCE
-
 https://www.kaggle.com/katerpillar/meteonet
-
-
 
 World Bank Climate Change Data
 From World Bank Open Data
