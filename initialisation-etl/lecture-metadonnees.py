@@ -38,14 +38,16 @@ user        = "spark"
 password    = "CoursSPARK3#"
 # ---------------------------------------------------------------------------------------------------------------------
 requette    = "select * from categories"
+listeTables = spark.read.parquet('donnees/etl/dictionnaireMetadonnees/Oracle/ListeTables.parquet').toPandas()
 
 for nom_table in listeTables.nom_table :
     donnees = spark.read.parquet(
                 'donnees/etl/stagiaire/Oracle/'+
                  nom_table+'.parquet')
     donnees.write.format('jdbc') \
-            .option('url', servername) \
+            .option('url', url) \
             .option('dbtable', nom_table.lower()) \
+            .option('truncate', True) \
             .option('user', user) \
             .option('password', password)\
             .save()
@@ -79,6 +81,3 @@ for nom_table in ['MAGASINS','MOUVEMENTS',
             .option('user', user) \
             .option('password', password)\
             .save()
-
-
-            
