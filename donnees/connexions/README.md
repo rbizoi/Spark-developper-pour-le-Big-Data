@@ -9,7 +9,8 @@
 ## Lieux ouverts au public de la catégorie "Sport" - Eurométropole de Strasbourg
 >> `url = "https://data.strasbourg.eu/api/records/1.0/search/?dataset=lieux_sport"`<br>
 
-## Lecture des données 
+## Lecture des données
+
 >>  `import json                                                                        `<br>
 >>  `import urllib.request                                                              `<br>
 >>  `url = "https://data.strasbourg.eu/api/records/1.0/search/?dataset=stations-velhop" `<br>
