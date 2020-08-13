@@ -1,41 +1,37 @@
-import org.apache.spark.sql.types.{ StructType, StructField,
-                                    FloatType , IntegerType,
-                                    StringType }
+case class typePosteSynop(
+                           Altitude:Long ,
+                           ID:String,
+                           Latitude:Double,
+                           Longitude:Double,
+                           Nom:String
+                         )
 
-val customSchemaMeteo = StructType(
-    StructField("id"        , StringType , true)::
-    StructField("ville"     , StringType , true)::
-    StructField("latitude"  , FloatType  , true)::
-    StructField("longitude" , FloatType  , true)::
-    StructField("altitude"  , IntegerType, true)::Nil )
-
-val stationsDF00  = spark.read.format("csv").
-      option("sep",";").
-      option("mergeSchema", "true").
-      option("header","true").
-      option("nullValue","mq").
-      schema(customSchemaMeteo).
-      load("/user/spark/donnees/postesSynop.csv").
-      cache()
+val stationsDF00  =  spark.read.json("donnees/json/postes-synop.json").as[typePosteSynop]
 stationsDF00.printSchema()
-val stationsDF01  = spark.read.format("csv").
-      option("sep",";").
-      option("mergeSchema", "true").
-      option("header","true").
-      option("nullValue","mq").
-      option("inferSchema", "true").
-      load("/user/spark/donnees/postesSynop.csv").
-      toDF("id","ville","latitude","longitude","altitude").
-      cache()
-stationsDF01.printSchema()
 
-val  customSchemaMeteo = "id STRING, ville STRING, latitude FLOAT, longitude FLOAT, altitude INT"
-val stationsDF02  = spark.read.format("csv").
-      option("sep",";").
-      option("mergeSchema", "true").
-      option("header","true").
-      option("nullValue","mq").
-      schema(customSchemaMeteo).
-      load("/user/spark/donnees/postesSynop.csv").
-      cache()
-stationsDF02.printSchema()
+val stationsDF01 = stationsDF00.map(l =>
+                  typePosteSynop(  l.Altitude ,
+                                    l.ID,
+                                    l.Latitude,
+                                    l.Longitude,
+                                    l.Nom.toLowerCase.split(' ').
+                                      map(_.capitalize).mkString(" ").
+                                      split('-').
+                                      map(_.capitalize).
+                                      mkString(" ") )
+                                    ).as[typePosteSynop]
+case class typeRPosteSynop(
+                            Nom:String,
+                            Altitude:Long ,
+                            Longitude:Double
+                         )
+stationsDF01.map(l =>
+                  typeRPosteSynop( l.Nom,
+                                   l.Altitude ,
+                                   l.Longitude)).
+             as[typeRPosteSynop].
+             filter( l => {l.Altitude > 400 && l.Longitude > 3 }).show()
+
+stationsDF01.select( $"Nom", $"Altitude", $"Longitude").
+        where("Altitude > 400").
+        where("Longitude > 3").show()
