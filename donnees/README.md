@@ -10,11 +10,6 @@ https://www.cts-strasbourg.eu/fr/portail-open-data/
 
 https://data.strasbourg.eu/explore/dataset/bal_ems/download/?format=json&timezone=Europe/Berlin&lang=fr
 
-
-
-
-https://data.strasbourg.eu/explore/dataset/bal_ems/download/?format=json&timezone=Europe/Berlin&lang=fr
-
 --json
 
 Non-invasive Blood Pressure Estimation
