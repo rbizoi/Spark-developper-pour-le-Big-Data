@@ -4,8 +4,6 @@ https://opendata-reunion.edf.fr/explore/dataset/prod-electricite-temps-reel/info
 
 https://dataratp.opendatasoft.com/page/temps-reel/
 
-https://data.strasbourg.eu/explore/?sort=modified
-
 https://www.cts-strasbourg.eu/fr/portail-open-data/
 
 https://data.strasbourg.eu/explore/dataset/bal_ems/download/?format=json&timezone=Europe/Berlin&lang=fr
