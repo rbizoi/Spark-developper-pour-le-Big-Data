@@ -35,3 +35,8 @@ stationsDF01.map(l =>
 stationsDF01.select( $"Nom", $"Altitude", $"Longitude").
         where("Altitude > 400").
         where("Longitude > 3").show()
+
+val stationsDF02 = stationsDF01.toDF()
+stationsDF02.select( $"Nom", $"Altitude", $"Longitude").
+        where("Altitude > 400").
+        where("Longitude > 3").show()
