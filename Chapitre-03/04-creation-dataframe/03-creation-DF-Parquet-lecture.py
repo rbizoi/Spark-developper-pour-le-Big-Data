@@ -10,7 +10,17 @@ drwxr-xr-x   - spark hdfs          0 2020-08-12 16:09 donnees/etl/dictionnaireMe
 drwxr-xr-x   - spark hdfs          0 2020-08-12 16:09 donnees/etl/dictionnaireMetadonnees/Oracle/ListeTables.parquet
 drwxr-xr-x   - spark hdfs          0 2020-08-12 16:09 donnees/etl/dictionnaireMetadonnees/Oracle/ListeTablesColonnees.parquet
 
+repertoire = '/'
 fichier = 'donnees/etl/stagiaire/Oracle/EMPLOYES.parquet'
+format  = 'parquet'
+
+
+
+donnees.write.mode("overwrite").format(format).save('donnees/etl/stagiaire/Oracle/EMPLOYES.delta')
+donnees01 = spark.read.format(format).load(fichier)
+
+
+
 donnees = spark.read.parquet(fichier)
 donnees.select("titre","nom","prenom",).show(10,False)
 
