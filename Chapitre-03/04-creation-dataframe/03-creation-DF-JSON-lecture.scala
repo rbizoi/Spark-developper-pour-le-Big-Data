@@ -24,3 +24,4 @@ val parkingStras02  = spark.read.format("json").
       cache()
 
 parkingStras02.printSchema()
+parkingStras02.select ("nom_parking","libre","total").show(3)
