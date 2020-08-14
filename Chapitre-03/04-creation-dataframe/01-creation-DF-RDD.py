@@ -31,7 +31,7 @@ donnees00 = spark.sparkContext \
                   transformLigneMeteo(ligne))\
         .persist()
 
-donnees01 = spark.sparkContext.\
+donnees01 = spark.sparkContext\
        .textFile('/user/spark/donnees/postesSynop.csv')\
        .filter( lambda ligne :
                  str(ligne)[0].isdigit() )\
