@@ -1,15 +1,8 @@
-pyspark \
-    --master spark://jupiter.olimp.fr:7077 \
-    --executor-cores 8 \
-    --executor-memory 20g \
-    --packages io.delta:delta-core_2.12:0.7.0
-
-
 from pyspark.sql import SparkSession
 
 spark = SparkSession.builder\
           .config("spark.jars.packages",
-                         "io.delta:delta-core_2.12:0.7.0") \
+                         "io.delta:delta-core_2.12:0.8.0") \
           .config("spark.sql.extensions",
                          "io.delta.sql.DeltaSparkSessionExtension")\
           .getOrCreate()
@@ -26,6 +19,6 @@ fichiers   = ['ACHETEURS','ADRESSES','AGENCES','CATEGORIES',
 
 for nom in fichiers :
     donnees = spark.read.format('parquet'
-                         ).load(repertoire+nom+'.parquet').cache()
+                         ).load(repertoire+nom+'_parquet').cache()
     donnees.write.mode('overwrite').format('delta'
                          ).save('donnees/delta/'+nom+'_delta')
