@@ -16,9 +16,21 @@ password   = 'CoursNFP107!'
 listeValeurs = spark.read \
             .format('jdbc') \
             .option('url', url) \
+            .option('dbtable', 'categories')\
+            .option('user', user) \
+            .option('password', password)\
+            .option('driver', 'com.microsoft.sqlserver.jdbc.SQLServerDriver')\
+            .load()\
+            .show(3)
+
+format = "com.microsoft.sqlserver.jdbc.spark"
+requette   = 'select titre, nom, prenom from employes'
+listeValeurs = spark.read \
+            .format(format) \
+            .option('url', url) \
             .option('query', requette) \
             .option('user', user) \
             .option('password', password)\
             .option('driver', 'com.microsoft.sqlserver.jdbc.SQLServerDriver')\
             .load()\
-            .show()
+            .show(3)
