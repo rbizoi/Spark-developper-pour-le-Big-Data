@@ -1,8 +1,8 @@
-pyspark \
-    --master spark://jupiter.olimp.fr:7077 \
-    --executor-cores 8 \
-    --executor-memory 20g \
-    --packages mysql:mysql-connector-java:8.0.20
+# pyspark \
+#    --master spark://jupiter.olimp.fr:7077 \
+#    --executor-cores 8 \
+#    --executor-memory 20g \
+#    --packages mysql:mysql-connector-java:8.0.20
 
 url  = "jdbc:mysql://jupiter.olimp.fr:3306/cours?serverTimezone=UTC#"
 user        = "spark"
