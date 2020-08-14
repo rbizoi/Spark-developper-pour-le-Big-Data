@@ -3,7 +3,7 @@ import org.apache.spark.sql.SparkSession
 
 val spark = SparkSession.builder.
           config("spark.jars.packages",
-                         "io.delta:delta-core_2.12:0.7.0").
+                         "io.delta:delta-core_2.12:0.8.0").
           config("spark.sql.extensions",
                          "io.delta.sql.DeltaSparkSessionExtension").
           getOrCreate()
@@ -15,8 +15,8 @@ val format     = "delta"
 val repertoire = "donnees/delta/"
 
 val donnees = spark.read.format("delta").load(
-                "donnees/delta/FOURNISSEURS_delta").cache()
-                
+                "donnees/delta/FOURNISSEURS_delta")
+
 donnees.write.format("jdbc").
         option("url", url).
         option("dbtable", "FOURNISSEURS").
@@ -24,25 +24,12 @@ donnees.write.format("jdbc").
         option("password", password).
         save()
 
-
-
-
-
-val donnees00 = spark.read.
-                      format("jdbc").
-                      option("url", url).
-                      option("dbtable", "categories").
-                      option("user", user).
-                      option("password", password).
-                      load()
-
-donnees00.show(3)
-
-val requette    = "select titre,nom,prenom from employes"
-val donnees01 = spark.read \
-        .format("jdbc") \
-        .option("url", url) \
-        .option("query", requette) \
-        .option("user", user) \
-        .option("password", password).load()
-val donnees01.show(3)
+spark.read.
+        format("jdbc").
+        option("url", url).
+        option("dbtable", "FOURNISSEURS").
+        option("user", user).
+        option("password", password).
+        load().
+        select("SOCIETE","TELEPHONE").
+        show(3)
