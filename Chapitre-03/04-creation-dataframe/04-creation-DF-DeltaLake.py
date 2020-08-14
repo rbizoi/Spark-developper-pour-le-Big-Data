@@ -16,11 +16,7 @@ donnees01 = spark.read.format('delta').load('donnees/etl/stagiaire/Oracle/EMPLOY
 url  = "jdbc:mysql://jupiter.olimp.fr:3306/cours?serverTimezone=UTC#"
 user        = "spark"
 password    = "CoursSPARK3#"
-
-
-formatDictionnaire     = "parquet"
-
-
+format     = "parquet"
 
 donnees00 = spark.read \
         .format("jdbc") \
