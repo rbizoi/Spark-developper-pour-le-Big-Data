@@ -7,7 +7,7 @@ meteoDF00  = spark.read.format('csv')         \
       .option('mergeSchema', 'true')          \
       .option('header','true')                \
       .option('nullValue','mq')               \
-      .option("inferSchema", "true")           \
+      .option("inferSchema", "true")          \
       .load('/user/spark/donnees/meteo.txt')  \
       .select('numer_sta', 'date', 't',
               'u', 'vv', 'pres') \
@@ -15,7 +15,6 @@ meteoDF00  = spark.read.format('csv')         \
 
 meteoDF00.printSchema()
 meteoDF00.show(3)
-
 
 schema = StructType([
         StructField('Id'           , StringType() , True),
@@ -32,5 +31,13 @@ postesDF00  = spark.read.format('csv')   \
       .load('/user/spark/donnees/postesSynop.csv')  \
       .cache()
 
-meteoDF00.printSchema()
-meteoDF00.select('ville','altitude').show(3)
+postesDF00.printSchema()
+postesDF00.select('ville','altitude').show(3)
+
+fichier = '/user/spark/donnees/postesSynop_csv'
+format  = 'csv'
+postesDF00.write.mode('overwrite').format(format).save(fichier)
+
+
+
+postesDF00.
