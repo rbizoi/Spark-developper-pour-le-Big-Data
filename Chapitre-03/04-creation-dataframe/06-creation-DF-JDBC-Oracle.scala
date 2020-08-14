@@ -22,6 +22,7 @@ donnees.write.format("jdbc").
         option("dbtable", "FOURNISSEURS").
         option("user", user).
         option("password", password).
+        option("driver", "oracle.jdbc.OracleDriver").
         save()
 
 spark.read.
@@ -30,6 +31,7 @@ spark.read.
         option("dbtable", "FOURNISSEURS").
         option("user", user).
         option("password", password).
+        option("driver", "oracle.jdbc.OracleDriver").
         load().
         select("SOCIETE","TELEPHONE").
         show(3)
