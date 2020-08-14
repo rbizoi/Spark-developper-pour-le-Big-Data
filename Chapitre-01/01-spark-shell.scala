@@ -1,4 +1,5 @@
 import org.apache.spark.sql.functions._
+
 val parseVille: (String => String) = (arg: String) =>
      {arg.toLowerCase.split(' ').
      map(_.capitalize).mkString(" ").
