@@ -2,8 +2,10 @@ repGitHub=https://raw.githubusercontent.com/rbizoi/Spark-developper-pour-le-Big-
 
 cd $SPARK_HOME/jars
 wget $repGitHub/delta-core_2.12-0.8.0-SNAPSHOT.jar
-wget $repGitHub/spark-mssql-connector_2.12-1.0.0.jar
+wget $repGitHub/ojdbc8.jar
 wget $repGitHub/postgresql-42.2.10.jar
+
+wget $repGitHub/spark-mssql-connector_2.12-1.0.0.jar
 
 
 hdfs dfs -put postgresql-42.2.10.jar /spark-jars
