@@ -9,7 +9,7 @@ spark = SparkSession.builder\
           .config('spark.jars.packages',
                          'mysql:mysql-connector-java:8.0.20') \
           .config('spark.jars.packages',
-                         'io.delta:delta-core_2.12:0.7.0') \
+                         'io.delta:delta-core_2.12:0.8.0') \
           .config('spark.sql.extensions',
                          'io.delta.sql.DeltaSparkSessionExtension')\
           .getOrCreate()
