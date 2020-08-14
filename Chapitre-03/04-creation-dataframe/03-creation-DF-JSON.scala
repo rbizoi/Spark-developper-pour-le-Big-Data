@@ -12,7 +12,7 @@ val customSchema = StructType(
 val parkingStras01  = spark.read.format("json").
       option("mergeSchema", "true").
       option("inferSchema", "true").
-      load("/user/spark/donnees/json/parking_stras.json").
+      load("/user/spark/donnees/json/parking_stras_json").
       cache()
 
 parkingStras01.printSchema()
@@ -20,7 +20,7 @@ parkingStras01.printSchema()
 val parkingStras02  = spark.read.format("json").
       option("mergeSchema", "true").
       schema(customSchema).
-      load("/user/spark/donnees/json/parking_stras.json").
+      load("/user/spark/donnees/json/parking_stras_json").
       cache()
 
 parkingStras02.printSchema()
