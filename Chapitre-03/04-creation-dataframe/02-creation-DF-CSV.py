@@ -37,7 +37,3 @@ postesDF00.select('ville','altitude').show(3)
 fichier = '/user/spark/donnees/postesSynop_csv'
 format  = 'csv'
 postesDF00.write.mode('overwrite').format(format).save(fichier)
-
-
-
-postesDF00.
