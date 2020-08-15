@@ -1,3 +1,9 @@
+pyspark \
+    --master spark://jupiter.olimp.fr:7077 \
+    --executor-cores 8 \
+    --executor-memory 20g \
+    --jars /usr/share/spark/jars/mysql-connector-java-8.0.20.jar
+
 from pyspark.sql import SparkSession
 
 spark = SparkSession.builder\
@@ -34,3 +40,12 @@ listeValeurs = spark.read \
             .option('driver', 'com.microsoft.sqlserver.jdbc.SQLServerDriver')\
             .load()\
             .show(3)
+
+
+
+
+        delta-core_2.12-0.8.0-SNAPSHOT.jar
+        derby-10.12.1.1.jar
+        mysql-connector-java-8.0.20.jar
+        spark-mssql-connector_2.12-1.0.0.jar
+        put("driver", "com.microsoft.sqlserver.jdbc.SQLServerDriver")
