@@ -4,7 +4,6 @@ from pyspark.sql.types import StructType, \
 
 meteoDF00  = spark.read.format('csv')         \
       .option('sep',';')                      \
-      .option('mergeSchema', 'true')          \
       .option('header','true')                \
       .option('nullValue','mq')               \
       .option("inferSchema", "true")          \
@@ -15,6 +14,21 @@ meteoDF00  = spark.read.format('csv')         \
 
 meteoDF00.printSchema()
 meteoDF00.show(3)
+
+meteoDF01  = spark.read.format('csv')         \
+      .option('sep',';')                      \
+      .option('header','true')                \
+      .option('nullValue','mq')               \
+      .option("inferSchema", "true")          \
+      .option("path", "/user/spark/donnees/meteo")  \
+      .load()  \
+      .select('numer_sta', 'date', 't',
+              'u', 'vv', 'pres') \
+      .cache()
+
+meteoDF01.printSchema()
+meteoDF01.show(3)
+
 
 schema = StructType([
         StructField('Id'           , StringType() , True),
