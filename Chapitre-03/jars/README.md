@@ -27,3 +27,18 @@ intelij pour la première fois a besoin d'initialiser JDK
 configurer build.sbt et pom.xml pour scala 1.12.11 et spark 3.0.0
 sbt> package
 ls -al target/scala-1.12
+
+
+
+
+#    --jars /usr/share/spark/jars/mssql-jdbc-8.4.0.jre8.jar
+
+
+
+
+delta-core_2.12-0.8.0-SNAPSHOT.jar
+derby-10.12.1.1.jar
+mysql-connector-java-8.0.20.jar
+ojdbc8.jar
+
+spark-mssql-connector_2.12-1.0.0.jar
