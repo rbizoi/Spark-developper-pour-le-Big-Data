@@ -1,8 +1,9 @@
-# pyspark \
+#pyspark \
 #    --master spark://jupiter.olimp.fr:7077 \
 #    --executor-cores 8 \
 #    --executor-memory 20g \
-#    --packages mysql:mysql-connector-java:8.0.20
+#    --jars /usr/share/spark/jars/mssql-jdbc-8.4.0.jre8.jar
+
 from pyspark.sql import SparkSession
 
 spark = SparkSession.builder\
