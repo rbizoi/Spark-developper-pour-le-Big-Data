@@ -3,7 +3,6 @@
 #    --executor-cores 8 \
 #    --executor-memory 20g \
 #    --jars /usr/share/spark/jars/postgresql-42.2.14.jar
-
 from pyspark.sql import SparkSession
 
 spark = SparkSession.builder\
@@ -18,7 +17,6 @@ spark = SparkSession.builder\
 url        = 'jdbc:postgresql://192.168.1.25:5432/cours'
 user       = 'stagiaire'
 password   = 'CoursNFP107!'
-
 format     = 'delta'
 repertoire = 'donnees/delta/'
 nom_table   = 'VILLES'
@@ -31,6 +29,16 @@ donnees.write.format('jdbc') \
         .option('user', user) \
         .option('password', password)\
         .save()
+
+spark.read \
+        .format('jdbc') \
+        .option('url', url) \
+        .option('dbtable', 'villes') \
+        .option('user', user) \
+        .option('password', password)\
+        .load()\
+        .select('VILLE','PROVINCE','PAYS')\
+        .show(5)
 
 spark.read \
         .format('jdbc') \
