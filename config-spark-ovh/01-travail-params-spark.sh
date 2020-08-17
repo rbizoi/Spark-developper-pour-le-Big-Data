@@ -1,6 +1,4 @@
-
 stop-all.sh
-
 
 cat <<FIN_FICHIER > $SPARK_HOME/conf/spark-defaults.conf
 spark.serializer                     org.apache.spark.serializer.KryoSerializer
