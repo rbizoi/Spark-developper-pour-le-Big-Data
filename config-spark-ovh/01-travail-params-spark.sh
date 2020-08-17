@@ -18,7 +18,6 @@ spark.history.fs.logDirectory        hdfs:///spark-history/
 #--------------------------------------------------------------------------------
 FIN_FICHIER
 
-
 cat <<FIN_FICHIER > $SPARK_HOME/conf/spark-defaults.conf
 spark.serializer                     org.apache.spark.serializer.KryoSerializer
 spark.io.compression.lz4.blockSize   128kb
