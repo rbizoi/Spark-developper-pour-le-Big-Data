@@ -1,0 +1,184 @@
+#-----------------------------------------------------------------------------------------------
+# 8.1.	Installer les prérequis
+#-----------------------------------------------------------------------------------------------
+# 8.1.1.	La configuration du système d'exploitation
+#-----------------------------------------------------------------------------------------------
+
+apt-get install -y ssh pdsh ntp supervisor xrdp \
+                   gdebi-core build-essential software-properties-common \
+                   curl gdebi net-tools wget dirmngr apt-transport-https \
+                   texlive-latex-base libxml2-dev  git git-core libtool \
+                   automake uuid-dev g++ gcc-multilib libtool-bin cmake tree \
+                   python3-pip python3-venv libcurl4-openssl-dev libssl-dev \
+                   texlive cifs-utils smbclient nano vim screen
+
+systemctl stop ufw
+systemctl disable ufw
+
+cat /etc/hosts |grep jupiter
+nslookup jupiter.olimp.fr
+cat /etc/ssh/sshd_config |grep Port
+ping -c 1 `hostname -f`
+exit
+
+ssh jupiter.olimp.fr
+
+#-----------------------------------------------------------------------------------------------
+# 8.1.2.	L'installation du Java
+#-----------------------------------------------------------------------------------------------
+
+apt-get install -y openjdk-8-jdk-headless maven
+java -version
+mvn -version
+
+cat << FIN_FICHIER > /etc/profile.d/java_dev.sh
+#!/bin/bash
+# Configuration Outils
+export M2_HOME=/usr/share/maven
+export MAVEN_HOME=/usr/share/maven
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export JRE_HOME=\$JAVA_HOME/jre
+export MAVEN_OPTS="-Xmx4g -XX:ReservedCodeCacheSize=2g"
+export PATH=\$M3_HOME/bin:\$SCALA_HOME/bin:\$JAVA_HOME/bin:\$PATH
+FIN_FICHIER
+
+. /etc/profile.d/java_dev.sh
+env | grep -E "JAVA_HOME|JRE_HOME|M2_HOME|MAVEN|MAVEN_OPTS|PATH"
+
+#-----------------------------------------------------------------------------------------------
+# 8.1.3.	L'installation du langage Python
+#-----------------------------------------------------------------------------------------------
+
+update-alternatives --install \
+        /usr/bin/python python \
+        /usr/bin/python3.8 1
+
+pip3 install flask findspark spylon-kernel \
+       pyhive pyhadoop ipython jupyter py4j koalas mlflow \
+       bokeh catboost curl cython cytoolz dask dask-core \
+       flask graphframes graphviz html5lib matplotlib nltk \
+       numpy pandas pyarrow pycurl plotly scikit-learn \
+       scipy seaborn tensorflow keras kafka
+
+
+#-----------------------------------------------------------------------------------------------
+# 8.1.4.	L'installation du langage R
+#-----------------------------------------------------------------------------------------------
+
+apt-get install r-base r-base-dev -y
+R
+install.packages(c('knitr', 'rmarkdown', 'devtools',
+    'testthat', 'tidyverse', 'googleVis', 'data.table',
+    'caret', 'caretEnsemble', 'factoextra', 'FactoMineR',
+    'Factoshiny', 'gridExtra', 'survival', 'qpdf'))
+
+q('yes')
+
+
+
+#-----------------------------------------------------------------------------------------------
+# 8.1.5.	La création des utilisateurs
+#-----------------------------------------------------------------------------------------------
+
+
+nrid=54000
+
+for nom in "hadoop" "hdfs" "hive" "zookeeper" "spark" "kafka" "zeppelin"
+do
+   `printf "groupadd -g %5d %s\n" $nrid $nom`
+   ((nrid++))
+done
+
+nrid=54001
+for nom in "hdfs" "hive" "zookeeper" "spark" "kafka" "zeppelin"
+do
+   `printf "useradd %s --uid %5d --home /home/%s/ --create-home --gid hadoop --groups hadoop,hdfs,hive,zookeeper,spark,kafka,zeppelin,sudo --shell /bin/bash \n" $nom $nrid $nom`
+   ((nrid++))
+done
+
+pass=CoursSPARK#
+for nom in "hdfs" "hive" "zookeeper" "spark" "kafka" "zeppelin"
+do
+    `echo -e "$pass\n$pass"|passwd $nom`
+done
+
+for nom in "hdfs" "hive" "zookeeper" "spark" "kafka" "zeppelin"
+do
+    `mkdir -p /usr/share/$nom`
+     chown -R hdfs:hadoop /usr/share/hadoop
+done
+
+
+mkdir -p /usr/share/hadoop
+mkdir -p /usr/share/hive
+mkdir -p /usr/share/spark
+mkdir -p /usr/share/kafka
+mkdir -p /usr/share/zookeeper
+mkdir -p /usr/share/zeppelin
+chown -R hdfs:hadoop      /usr/share/hadoop
+chown -R hive:hadoop      /usr/share/hive
+chown -R spark:hadoop     /usr/share/spark
+chown -R kafka:hadoop     /usr/share/kafka
+chown -R zookeeper:hadoop /usr/share/zookeeper
+chown -R zeppelin:hadoop  /usr/share/zeppelin
+
+chmod -R 755 /u01
+mkdir -p /u01/hadoop/hdfs/namenode
+mkdir -p /u01/hadoop/hdfs/checkpoint
+mkdir -p /u01/hadoop/hdfs/journalnode
+mkdir -p /u01/hadoop/hdfs/datanode
+mkdir -p /u01/hadoop/hdfs/nodemanager
+mkdir -p /u01/hadoop/hdfs/recovery
+chown -R hdfs:hadoop /u01/hadoop
+
+#-----------------------------------------------------------------------------------------------
+CoursSPARK#
+
+su - hadoop
+/usr/bin/ssh-keygen -t rsa -f ~/.ssh/id_rsa -N '' -P ''
+/usr/bin/ssh-copy-id -i ~/.ssh/id_rsa.pub jupiter.olimp.fr
+ssh jupiter date
+exit
+su - hive
+/usr/bin/ssh-keygen -t rsa -f ~/.ssh/id_rsa -N '' -P ''
+/usr/bin/ssh-copy-id -i ~/.ssh/id_rsa.pub jupiter.olimp.fr
+ssh jupiter date
+exit
+su - spark
+/usr/bin/ssh-keygen -t rsa -f ~/.ssh/id_rsa -N '' -P ''
+/usr/bin/ssh-copy-id -i ~/.ssh/id_rsa.pub jupiter.olimp.fr
+ssh jupiter date
+exit
+su - kafka
+/usr/bin/ssh-keygen -t rsa -f ~/.ssh/id_rsa -N '' -P ''
+/usr/bin/ssh-copy-id -i ~/.ssh/id_rsa.pub jupiter.olimp.fr
+ssh jupiter date
+exit
+su - zookeeper
+/usr/bin/ssh-keygen -t rsa -f ~/.ssh/id_rsa -N '' -P ''
+/usr/bin/ssh-copy-id -i ~/.ssh/id_rsa.pub jupiter.olimp.fr
+ssh jupiter date
+exit
+su - zeppelin
+/usr/bin/ssh-keygen -t rsa -f ~/.ssh/id_rsa -N '' -P ''
+/usr/bin/ssh-copy-id -i ~/.ssh/id_rsa.pub jupiter.olimp.fr
+
+
+cat /home/*/.ssh/authorized_keys \
+             |grep @jupiter.olimp.fr
+
+
+echo "Les variables prérequis système"
+env | grep -E "JAVA_HOME|JRE_HOME|M2_HOME|MAVEN|MAVEN_OPTS|PATH"
+echo "Les variables Hadoop"
+env | grep -E "PDSH_RCMD_TYPE|HADOOP_HOME|HADOOP_CONF_DIR|HADOOP_YARN_HOME"
+echo "Les variables SPARK"
+env | grep -E "SPARK_HOME|PYSPARK_PYTHON|PYSPARK_DRIVER_PYTHON|PYSPARK_DRIVER_PYTHON_OPTS"
+echo "Les variables HIVE"
+env | grep -E "HIVE_HOME|HIVE_CONF_DIR"
+echo "Les variables Zookeeper"
+env | grep -E "ZOOKEEPER_HOME|ZOOKEEPER_HOSTS"
+echo "Les variables Kafka"
+env | grep -E "KAFKA_HOME|KAFKA_MANAGER_HOME"
+echo "Les variables Zeppelin"
+env | grep -E "ZEPPELIN_HOME"
