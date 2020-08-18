@@ -1,4 +1,4 @@
-repGitHub=https://raw.githubusercontent.com/rbizoi/Spark-developper-pour-le-Big-Data/master/Chapitre-03/jars
+repGitHub=https://raw.githubusercontent.com/rbizoi/Spark-developper-pour-le-Big-Data/master/Module-05/jars
 
 cd $SPARK_HOME/jars
 wget $repGitHub/delta-core_2.12-0.8.0-SNAPSHOT.jar
