@@ -40,3 +40,28 @@ villes.select('Id,'ville,'latitude,
 villes.selectExpr("*","altitude * 1000 as alt").show(3)
 
 villes.drop("Id", "latitude", "longitude").show(3)
+
+
+
+val meteo = meteoDataFrame.sample(0.3).select(
+                 col("numer_sta"),
+                 col("date").cast("string").substr(0,4).cast("int"),
+                 col("date").cast("string").substr(5,2).cast("int"),
+                 col("date").cast("string").substr(7,2).cast("int"),
+                 col("date").cast("string").substr(5,4),
+                 col("t") - 273.15,
+                 col("u") / 100 ,
+                 col("vv") / 1000 ,
+                 col("pres") / 1000
+                 ).
+             toDF("id","annee","mois","jour","mois_jour",
+                  "temperature","humidite","visibilite","pression").
+             cache()
+
+meteo.select("annee","mois","jour","temperature","humidite",
+                          "visibilite","pression").show(3)
+
+meteo.where("id < 8000").
+     select("annee","mois_jour",
+             "temperature").
+     describe().show()
