@@ -26,13 +26,13 @@ val villes  = spark.read.format("csv").
              load("/user/spark/donnees/postesSynop.csv").
              cache()
 
-val meteo = meteoDataFrame.sample(0.3).select(
+val meteo = meteoDataFrame.select(
                  col("numer_sta"),
-                 col("date").cast("string").substr(0,4).cast("int"),
-                 col("date").cast("string").substr(5,2).cast("int"),
-                 col("date").cast("string").substr(7,2).cast("int"),
-                 col("date").cast("string").substr(5,4),
-                 col("t") - 273.15,
+                 col("date").substr(0,4).cast("int"),
+                 col("date").substr(5,2).cast("int"),
+                 col("date").substr(7,2).cast("int"),
+                 col("date").substr(5,4),
+                 round(col("t") - 273.15,2),
                  col("u") / 100 ,
                  col("vv") / 1000 ,
                  col("pres") / 1000
