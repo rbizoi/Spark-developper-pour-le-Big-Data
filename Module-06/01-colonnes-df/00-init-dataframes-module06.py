@@ -3,6 +3,14 @@ from pyspark.sql.types     import StructType, \
      StructField, FloatType, \
      IntegerType, StringType
 
+spark = SparkSession.builder\
+          .config("spark.jars.packages",
+                         "io.delta:delta-core_2.12:0.8.0") \
+          .config("spark.sql.extensions",
+                         "io.delta.sql.DeltaSparkSessionExtension")\
+          .getOrCreate()
+
+
 meteoDataFrame  = spark.read.format('csv')\
     .option('sep',';')\
     .option('header','true')\
@@ -47,3 +55,49 @@ meteo = meteoDataFrame.select(
 
 meteo.select('annee','mois','jour','temperature','humidite',
              'visibilite','pression').show(3)
+
+data = [('Ajaccio'     ,'dfa' ),
+                  ('Angers'      ,'dfa' ),
+                  ('Angoulème'   ,'dfa' ),
+                  ('Besançon'    ,'dfa' ),
+                  ('Biarritz'    ,'dfa' ),
+                  ('Bordeaux'    ,'dfa' ),
+                  ('Brest'       ,'dfa' ),
+                  ('Caen'        ,'dfa' ),
+                  ('Clermont-Fd' ,'dfa' ),
+                  ('Dijon'       ,'dfa' ),
+                  ('Embrun'      ,'dfa' ),
+                  ('Grenoble'    ,'dfa' ),
+                  ('Lille'       ,'dfa' ),
+                  ('Limoges'     ,'dfa' ),
+                  ('Lyon'        ,'dfa' ),
+                  ('Marseille'   ,'dfa' ),
+                  ('Montpellier' ,'dfa' ),
+                  ('Nancy'       ,'dfa' ),
+                  ('Nantes'      ,'dfa' ),
+                  ('Nice'        ,'dfa' ),
+                  ('Nîmes'       ,'dfa' ),
+                  ('Orléans'     ,'dfa' ),
+                  ('Paris'       ,'dfa' )]
+
+dfa = spark.sparkContext.parallelize(data).toDF(['ville','valeur'])
+
+data = [ ('Nancy'       ,'dfb' ),
+          ('Nantes'      ,'dfb' ),
+          ('Nice'        ,'dfb' ),
+          ('Nîmes'       ,'dfb' ),
+          ('Orléans'     ,'dfb' ),
+          ('Paris'       ,'dfb' ),
+          ('Perpignan'   ,'dfb' ),
+          ('Poitiers'    ,'dfb' ),
+          ('Reims'       ,'dfb' ),
+          ('Rennes'      ,'dfb' ),
+          ('Rouen'       ,'dfb' ),
+          ('St-Quentin'  ,'dfb' ),
+          ('Strasbourg'  ,'dfb' ),
+          ('Toulon'      ,'dfb' ),
+          ('Toulouse'    ,'dfb' ),
+          ('Tours'       ,'dfb' ),
+          ('Vichy'       ,'dfb' )]
+
+dfb = spark.sparkContext.parallelize(data).toDF(['ville','valeur'])
