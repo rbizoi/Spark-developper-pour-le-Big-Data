@@ -35,11 +35,12 @@ val meteo = meteoDataFrame.select(
                  round(col("t") - 273.15,2),
                  col("u") / 100 ,
                  col("vv") / 1000 ,
-                 col("pres") / 1000
+                 col("pres") / 1000,
+                 col("rr1")
                  ).
-             toDF("id","annee","mois","jour","mois_jour",
-                  "temperature","humidite","visibilite","pression").
-             cache()
+           toDF("id","annee","mois","jour","mois_jour","temperature",
+                "humidite","visibilite","pression","precipitations").
+           cache()
 
 meteo.select("annee","mois","jour","temperature","humidite",
-                          "visibilite","pression").show(3)
+                          "visibilite","pression","precipitations").show(3)
