@@ -34,9 +34,23 @@ meteo.where('id < 8000')\
 meteo.where('id < 8000')\
      .groupBy('id','annee')\
      .agg(
-            {"id":"count",
-            "temperature":"avg",
-            "humidite":"avg"}
-     ).toDF("id","annee","humidite","temperature","nb_villes").show(10)
+            {'id':'count',
+            'temperature':'avg',
+            'humidite':'avg'}
+     ).toDF('id','annee','humidite','temperature','nb_villes').show(10)
 
-     
+
+
+meteo.where('id < 8000 and annee > 2014')\
+     .groupBy('id','annee')\
+     .agg( round(avg('temperature'),2).alias('temperature'))\
+     .orderBy("id","annee")\
+     .show(10)
+
+
+meteo.where('id < 8000 and annee > 2014')\
+      .groupBy('id')\
+      .pivot('annee')\
+      .agg( round(avg('temperature'),2))\
+      .sort('id')\
+      .show(10)
