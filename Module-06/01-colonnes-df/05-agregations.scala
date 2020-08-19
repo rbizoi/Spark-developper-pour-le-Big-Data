@@ -31,3 +31,18 @@ meteo.where("id < 8000").
                       "humidite"->"avg"
                ).toDF("id","annee","nb_villes","temperature",
                       "humidite").show(10)
+
+meteo.where("id < 8000").
+     groupBy("id","mois").
+     agg(round(avg("temperature"),2)).
+     orderBy("id","mois").
+     show()
+
+meteo.where("id < 8000").
+    groupBy("id").
+    pivot("mois").
+    agg(round(avg("temperature"),2)).
+    toDF("id","Jan","Fev","Mar","Avr","Mai",
+         "Jun","Jul","Aou","Sep","Oct","Nov","Dec").
+    orderBy("id").
+    show()
