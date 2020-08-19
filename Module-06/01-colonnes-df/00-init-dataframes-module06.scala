@@ -44,3 +44,49 @@ val meteo = meteoDataFrame.select(
 
 meteo.select("annee","mois","jour","temperature","humidite",
                           "visibilite","pression","precipitations").show(3)
+
+val data = Array( ("Ajaccio"     ,"dfa" ),
+                  ("Angers"      ,"dfa" ),
+                  ("Angoulème"   ,"dfa" ),
+                  ("Besançon"    ,"dfa" ),
+                  ("Biarritz"    ,"dfa" ),
+                  ("Bordeaux"    ,"dfa" ),
+                  ("Brest"       ,"dfa" ),
+                  ("Caen"        ,"dfa" ),
+                  ("Clermont-Fd" ,"dfa" ),
+                  ("Dijon"       ,"dfa" ),
+                  ("Embrun"      ,"dfa" ),
+                  ("Grenoble"    ,"dfa" ),
+                  ("Lille"       ,"dfa" ),
+                  ("Limoges"     ,"dfa" ),
+                  ("Lyon"        ,"dfa" ),
+                  ("Marseille"   ,"dfa" ),
+                  ("Montpellier" ,"dfa" ),
+                  ("Nancy"       ,"dfa" ),
+                  ("Nantes"      ,"dfa" ),
+                  ("Nice"        ,"dfa" ),
+                  ("Nîmes"       ,"dfa" ),
+                  ("Orléans"     ,"dfa" ),
+                  ("Paris"       ,"dfa" ))
+
+val dfa = spark.sparkContext.parallelize(data).toDF("ville","valeur")
+
+val data = Array( ("Nancy"       ,"dfb" ),
+                  ("Nantes"      ,"dfb" ),
+                  ("Nice"        ,"dfb" ),
+                  ("Nîmes"       ,"dfb" ),
+                  ("Orléans"     ,"dfb" ),
+                  ("Paris"       ,"dfb" ),
+                  ("Perpignan"   ,"dfb" ),
+                  ("Poitiers"    ,"dfb" ),
+                  ("Reims"       ,"dfb" ),
+                  ("Rennes"      ,"dfb" ),
+                  ("Rouen"       ,"dfb" ),
+                  ("St-Quentin"  ,"dfb" ),
+                  ("Strasbourg"  ,"dfb" ),
+                  ("Toulon"      ,"dfb" ),
+                  ("Toulouse"    ,"dfb" ),
+                  ("Tours"       ,"dfb" ),
+                  ("Vichy"       ,"dfb" ))
+
+val dfb = spark.sparkContext.parallelize(data).toDF("ville","valeur")
