@@ -1,14 +1,5 @@
 from pyspark.sql.functions import *
 
-
-meteo.\
-     .select('annee','mois_jour','temperature','precipitations')\
-     .describe().show()
-
-villes.show()
-
-
-
 meteo.join(villes,
        meteo.id == villes.Id)\
        .select('ville','annee','mois_jour',
