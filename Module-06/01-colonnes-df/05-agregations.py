@@ -1,22 +1,42 @@
 from pyspark.sql.functions import *
 
-meteoDataFrame.columns
-meteoDataFrame.printSchema()
+meteo.where('id < 8000')\
+     .select('annee','mois_jour','temperature')\
+     .describe().show()
 
-meteoDataFrame.select('numer_sta',
-        expr('t  - 273.15').alias('temperature'),
-        expr('(t + pres/1000)*vv/1000')
-             .alias('calc')).show(3)
-
-villes.select('*',expr('altitude * 1000').alias('alt')).show(3)
-villes.selectExpr('*','altitude * 1000 as alt').show(3)
-
-meteoDataFrame.selectExpr('numer_sta',
-        expr('t  - 273.15').alias('temperature'),
-        expr('(t + pres/1000)*vv/1000')
-             .alias('calc')).show(3)
+meteo.where('id < 8000').count()
 
 meteo.where('id < 8000')\
-     .select('annee','mois_jour',
-             'temperature')\
+     .select('humidite','visibilite','pression')\
      .describe().show()
+
+
+
+meteo.where('id < 8000')\
+     .groupBy('annee')\
+     .avg('temperature','visibilite','pression').show(5)
+
+meteo.where('id < 8000')\
+     .groupBy('id','annee')\
+     .max('temperature','visibilite','pression').show(5)
+
+
+meteo.where('id < 8000')\
+     .groupBy('id','annee')\
+     .agg(
+            count('id').alias('nb_villes'),
+            round(avg('temperature'),2).alias('temperature'),
+            round(avg('humidite'),2).alias('humidite'),
+            round(avg('visibilite'),2).alias('visibilite'),
+            round(avg('pression'),2).alias('pression')
+     ).show(10)
+
+meteo.where('id < 8000')\
+     .groupBy('id','annee')\
+     .agg(
+            {"id":"count",
+            "temperature":"avg",
+            "humidite":"avg"}
+     ).toDF("id","annee","humidite","temperature","nb_villes").show(10)
+
+     
