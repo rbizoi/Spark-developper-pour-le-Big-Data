@@ -46,3 +46,62 @@ meteo.where("id < 8000").
          "Jun","Jul","Aou","Sep","Oct","Nov","Dec").
     orderBy("id").
     show()
+
+
+
+meteo.where("id < 8000").
+     groupBy("annee","mois").
+     agg(round(sum("pression") / 1000).alias("precipitations")).
+     count()
+
+meteo.where("id < 8000").
+     groupBy("annee","mois").
+     agg(round(sum("pression") / 1000).alias("precipitations")).
+     rollup("annee","mois").
+     agg( round(sum("precipitations")).alias("precipitations")).
+     count()
+
+meteo.where("id < 8000").
+     groupBy("annee","mois").
+     agg(round(sum("pression") / 1000).alias("precipitations")).
+     cube("annee","mois").
+     agg( round(sum("precipitations")).alias("precipitations")).
+     count()
+
+meteo.where("id < 8000").
+     groupBy("annee","mois").
+     agg(round(sum("pression") / 1000).alias("precipitations")).
+     cube("annee","mois").
+     agg( round(sum("precipitations")).alias("precipitations"),
+          grouping_id().alias("regroupement")).
+     orderBy(col("annee"),col("mois")).
+     show(27)
+
+meteo.where("id < 8000").
+    groupBy("id","annee","mois").
+    agg(round(sum("pression") / 1000).alias("precipitations")).
+    rollup("id","annee","mois").
+    agg( round(sum("precipitations")).alias("precipitations"),
+         grouping("id").alias("r_id*2^2"),
+         grouping("annee").alias("r_annee*2^1"),
+         grouping("mois").alias("r_mois*2^0"),
+         (grouping("id")*4+grouping("annee")*2+grouping("mois")).alias("r_perso"),
+         grouping_id().alias("regroupement")
+       ).
+    orderBy(col("id"),col("annee"),col("mois")).
+    where('regroupement > 0).
+    show(27)
+
+meteo.where("id < 8000").
+    groupBy("id","annee","mois").
+    agg(round(sum("pression") / 1000).alias("precipitations")).
+    rollup("id","annee","mois").
+    agg( grouping("id").alias("r_id*2^2"),
+         grouping("annee").alias("r_annee*2^1"),
+         grouping("mois").alias("r_mois*2^0"),
+         (grouping("id")*4+grouping("annee")*2+grouping("mois")).alias("r_perso"),
+         grouping_id().alias("regroupement")
+       ).
+    orderBy(col("id"),col("annee"),col("mois")).
+    where('regroupement > 0).
+    show(5)
