@@ -1,41 +1,15 @@
 import org.apache.spark.sql.functions._
 
-meteo.join(villes,
-       meteo.col("id") === villes.col("Id")).
-       select("ville","annee","mois_jour",
-               "temperature","precipitations").
-       show(10)
-
-meteo.join(villes,
-       meteo.col("id").eqNullSafe(villes.col("Id"))).
-       select("ville","annee","mois_jour",
-               "temperature","precipitations").
-       show(10)
-
-meteo.join(villes,
-       meteo.col("id").equalTo(villes.col("Id"))).
-       select("ville","annee","mois_jour",
-               "temperature","precipitations").
-       show(10)
-
-meteo.join(villes.withColumnRenamed("Id", "id"),"id").
-      select("ville","annee","mois_jour",
-              "temperature","precipitations").
-      show(10)
+dfa.union(dfb).orderBy("ville").show(40)
+dfa.select("ville").union(dfb.select("ville")).distinct().orderBy("ville").show(40)
 
 
-dfa.show()
-dfb.show()
+meteo.select("id","temperature").
+     union(villes.select("ville","altitude")).
+     orderBy("id").show(5)
 
-dfa.join(dfb,"ville").show()
-dfa.join(dfb,dfa.col("ville") === dfb.col("ville"),"inner").show()
-dfa.join(dfb,dfa.col("ville") === dfb.col("ville"),"outer").show()
+meteo.select("id","temperature").
+     union(villes.select("ville","altitude")).
+     orderBy(desc("id")).show(5)
 
-dfa.join(dfb,dfa.col("ville") === dfb.col("ville"),"left").show()
-dfa.join(dfb,dfa.col("ville") === dfb.col("ville"),"right").show()
-
-dfa.join(dfb,dfa.col("ville") === dfb.col("ville"),"full").show()
-
-
-dfa.join(dfb,dfa.col("ville") === dfb.col("ville"),"left_semi").show()
-dfa.join(dfb,dfa.col("ville") === dfb.col("ville"),"left_anti").show()
+dfa.select("ville").intersect(dfb.select("ville")).show()
