@@ -103,3 +103,9 @@ meteo.where("id < 8000").
     orderBy(col("id"),col("annee"),col("mois")).
     where('regroupement > 0).
     show(5)
+
+
+villes.select('ville,round('altitude,-2).alias("altitude")).
+      groupBy("altitude").
+      agg(collect_list('ville).alias("ville par altitude")).
+      show(truncate=false)
