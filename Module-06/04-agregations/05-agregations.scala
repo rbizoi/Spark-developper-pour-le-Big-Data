@@ -47,8 +47,6 @@ meteo.where("id < 8000").
     orderBy("id").
     show()
 
-
-
 meteo.where("id < 8000").
      groupBy("annee","mois").
      agg(round(sum("pression") / 1000).alias("precipitations")).
