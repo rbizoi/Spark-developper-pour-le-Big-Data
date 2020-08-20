@@ -128,3 +128,9 @@ meteo.where('id < 8000 and annee > 2014')\
       .agg( round(avg('temperature'),2))\
       .sort('id')\
       .show(10)
+
+villes.select('ville',
+               round('altitude',-2).alias('altitude'))\
+      .groupBy('altitude')\
+      .agg(collect_list('ville').alias('ville par altitude'))\
+.show(truncate=False)
