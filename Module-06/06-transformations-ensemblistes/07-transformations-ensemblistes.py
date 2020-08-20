@@ -1,18 +1,15 @@
 from pyspark.sql.functions import *
 
-meteo.join(villes,
-       meteo.id == villes.Id)\
-       .select('ville','annee','mois_jour',
-               'temperature','precipitations')\
-       .show(10)
+dfa.union(dfb).orderBy('ville').show(dfa.count()+dfb.count())
+dfa.select('ville').union(dfb.select('ville')).distinct().orderBy('ville').show(dfa.count()+dfb.count())
 
-meteo.join(villes,
-       meteo['id'].eqNullSafe(villes['Id']))\
-       .select('ville','annee','mois_jour',
-               'temperature','precipitations')\
-       .show(10)
 
-meteo.join(villes.withColumnRenamed('Id', 'id'),'id')\
-       .select('ville','annee','mois_jour',
-               'temperature','precipitations')\
-       .show(10)
+meteo.select('id','temperature')\
+     .union(villes.select('ville','altitude'))\
+     .orderBy('id').show(5)
+
+meteo.select('id','temperature')\
+     .union(villes.select('ville','altitude'))\
+     .orderBy(desc('id')).show(5)
+
+dfa.select('ville').intersect(dfb.select('ville')).show()
