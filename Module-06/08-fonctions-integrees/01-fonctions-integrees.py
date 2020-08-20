@@ -1,51 +1,49 @@
 from pyspark.sql.functions import *
 
-meteo.where('id < 8000').count()
-description = meteo.where('id < 8000')\
-     .select('annee','temperature', 'humidite',
-             'visibilite', 'pression','precipitations')\
-     .describe()\
-     .select([c if c == 'summary'
-                else round(c,2).alias(c)
-                for c in
-                    ['summary','annee','temperature', 'humidite',
-                   'visibilite', 'pression','precipitations']])\
-     .show()
+meteoDataFrame.columns
 
-meteo.where('id < 8000').where(meteo['temperature'].isNull()).count()
-meteo.where('id < 8000').where(meteo['humidite'].isNull()).count()
-meteo.where('id < 8000').where(meteo['visibilite'].isNull()).count()
-meteo.where('id < 8000').where(meteo['pression'].isNull()).count()
-meteo.where('id < 8000').where(meteo['precipitations'].isNull()).count()
+df01 = meteoDataFrame.select('date')\
+         .withColumn('d00',col('date')[0:4])\
+         .withColumn('d01',to_date(col('date')[0:8],'yyyyMMdd'))\
+         .withColumn('d02',to_timestamp(col('date').cast('string'),'yyyyMMddHHmmss'))
+df01.show(10)
+df01.printSchema()
 
-meteo.where('id < 8000').toPandas().isna().sum()
-meteoDataFrame.toPandas().isna().sum()
+unix_timestamp
 
-meteo.where('id < 8000')\
-     .where(meteo['temperature'].isNotNull())\
-     .where(meteo['humidite'].isNotNull() )\
-     .where(meteo['visibilite'].isNotNull() )\
-     .where(meteo['pression'].isNotNull() )\
-     .count()
 
-meteo.where('id < 8000')\
-     .na.fill(0 ,["precipitations"])\
-     .na.drop()\
-     .count()
 
-meteoNotNull =  meteo.where('id < 8000')\
-                     .na.fill(0 ,["precipitations"])\
-                     .na.drop()
+meteo = meteoDataFrame.select(
+         col('numer_sta'),
+         to_date(col('date')[0:8],'yyyyMMdd'),
+         to_timestamp(col('date').cast('string'),'yyyyMMddHHmmss'),
+         col('date')[0:4].cast('int') ,
+         col('date')[5:2].cast('int'),
+         col('date')[7:2].cast('int'),
+         col('date')[5:4],
+         round(col('t') - 273.15,2),
+         col('u') / 100 ,
+         col('vv') / 1000 ,
+         col('pres') / 1000,
+         col('rr1'))\
+     .toDF('id','date','timestamp','annee','mois','jour','mois_jour',
+           'temperature','humidite','visibilite','pression','precipitations')\
+     .cache()
 
-meteo.where('id == 7020')\
-     .where(meteo['temperature'].isNotNull())\
-     .where(meteo['humidite'].isNotNull() )\
-     .where(meteo['visibilite'].isNull() )\
-     .where(meteo['pression'].isNull() )\
-     .where(meteo['precipitations'].isNull())\
-     .select('id','annee','mois_jour','temperature',
-             'humidite','precipitations')\
-     .show()
+meteo.select('date','timestamp','temperature','humidite',
+             'visibilite','pression').show(3)
 
-from databricks import koalas as ks
-meteoDataFrame.to_koalas().isna().sum()
+meteo.select(date_format('date','d dd DDD M MMM MMMM yy yyyy')).show(3,truncate=False)
+
+meteo.sample(0.3)\
+     .orderBy(desc('timestamp'))\
+     .select(date_format('timestamp','h H m s S'))\
+     .show(10,truncate=False)
+
+meteo.sample(0.3)\
+     .orderBy(desc('timestamp'))\
+     .select(date_format('date','q Q E F'))\
+     .show(3,truncate=False)
+
+
+                      
