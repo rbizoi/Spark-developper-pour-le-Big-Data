@@ -48,4 +48,4 @@ meteo.where('id == 7020')\
      .show()
 
 from databricks import koalas as ks
-meteoDataFrame.to_koalas().isna().sum()
+meteoDataFrame.to_koalas().isna().sum()     
