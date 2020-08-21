@@ -3,7 +3,7 @@ val customSchema = StructType(
    StructField("etat"            , IntegerType , true)::
    StructField("etat_descriptif" , StringType , true)::
    StructField("ident"           , StringType, true)::
-   StructField("idsurfs"           , StringType, true)::
+   StructField("idsurfs"         , StringType, true)::
    StructField("infousager"      , StringType, true)::
    StructField("libre"           , IntegerType, true)::
    StructField("nom_parking"     , StringType, true)::
