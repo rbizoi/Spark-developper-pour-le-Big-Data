@@ -25,3 +25,15 @@ val parkingStras02  = spark.read.format("json").
 
 parkingStras02.printSchema()
 parkingStras02.select ("nom_parking","libre","total").show(3)
+
+
+url = "https://data.strasbourg.eu/api/records/1.0/search/?dataset=vente_a_la_ferme&q=&lang=fr&rows=39"
+import org.apache.spark.sql.{DataFrame, SparkSession}
+
+def GetUrlContentJson(url: String): DataFrame ={
+    val result = scala.io.Source.fromURL(url).mkString
+    val jsonResponseOneLine = result.toString().stripLineEnd
+    val jsonRdd = spark.createDataset(jsonResponseOneLine :: Nil)
+    val jsonDf = spark.read.json(jsonRdd)
+    return jsonDf
+}
