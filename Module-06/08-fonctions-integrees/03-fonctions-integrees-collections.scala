@@ -23,6 +23,9 @@ donnees.select(  'nhits,'parameters,
                  'records.getField("geometry").as("geometry"),
                ).show()
 
+donnees.select( "nhits","parameters.*","records.fields","records.geometry"
+             ).show()
+
 donnees.select( 'records.getField("fields").getField("nom").as("nom"),
                  'records.getField("fields").getField("commune").as("commune"),
                  'records.getField("fields").getField("code_postal").as("code_postal")
