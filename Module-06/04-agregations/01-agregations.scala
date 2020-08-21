@@ -39,6 +39,18 @@ meteo.where("id < 8000").
      show()
 
 meteo.where("id < 8000").
+     groupBy("id").
+     agg(
+       round(skewness  ("temperature"),3).alias("skewness"  ),
+       round(kurtosis  ("temperature"),3).alias("kurtosis"  ),
+       round(variance  ("temperature"),3).alias("variance"  ),
+       round(var_pop   ("temperature"),3).alias("var_pop"   ),
+       round(stddev    ("temperature"),3).alias("stddev"    ),
+       round(stddev_pop("temperature"),3).alias("stddev_pop")).
+     orderBy("id").
+     show(15)
+
+meteo.where("id < 8000").
     groupBy("id").
     pivot("mois").
     agg(round(avg("temperature"),2)).
