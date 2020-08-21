@@ -102,7 +102,7 @@ meteo.where('id < 8000')\
             round(avg('humidite'),2).alias('humidite'),
             round(avg('visibilite'),2).alias('visibilite'),
             round(avg('pression'),2).alias('pression'),
-            round(avg('pression'),2).alias('precipitations'))\
+            round(avg('precipitations'),2).alias('precipitations'))\
      .orderBy(col('annee').asc_nulls_last(),
               col('mois').asc_nulls_last())\
      .show(16)
@@ -115,6 +115,23 @@ meteo.where('id < 8000')\
             'humidite':'avg'}
      ).toDF('id','annee','humidite','temperature','nb_villes').show(10)
 
+meteo.where('id < 8000')\
+     .groupBy('id')\
+     .agg(
+        {'temperature':['skewness','kurtosis','variance','var_pop','stddev','stddev_pop']}
+     ).toDF('id','skewness','kurtosis','variance','var_pop','stddev','stddev_pop').show(10)
+
+meteo.where('id < 8000')\
+     .groupBy('id')\
+     .agg(
+        round(skewness  ('temperature'),3).alias('skewness'  ),
+        round(kurtosis  ('temperature'),3).alias('kurtosis'  ),
+        round(variance  ('temperature'),3).alias('variance'  ),
+        round(var_pop   ('temperature'),3).alias('var_pop'   ),
+        round(stddev    ('temperature'),3).alias('stddev'    ),
+        round(stddev_pop('temperature'),3).alias('stddev_pop'))\
+     .orderBy('id')\
+     .show(15)
 
 meteo.where('id < 8000 and annee > 2014')\
      .groupBy('id','annee')\
