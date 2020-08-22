@@ -48,7 +48,11 @@ meteo = meteoDataFrame.select(
                  col('u') / 100 ,
                  col('vv') / 1000 ,
                  col('pres') / 1000,
-                 col('rr1'))\
+                 coalesce( col('rr3'),
+                           col('rr24')/8,
+                           col('rr12')/4,
+                           col('rr6')/2,
+                           col('rr1')*3  ) )\
              .toDF('id','annee','mois','jour','mois_jour','temperature',
                    'humidite','visibilite','pression','precipitations')\
              .cache()
@@ -56,14 +60,12 @@ meteo = meteoDataFrame.select(
 meteo.select('annee','mois','jour','temperature','humidite',
              'visibilite','pression').show(3)
 
-
-
 meteoFance = meteo.where('id < 8000')\
              .join(villes.withColumnRenamed('Id', 'id'),'id')\
              .select(initcap(regexp_replace('ville','-',' ')).alias('ville'),
                      'annee','mois','jour','temperature',
                      'humidite','visibilite','pression','precipitations')
-       
+
 data = [('Ajaccio'     ,'dfa' ),
                   ('Angers'      ,'dfa' ),
                   ('Angoulème'   ,'dfa' ),
