@@ -37,30 +37,31 @@ export SPARK_LOG_DIR=/var/log/spark/\$USER
 export SPARK_PID_DIR=/var/run/spark/\$USER
 FIN_FICHIER
 
-
-
 cat <<FIN_FICHIER > $SPARK_HOME/conf/spark-defaults.conf
-spark.serializer                     org.apache.spark.serializer.KryoSerializer
-spark.io.compression.lz4.blockSize   128kb
+spark.serializer                               org.apache.spark.serializer.KryoSerializer
+spark.io.compression.lz4.blockSize             128kb
 #--------------------------------------------------------------------------------
-spark.yarn.jars                      hdfs:///spark-jars
+spark.yarn.jars                                hdfs:///spark-jars
 #--------------------------------------------------------------------------------
-spark.master                         yarn
-spark.driver.memory                  1g
-spark.executor.cores                 1
-spark.executor.memory                1g
-spark.deploy.defaultCores            4
+spark.master                                   yarn
+spark.driver.memory                            1g
+spark.executor.cores                           1
+spark.executor.memory                          1g
+spark.deploy.defaultCores                      4
 #--------------------------------------------------------------------------------
-spark.eventLog.dir                   hdfs:///spark-history/
-spark.eventLog.enabled               true
+spark.eventLog.dir                             hdfs:///spark-history/
+spark.eventLog.enabled                         true
 #--------------------------------------------------------------------------------
-spark.history.fs.cleaner.enabled     true
-spark.history.fs.cleaner.interval    7d
-spark.history.fs.cleaner.maxAge      90d
-spark.history.fs.logDirectory        hdfs:///spark-history/
+spark.history.fs.cleaner.enabled               true
+spark.history.fs.cleaner.interval              7d
+spark.history.fs.cleaner.maxAge                90d
+spark.history.fs.logDirectory                  hdfs:///spark-history/
 #--------------------------------------------------------------------------------
+spark.sql.session.timeZone                     UTC
+#--------------------------------------------------------------------------------
+spark.sql.execution.arrow.enabled              false
+spark.sql.execution.arrow.pyspark.enabled      false
 FIN_FICHIER
-
 
 #--------------------------------------------------------------------------------
 # par défaut infinite
