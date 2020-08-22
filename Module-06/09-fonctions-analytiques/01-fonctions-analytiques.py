@@ -76,42 +76,91 @@ meteoMM.where('annee = 1996').agg(sum('precipitations').alias('s5')).show()
 meteoMM.where('jour = 31').agg(sum('precipitations').alias('s6')).show()
 meteoMM.agg(sum('precipitations')).show()
 
-
-meteoMM = meteoFance.where("ville = 'Mont De Marsan' \
-                            and annee = 2019")\
-           .select('ville','annee','mois',
-                           'jour','temperature','precipitations')\
-           .groupBy('ville', 'annee', 'mois', 'jour')\
-           .agg( round(avg('temperature'),2).alias('temperature'),
-                round(sum('precipitations'),2).alias('precipitations'))\
-           .select('mois','jour','temperature','precipitations')\
-           .orderBy('mois','jour')
-meteoMM.show(5)
-
-jour = Window.partitionBy('mois').orderBy('jour')
-meteoMM.select('jour','mois','annee',col('precipitations').alias('prec'),
-          round(sum('precipitations').over(jourMoisAnnee),2).alias('s1'),
-          round(sum('precipitations').over(jourMois),2).alias('s2'),
-          round(sum('precipitations').over(moisAnnee),2).alias('s3'),
-          round(sum('precipitations').over(mois),2).alias('s4'),
-          round(sum('precipitations').over(annee),2).alias('s5'),
-          round(sum('precipitations').over(jour),2).alias('s6'))\
-       .show(28)
-
-
+#meteoMM = meteoFance.where("ville = 'Mont De Marsan' \
+#                            and annee = 2019")\
+#           .select('ville','annee','mois',
+#                           'jour','temperature','precipitations')\
+#           .groupBy('ville', 'annee', 'mois', 'jour')\
+#           .agg( round(avg('temperature'),2).alias('temperature'),
+#                round(sum('precipitations'),2).alias('precipitations'))\
+#           .select('mois','jour','temperature','precipitations')\
+#           .orderBy('mois','jour')
+#meteoMM.show(5)
+jour    = Window.partitionBy('mois')
+jourOby = Window.partitionBy('mois').orderBy('jour')
+meteoMM.where("annee = 2019")\
+       .select('mois','jour',
+          col('temperature').alias('temp'),
+          round(avg('temperature').over(jourOby),2).alias('s1'),
+          round(avg('temperature').over(jour),2).alias('s2'),
+          col('precipitations').alias('prec'),
+          round(sum('precipitations').over(jourOby),2).alias('s3'),
+          round(sum('precipitations').over(jour),2).alias('s4'))\
+       .show(32)
 
 
+jourPOby = Window.partitionBy('mois').orderBy('jour')
+jourOby  = Window.orderBy('mois','jour')
+meteoMM.where("annee = 2019")\
+       .select('mois','jour',
+          col('precipitations').alias('prec'),
+          round(sum('precipitations').over(jourPOby),2).alias('s3'),
+          round(sum('precipitations').over(jourOby),2).alias('s4'))\
+       .show(35)
+
+
+jourOby = Window.partitionBy('mois')\
+                .orderBy('jour')\
+                .rowsBetween(Window.unboundedPreceding,Window.currentRow)
+
+meteoMM.where("annee = 2019")\
+       .select('mois','jour',
+          col('precipitations').alias('prec'),
+          round(sum('precipitations')\
+                   .over(jourOby),2).alias('s3'))\
+       .show(32)
+
+
+jour = Window.orderBy('mois').rowsBetween(-1, 1)
+meteoMM.where('annee = 2019')\
+       .groupBy('mois')\
+       .agg( round(avg('temperature'),2).alias('temp'),
+             round(sum('precipitations'),2).alias('prec'))\
+       .select('mois','temp',
+          round(avg('temp').over(jour),2).alias('s1'),
+          'prec',
+          round(sum('prec').over(jour),2).alias('s2'))\
+       .show(32)
 
 
 
+meteoFance = meteo.where('id < 8000')\
+             .join(villes.withColumnRenamed('Id', 'id'),'id')\
+             .select(initcap(regexp_replace('ville','-',' ')).alias('ville'),
+                     'date','annee','mois','jour','temperature',
+                     'humidite','visibilite','pression','precipitations')
 
 
+from pyspark.sql.functions import window
 
+meteoFance.where("ville = 'Mont De Marsan' and \
+                 annee = 2019")\
+           .groupBy(window('date', '5 week'))\
+           .agg( round(avg('temperature'),3).alias('temperature'  ),
+                round(sum('precipitations'),3).alias('precipitations'))\
+           .orderBy('window')\
+           .show(15,truncate=False)
 
+meteoFance.count()
+meteoFance.selectExpr('ville','date','temperature as t',
+                      'humidite as h','visibilite as v',
+                      'pression as p','precipitations as e').show()
 
-
-
-
-
-
-       
+from pyspark.sql.functions import window
+meteoFance.where("ville = 'Mont De Marsan' and \
+                 annee = 2019")\
+           .groupBy(window('date', '5 week'))\
+           .agg( round(avg('temperature'),3).alias('temperature'  ),
+                round(sum('precipitations'),3).alias('precipitations'))\
+           .orderBy('window')\
+           .show(15,truncate=False)
