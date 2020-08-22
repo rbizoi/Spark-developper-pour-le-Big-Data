@@ -68,3 +68,32 @@ meteo.orderBy(desc("timestamp")).
               month     ('timestamp).alias("m"),
               hour      ('timestamp).alias("h"),
             ).show(1)
+
+val meteoFance = meteo.where("id < 8000").
+            join( villes.withColumnRenamed("Id", "id"),"id").
+            select(initcap(regexp_replace('ville,"-"," ")).alias("ville"),
+                    'date,'annee,'mois,'jour,'temperature,
+                    'humidite,'visibilite,'pression,'precipitations)
+
+meteoFance.select('ville,'date,'temperature,
+                   'humidite,'visibilite,'pression,'precipitations).show()
+
+meteoFance.selectExpr("ville","date","temperature as t",
+                      "humidite as h","visibilite as v",
+                      "pression as p","precipitations as e").show()
+
+meteoFance.where("ville = 'Mont De Marsan' and "+
+                 "annee = 2019").
+           groupBy(window('date, "5 week")).
+           agg( round(avg("temperature"),3).alias("temperature"  ),
+                round(sum("precipitations"),3).alias("precipitations")).
+           orderBy('window).
+           show(15,false)
+
+meteoFance.where("ville = 'Mont De Marsan' and "+
+                "annee = 2019").
+          groupBy(window('date, "24 day")).
+          agg( round(avg("temperature"),3).alias("temperature"  ),
+               round(sum("precipitations"),3).alias("precipitations")).
+          orderBy('window).
+          show(15,false)
