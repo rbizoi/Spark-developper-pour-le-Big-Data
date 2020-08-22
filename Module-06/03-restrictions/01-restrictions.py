@@ -20,5 +20,6 @@ meteoDataFrame.sample(True,1/100).count()
 
 villes.sample(True,2/100,0).show()
 villes.filter("Id == '07168' or Id == '07280'").show()
+villes.filter("Id = '07168' or Id = '07280'").show()
 
 meteoDataFrame.groupBy('numer_sta').show(3)
