@@ -97,56 +97,8 @@ meteoMM.where("annee = 2019").
                round(sum("prec").over(jour),2).alias("s2")).
        show(32)
 
-
-
-
-
-
-meteoMM.where("annee = 1996 and mois = 12 and jour = 1").agg(sum("precipitations")).show()
-
-
-
-
-
-
-df.select(
-  sum("price").over(),
-  avg("price").over()
-)
-
-window = Window.partitionBy()
-
-
-
-
-meteoFance.where("ville = 'Strasbourg Entzheim' and "+
-                "annee = 2020 and mois = 7 and jour < 4").
-           orderBy("jour").
-           rollup("jour").
-           agg(round(sum("precipitations"),2).alias("precipitations")).
-           orderBy(col("jour")).
-           show()
-
-val meteoFance01 = meteoFance.where("ville = 'Strasbourg Entzheim' and "+
-                                    "annee = 2020 and mois = 7 and jour < 4").
-                       cache()
-
-meteoFance01.show(200)
-
-meteoFance01.orderBy("jour").
-             rollup("jour").
-             agg(round(sum("temperature"),2).alias("temperature")).
-             orderBy(col("jour")).
-             show()
-
-
-
-
-    agg( grouping("id").alias("r_id*2^2"),
-         grouping("annee").alias("r_annee*2^1"),
-         grouping("mois").alias("r_mois*2^0"),
-         (grouping("id")*4+grouping("annee")*2+grouping("mois")).alias("r_perso"),
-         grouping_id().alias("regroupement")
-       ).
-    orderBy(col("id"),col("annee"),col("mois")).
-    where('regroupement > 0).
+val meteoFance = meteo.where("id < 8000").
+            join( villes.withColumnRenamed("Id", "id"),"id").
+            select(initcap(regexp_replace('ville,"-"," ")).alias("ville"),
+                    'date,'annee,'mois,'jour,'temperature,
+                    'humidite,'visibilite,'pression,'precipitations)
