@@ -36,7 +36,11 @@ val meteo = meteoDataFrame.select(
                  col("u") / 100 ,
                  col("vv") / 1000 ,
                  col("pres") / 1000,
-                 col("rr1")
+                 coalesce( col("rr3"),
+                           col("rr24")/8,
+                           col("rr12")/4,
+                           col("rr6")/2,
+                           col("rr1")*3)
                  ).
            toDF("id","annee","mois","jour","mois_jour","temperature",
                 "humidite","visibilite","pression","precipitations").
@@ -44,7 +48,6 @@ val meteo = meteoDataFrame.select(
 
 meteo.select("annee","mois","jour","temperature","humidite",
                           "visibilite","pression","precipitations").show(3)
-
 
 val meteoFance = meteo.where("id < 8000").
              join( villes.withColumnRenamed("Id", "id"),"id").
