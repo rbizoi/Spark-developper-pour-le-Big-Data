@@ -1,6 +1,19 @@
-
 export PYSPARK_DRIVER_PYTHON=python3
 export PYSPARK_DRIVER_PYTHON_OPTS=''
+
+# ensemble
+pyspark \
+    --master spark://jupiter.olimp.fr:7077 \
+    --executor-cores 4 \
+    --executor-memory 10g
+
+spark-shell \
+    --master spark://jupiter.olimp.fr:7077 \
+    --executor-cores 4 \
+    --executor-memory 10g
+
+
+# seul
 
 pyspark \
     --master spark://jupiter.olimp.fr:7077 \
