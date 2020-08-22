@@ -40,6 +40,7 @@ villes  = spark.read.format('csv')   \
 
 meteo = meteoDataFrame.select(
                  col('numer_sta'),
+                 to_timestamp(col('date').cast('string'),'yyyyMMddHHmmss'),
                  col('date')[0:4].cast('int') ,
                  col('date')[5:2].cast('int'),
                  col('date')[7:2].cast('int'),
@@ -53,7 +54,7 @@ meteo = meteoDataFrame.select(
                            col('rr12')/4,
                            col('rr6')/2,
                            col('rr1')*3  ) )\
-             .toDF('id','annee','mois','jour','mois_jour','temperature',
+             .toDF('id','date','annee','mois','jour','mois_jour','temperature',
                    'humidite','visibilite','pression','precipitations')\
              .cache()
 
