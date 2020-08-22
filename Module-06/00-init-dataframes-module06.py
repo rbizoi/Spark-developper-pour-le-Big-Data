@@ -56,6 +56,14 @@ meteo = meteoDataFrame.select(
 meteo.select('annee','mois','jour','temperature','humidite',
              'visibilite','pression').show(3)
 
+
+
+meteoFance = meteo.where('id < 8000')\
+             .join(villes.withColumnRenamed('Id', 'id'),'id')\
+             .select(initcap(regexp_replace('ville','-',' ')).alias('ville'),
+                     'annee','mois','jour','temperature',
+                     'humidite','visibilite','pression','precipitations')
+       
 data = [('Ajaccio'     ,'dfa' ),
                   ('Angers'      ,'dfa' ),
                   ('Angoulème'   ,'dfa' ),
