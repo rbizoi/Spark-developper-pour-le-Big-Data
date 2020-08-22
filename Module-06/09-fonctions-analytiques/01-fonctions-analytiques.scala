@@ -28,28 +28,85 @@ meteoMM.groupBy("jour").
         orderBy(col("jour").asc_nulls_last).
         show()
 
+val meteoMM = meteoFance.where("ville = 'Mont De Marsan'").
+           select("ville","annee","mois",
+                           "jour","temperature","precipitations").
+           groupBy("ville", "annee", "mois", "jour").
+           agg( round(avg("temperature"),2).alias("temperature"),
+                round(sum("precipitations"),2).alias("precipitations")).
+           select("annee","mois","jour","temperature","precipitations")
+meteoMM.show(5)
+
+import org.apache.spark.sql.expressions.Window
+
+val jour          = Window.partitionBy("jour")
+val mois          = Window.partitionBy("mois")
+val moisAnnee     = Window.partitionBy("mois","annee")
+val annee         = Window.partitionBy("annee")
+val jourMois      = Window.partitionBy("jour","mois")
+val jourMoisAnnee = Window.partitionBy("jour","mois","annee")
+
+meteoMM.select('jour,'mois,'annee,'precipitations.as("prec"),
+          round(sum("precipitations").over(jourMoisAnnee),2).as("s1"),
+          round(sum("precipitations").over(jourMois),2).as("s2"),
+          round(sum("precipitations").over(moisAnnee),2).as("s3"),
+          round(sum("precipitations").over(mois),2).as("s4"),
+          round(sum("precipitations").over(annee),2).as("s5"),
+          round(sum("precipitations").over(jour),2).as("s6")).
+        show(28)
+
+meteoMM.where("annee = 1996 and mois = 12 and jour = 1").agg(sum("precipitations").as("s1")).show()
+meteoMM.where("mois = 12 and jour = 1").agg(sum("precipitations").as("s2")).show()
+meteoMM.where("annee = 1996 and mois = 12").agg(sum("precipitations").as("s3")).show()
+meteoMM.where("mois  = 12"  ).agg(sum("precipitations").as("s4")).show()
+meteoMM.where("annee = 1996").agg(sum("precipitations").as("s5")).show()
+meteoMM.where("jour = 1").agg(sum("precipitations").as("s6")).show()
 meteoMM.agg(sum("precipitations")).show()
 
+val jour    = Window.partitionBy("mois")
+val jourOby = Window.partitionBy("mois").orderBy("jour")
+
+meteoMM.where("annee = 2019").
+        select('mois,'jour,
+          col("temperature").alias("temp"),
+          round(avg("temperature").over(jourOby),2).alias("s1"),
+          round(avg("temperature").over(jour),2).alias("s2"),
+          col("precipitations").alias("prec"),
+          round(sum("precipitations").over(jourOby),2).alias("s3"),
+          round(sum("precipitations").over(jour),2).alias("s4")).
+        show(32)
+
+val jourPOby = Window.orderBy("mois","jour")
+val jourOby  = Window.orderBy("jour")
+
+meteoMM.where("annee = 2019").
+        select('mois,'jour,'precipitations.as("prec"),
+          round(sum("precipitations").over(jourPOby),2).as("s1"),
+          round(sum("precipitations").over(jourOby),2).as("s2")).
+        orderBy("jour","mois").
+        show(14)
+
+val jour = Window.orderBy("mois").rowsBetween(-1, 1)
+meteoMM.where("annee = 2019").
+       groupBy("mois").
+       agg( round(avg("temperature"),2).alias("temp"),
+             round(sum("precipitations"),2).alias("prec")).
+       select('mois,'temp,
+              round(avg("temp").over(jour),2).alias("s1"),
+              'prec,
+               round(sum("prec").over(jour),2).alias("s2")).
+       show(32)
 
 
 
 
 
 
+meteoMM.where("annee = 1996 and mois = 12 and jour = 1").agg(sum("precipitations")).show()
 
 
 
 
-
-
-
-
-
-
-
-
-
-meteoMM.select('jour,'precipitations,sum("precipitations").over().as("somme totale")).show()
 
 
 df.select(
