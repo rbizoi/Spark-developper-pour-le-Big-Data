@@ -18,3 +18,4 @@ villes.where("latitude > 49" or "altitude > 90").show()
 villes.sample(0.02,0).show()
 
 villes.filter("Id == '07168' or Id == '07280'").show()
+villes.filter("Id = '07168' or Id = '07280'").show()
