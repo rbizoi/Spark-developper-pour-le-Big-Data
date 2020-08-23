@@ -217,3 +217,24 @@ cat <<FIN_FICHIER > $SPARK_HOME/conf/hive-site.xml
 
 </configuration>
 FIN_FICHIER
+
+cat <<FIN_FICHIER > $SPARK_HOME/conf/beeline-site.xml
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+<property>
+  <name>beeline.hs2.jdbc.url.tcpUrl</name>
+  <value>jdbc:hive2://`hostname -f`:10000/default;user=spark;password=CoursSPARK3#</value>
+</property>
+
+<property>
+  <name>beeline.hs2.jdbc.url.httpUrl</name>
+  <value>jdbc:hive2://`hostname -f`:10000/default;user=spark;password=CoursSPARK3#;transportMode=http;httpPath=cliservice</value>
+</property>
+
+<property>
+  <name>beeline.hs2.jdbc.url.default</name>
+  <value>tcpUrl</value>
+</property>
+</configuration>
+FIN_FICHIER
