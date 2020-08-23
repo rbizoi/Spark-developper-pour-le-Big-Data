@@ -20,6 +20,7 @@ export PYSPARK_PYTHON=/bin/python3
 #export PYSPARK_DRIVER_PYTHON=python3
 export PYSPARK_DRIVER_PYTHON=jupyter
 export PYSPARK_DRIVER_PYTHON_OPTS='notebook'
+export ARROW_PRE_0_15_IPC_FORMAT=1
 export PATH=\$SPARK_HOME/bin:\$SPARK_HOME/sbin:\$PATH
 FIN_FICHIER
 
@@ -38,7 +39,7 @@ export SPARK_PID_DIR=/var/run/spark/\$USER
 FIN_FICHIER
 
 cat <<FIN_FICHIER > $SPARK_HOME/conf/spark-defaults.conf
-spark.serializer                               org.apache.spark.serializer.KryoSerializer
+#spark.serializer                               org.apache.spark.serializer.KryoSerializer
 spark.io.compression.lz4.blockSize             128kb
 #--------------------------------------------------------------------------------
 spark.yarn.jars                                hdfs:///spark-jars
@@ -59,8 +60,11 @@ spark.history.fs.logDirectory                  hdfs:///spark-history/
 #--------------------------------------------------------------------------------
 spark.sql.session.timeZone                     UTC
 #--------------------------------------------------------------------------------
-spark.sql.execution.arrow.enabled              false
-spark.sql.execution.arrow.pyspark.enabled      false
+spark.sql.execution.arrow.enabled                    true
+spark.sql.execution.arrow.pyspark.enabled            true
+spark.sql.execution.arrow.pyspark.fallback.enabled   true
+spark.sql.execution.pandas.convertToArrowArraySafely true
+spark.sql.execution.arrow.maxRecordsPerBatch         10000
 FIN_FICHIER
 
 #--------------------------------------------------------------------------------
