@@ -63,7 +63,7 @@ spark.sql.execution.arrow.enabled                    true
 spark.sql.execution.arrow.pyspark.enabled            true
 spark.sql.execution.arrow.pyspark.fallback.enabled   true
 spark.sql.execution.pandas.convertToArrowArraySafely true
-spark.sql.execution.arrow.maxRecordsPerBatch         10000
+spark.sql.execution.arrow.maxRecordsPerBatch         100000000
 FIN_FICHIER
 
 #--------------------------------------------------------------------------------
@@ -123,6 +123,7 @@ log4j.logger.org.apache.hadoop.hive.ql.exec.FunctionRegistry=ERROR
 FIN_FICHIER
 
 pip3 install pyarrow==1.0.1
+#https://search.maven.org/search?q=g:org.apache.arrow%20AND%20v:1.0.1
 wget https://repo1.maven.org/maven2/org/apache/arrow/arrow-performance/1.0.1/arrow-format-1.0.1.jar
 wget https://repo1.maven.org/maven2/org/apache/arrow/arrow-performance/1.0.1/arrow-jdbc-1.0.1.jar
 wget https://repo1.maven.org/maven2/org/apache/arrow/arrow-performance/1.0.1/arrow-memory-core-1.0.1.jar
