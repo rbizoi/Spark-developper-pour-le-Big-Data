@@ -13,3 +13,24 @@ meteoHexagone.select('temperature',
                            .alias('t_kelvin'),
                      round(celsiusFahrenheit('temperature'),2)\
                            .alias('t_fahrenheit')).show()
+
+
+
+
+modelStd = StandardScaler()
+
+
+
+import pandas as pd
+from pyspark.sql.functions import *
+
+def normalisation(colonne: pd.Series) -> pd.Series:
+    return (colonne - colonne.mean(axis=0))/colonne.std(axis=0)
+
+normalisation = pandas_udf(normalisation,returnType=FloatType())
+
+meteo.where('id < 8000')\
+     .na.drop()\
+     .select('temperature',
+             normalisation(meteo['temperature']).alias('norm'))\
+     .show()
