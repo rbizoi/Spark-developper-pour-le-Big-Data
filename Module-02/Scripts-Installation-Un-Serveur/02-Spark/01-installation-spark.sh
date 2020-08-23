@@ -123,6 +123,29 @@ log4j.logger.org.apache.hadoop.hive.metastore.RetryingHMSHandler=FATAL
 log4j.logger.org.apache.hadoop.hive.ql.exec.FunctionRegistry=ERROR
 FIN_FICHIER
 
+pip3 install pyarrow==1.0.1
+wget https://repo1.maven.org/maven2/org/apache/arrow/arrow-performance/1.0.1/arrow-format-1.0.1.jar
+wget https://repo1.maven.org/maven2/org/apache/arrow/arrow-performance/1.0.1/arrow-jdbc-1.0.1.jar
+wget https://repo1.maven.org/maven2/org/apache/arrow/arrow-performance/1.0.1/arrow-memory-core-1.0.1.jar
+wget https://repo1.maven.org/maven2/org/apache/arrow/arrow-performance/1.0.1/arrow-memory-netty-1.0.1.jar
+wget https://repo1.maven.org/maven2/org/apache/arrow/arrow-performance/1.0.1/arrow-memory-unsafe-1.0.1.jar
+wget https://repo1.maven.org/maven2/org/apache/arrow/arrow-performance/1.0.1/arrow-performance-1.0.1.jar
+wget https://repo1.maven.org/maven2/org/apache/arrow/arrow-performance/1.0.1/arrow-tools-1.0.1.jar
+wget https://repo1.maven.org/maven2/org/apache/arrow/arrow-performance/1.0.1/arrow-vector-1.0.1.jar
+
+mv /usr/share/spark/jars/arrow-format-0.15.1.jar /usr/share/spark/jars/arrow-format-0.15.1.jar.sav
+mv /usr/share/spark/jars/arrow-memory-0.15.1.jar /usr/share/spark/jars/arrow-memory-0.15.1.jar.sav
+mv /usr/share/spark/jars/arrow-vector-0.15.1.jar /usr/share/spark/jars/arrow-vector-0.15.1.jar.sav
+
+mv arrow-format-1.0.1.jar           /usr/share/spark/jars
+mv arrow-jdbc-1.0.1.jar             /usr/share/spark/jars
+mv arrow-memory-core-1.0.1.jar      /usr/share/spark/jars
+mv arrow-memory-netty-1.0.1.jar     /usr/share/spark/jars
+mv arrow-memory-unsafe-1.0.1.jar    /usr/share/spark/jars
+mv arrow-performance-1.0.1.jar      /usr/share/spark/jars
+mv arrow-tools-1.0.1.jar            /usr/share/spark/jars
+mv arrow-vector-1.0.1.jar           /usr/share/spark/jars
+
 chown -R spark:hadoop /usr/share/spark
 ls -al /usr/share/spark
 
