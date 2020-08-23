@@ -96,9 +96,3 @@ meteoMM.where("annee = 2019").
               'prec,
                round(sum("prec").over(jour),2).alias("s2")).
        show(32)
-
-val meteoFance = meteo.where("id < 8000").
-            join( villes.withColumnRenamed("Id", "id"),"id").
-            select(initcap(regexp_replace('ville,"-"," ")).alias("ville"),
-                    'date,'annee,'mois,'jour,'temperature,
-                    'humidite,'visibilite,'pression,'precipitations)
