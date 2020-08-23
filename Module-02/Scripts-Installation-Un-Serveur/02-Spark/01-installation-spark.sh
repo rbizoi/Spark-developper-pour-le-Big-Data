@@ -20,7 +20,6 @@ export PYSPARK_PYTHON=/bin/python3
 #export PYSPARK_DRIVER_PYTHON=python3
 export PYSPARK_DRIVER_PYTHON=jupyter
 export PYSPARK_DRIVER_PYTHON_OPTS='notebook'
-export ARROW_PRE_0_15_IPC_FORMAT=1
 export PATH=\$SPARK_HOME/bin:\$SPARK_HOME/sbin:\$PATH
 FIN_FICHIER
 
