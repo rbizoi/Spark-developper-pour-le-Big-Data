@@ -131,36 +131,3 @@ meteoMM.where('annee = 2019')\
           'prec',
           round(sum('prec').over(jour),2).alias('s2'))\
        .show(32)
-
-
-
-meteoFance = meteo.where('id < 8000')\
-             .join(villes.withColumnRenamed('Id', 'id'),'id')\
-             .select(initcap(regexp_replace('ville','-',' ')).alias('ville'),
-                     'date','annee','mois','jour','temperature',
-                     'humidite','visibilite','pression','precipitations')
-
-
-from pyspark.sql.functions import window
-
-meteoFance.where("ville = 'Mont De Marsan' and \
-                 annee = 2019")\
-           .groupBy(window('date', '5 week'))\
-           .agg( round(avg('temperature'),3).alias('temperature'  ),
-                round(sum('precipitations'),3).alias('precipitations'))\
-           .orderBy('window')\
-           .show(15,truncate=False)
-
-meteoFance.count()
-meteoFance.selectExpr('ville','date','temperature as t',
-                      'humidite as h','visibilite as v',
-                      'pression as p','precipitations as e').show()
-
-from pyspark.sql.functions import window
-meteoFance.where("ville = 'Mont De Marsan' and \
-                 annee = 2019")\
-           .groupBy(window('date', '5 week'))\
-           .agg( round(avg('temperature'),3).alias('temperature'  ),
-                round(sum('precipitations'),3).alias('precipitations'))\
-           .orderBy('window')\
-           .show(15,truncate=False)
