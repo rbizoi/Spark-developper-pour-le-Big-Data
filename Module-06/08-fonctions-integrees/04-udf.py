@@ -14,23 +14,42 @@ meteoHexagone.select('temperature',
                      round(celsiusFahrenheit('temperature'),2)\
                            .alias('t_fahrenheit')).show()
 
+import pandas as pd
+from pyspark.sql.functions import *
+from sklearn.preprocessing import scale
 
+@pandas_udf(returnType=FloatType())
+def normalisation(colonne: pd.Series)-> pd.Series:
+    return pd.Series(scale(colonne))
 
+meteo.where('id < 8000')\
+     .na.drop()\
+     .select('temperature',
+             normalisation(meteo['temperature']).alias('normalisation'))\
+     .show(10)
 
-modelStd = StandardScaler()
-
+meteo.where('id < 8000')\
+     .na.drop()\
+     .count()
 
 
 import pandas as pd
 from pyspark.sql.functions import *
 
-def normalisation(colonne: pd.Series) -> pd.Series:
-    return (colonne - colonne.mean(axis=0))/colonne.std(axis=0)
-
-normalisation = pandas_udf(normalisation,returnType=FloatType())
+@pandas_udf(returnType=FloatType())
+def correlation(col1: pd.Series,col2: pd.Series)-> pd.Series:
+    return pd.Series(col1.corr(col2, method='pearson')).repeat(col1.size)
 
 meteo.where('id < 8000')\
      .na.drop()\
      .select('temperature',
-             normalisation(meteo['temperature']).alias('norm'))\
-     .show()
+             'humidite',
+              correlation( meteo['temperature'],
+                          meteo['humidite'] ).alias('corr_h'),
+              correlation( meteo['temperature'],
+                          meteo['pression'] ).alias('corr_p'),
+              correlation( meteo['temperature'],
+                          meteo['visibilite'] ).alias('corr_v'),
+              correlation( meteo['temperature'],
+                          meteo['precipitations'] ).alias('corr_e'))\
+     .show(5)
