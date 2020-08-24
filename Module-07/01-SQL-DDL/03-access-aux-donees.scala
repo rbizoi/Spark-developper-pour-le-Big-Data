@@ -5,8 +5,6 @@ val spark = SparkSession.builder.
                         "io.delta:delta-core_2.12:0.8.0").
               config("spark.sql.extensions",
                         "io.delta.sql.DeltaSparkSessionExtension").
-              config("spark.sql.catalog.spark_catalog",
-                       "org.apache.spark.sql.delta.catalog.DeltaCatalog").
               getOrCreate()
 
 spark.sql("show databases").show()
@@ -27,4 +25,25 @@ val fichiers = Array( "ACHETEURS","ADRESSES","AGENCES","CATEGORIES",
 fichiers.foreach{fichier => spark.sql("CREATE TABLE "+fichier+
                               " USING DELTA LOCATION \"donnees/delta/"+
                               fichier+"_delta\"")}
-                                      
+
+spark.sql("SELECT CL.SOCIETE                           "+
+"        , EXTRACT ( YEAR FROM DATE_COMMANDE) ANNEE    "+
+"        , EXTRACT ( MONTH FROM DATE_COMMANDE) MOIS    "+
+"        , COUNT(DISTINCT CO.NO_COMMANDE) NB_COMMANDES "+
+"        , SUM(DC.PORT) PORT                           "+
+"        , SUM(DC.QUANTITE) QUANTITE                   "+
+"FROM CLIENTS CL                                       "+
+"    JOIN MAGASINS  MA                                 "+
+"             ON MA.CODE_CLIENT = CL.CODE_CLIENT       "+
+"    JOIN ACHETEURS AC                                 "+
+"             ON AC.NO_MAGASIN = MA.NO_MAGASIN         "+
+"    JOIN COMMANDES CO                                 "+
+"             ON CO.NO_ACHETEUR = AC.NO_ACHETEUR       "+
+"    JOIN DETAILS_COMMANDES DC                         "+
+"             ON DC.NO_COMMANDE = CO.NO_COMMANDE       "+
+"GROUP BY CL.SOCIETE                                   "+
+"        , EXTRACT ( YEAR FROM DATE_COMMANDE)          "+
+"        , EXTRACT ( MONTH FROM DATE_COMMANDE)         "+
+"ORDER BY CL.SOCIETE                                   "+
+"        , EXTRACT ( YEAR FROM DATE_COMMANDE)          "+
+"        , EXTRACT ( MONTH FROM DATE_COMMANDE)         ").show()
