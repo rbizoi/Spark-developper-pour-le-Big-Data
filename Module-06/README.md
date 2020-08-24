@@ -31,6 +31,10 @@ spark-shell \
           spark.conf.get('spark.executor.cores'),\
           spark.conf.get('spark.executor.memory')
 
+spark-sql \
+    --master spark://jupiter.olimp.fr:7077 \
+    --executor-cores 8 \
+    --executor-memory 20g
 
 
 
