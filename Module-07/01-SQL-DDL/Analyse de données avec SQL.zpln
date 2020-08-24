@@ -1,0 +1,403 @@
+﻿{
+  "paragraphs": [
+    {
+      "user": "anonymous",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 145.4,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "namespace": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598286926406_537141955",
+      "id": "paragraph_1598286926406_537141955",
+      "dateCreated": "2020-08-24T18:35:26+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:15776",
+      "text": "%sql\nshow databases;",
+      "dateUpdated": "2020-08-24T18:36:02+0200",
+      "dateFinished": "2020-08-24T18:35:58+0200",
+      "dateStarted": "2020-08-24T18:35:58+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "namespace\ncoursspark3\ndefault\ndeltacours\ngest_comm\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nuse deltacours;",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-24T18:36:22+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598286958143_1737301416",
+      "id": "paragraph_1598286958143_1737301416",
+      "dateCreated": "2020-08-24T18:35:58+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:15861",
+      "dateFinished": "2020-08-24T18:36:22+0200",
+      "dateStarted": "2020-08-24T18:36:22+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%sql\nSELECT  EXTRACT ( YEAR FROM DATE_COMMANDE) ANNEE    \n        , EXTRACT ( MONTH FROM DATE_COMMANDE) MOIS    \n        , COUNT(DISTINCT CO.NO_COMMANDE) NB_COMMANDES \n        , SUM(DC.PORT) PORT                           \n        , SUM(DC.QUANTITE) QUANTITE                   \nFROM CLIENTS CL                                       \n    JOIN MAGASINS  MA                                 \n             ON MA.CODE_CLIENT = CL.CODE_CLIENT       \n    JOIN ACHETEURS AC                                 \n             ON AC.NO_MAGASIN = MA.NO_MAGASIN         \n    JOIN COMMANDES CO                                 \n             ON CO.NO_ACHETEUR = AC.NO_ACHETEUR       \n    JOIN DETAILS_COMMANDES DC                         \n             ON DC.NO_COMMANDE = CO.NO_COMMANDE       \nWHERE CL.SOCIETE = \"Blondel père et fils\"          \nGROUP BY EXTRACT ( YEAR FROM DATE_COMMANDE)          \n        , EXTRACT ( MONTH FROM DATE_COMMANDE)         \nORDER BY EXTRACT ( YEAR FROM DATE_COMMANDE)          \n        , EXTRACT ( MONTH FROM DATE_COMMANDE)",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-24T18:43:01+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "ANNEE": "string",
+                      "MOIS": "string",
+                      "NB_COMMANDES": "string",
+                      "PORT": "string",
+                      "QUANTITE": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=29",
+              "$$hashKey": "object:18883"
+            },
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=30",
+              "$$hashKey": "object:18884"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598286982190_422028812",
+      "id": "paragraph_1598286982190_422028812",
+      "dateCreated": "2020-08-24T18:36:22+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:16298",
+      "dateFinished": "2020-08-24T18:43:01+0200",
+      "dateStarted": "2020-08-24T18:42:51+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "ANNEE\tMOIS\tNB_COMMANDES\tPORT\tQUANTITE\n2017\t1\t15\t33240.60\t53814\n2017\t2\t18\t49995.30\t66740\n2017\t3\t20\t53990.80\t83924\n2017\t4\t19\t52025.10\t73460\n2017\t5\t26\t80794.40\t109110\n2017\t6\t4\t10263.90\t14951\n2017\t7\t30\t87767.10\t116165\n2017\t8\t5\t13105.40\t22761\n2017\t9\t22\t58342.40\t85236\n2017\t10\t14\t36736.10\t53364\n2017\t11\t10\t25426.60\t40266\n2017\t12\t13\t31244.20\t44967\n2018\t1\t23\t63329.00\t93751\n2018\t2\t14\t31090.00\t49403\n2018\t3\t24\t66878.40\t97325\n2018\t4\t31\t95767.40\t128492\n2018\t5\t19\t42673.70\t73481\n2018\t6\t18\t49599.50\t74311\n2018\t7\t33\t82084.70\t123020\n2018\t8\t34\t87534.40\t139312\n2018\t9\t22\t53070.30\t81845\n2018\t10\t24\t55713.10\t92948\n2018\t11\t17\t43643.70\t64591\n2018\t12\t27\t73296.40\t106291\n2019\t1\t23\t75428.70\t100143\n2019\t2\t17\t43660.00\t65256\n2019\t3\t10\t25193.80\t38479\n2019\t4\t10\t25142.00\t34193\n2019\t5\t26\t69473.90\t101361\n2019\t6\t20\t54943.90\t84539\n2019\t7\t3\t9286.50\t12097\n2019\t8\t14\t37259.00\t49652\n2019\t9\t21\t57074.60\t85734\n2019\t10\t13\t37369.20\t54881\n2019\t11\t13\t41312.40\t56936\n2019\t12\t18\t48645.40\t72247\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nSELECT  EXTRACT ( YEAR FROM DATE_COMMANDE) ANNEE    \n        , EXTRACT ( MONTH FROM DATE_COMMANDE) MOIS    \n        , COUNT(DISTINCT CO.NO_COMMANDE) NB_COMMANDES \n        , SUM(DC.PORT) PORT                           \n        , SUM(DC.QUANTITE) QUANTITE                   \nFROM CLIENTS CL                                       \n    JOIN MAGASINS  MA                                 \n             ON MA.CODE_CLIENT = CL.CODE_CLIENT       \n    JOIN ACHETEURS AC                                 \n             ON AC.NO_MAGASIN = MA.NO_MAGASIN         \n    JOIN COMMANDES CO                                 \n             ON CO.NO_ACHETEUR = AC.NO_ACHETEUR       \n    JOIN DETAILS_COMMANDES DC                         \n             ON DC.NO_COMMANDE = CO.NO_COMMANDE       \nWHERE CL.SOCIETE = \"Blondel père et fils\"          \nGROUP BY EXTRACT ( YEAR FROM DATE_COMMANDE)          \n        , EXTRACT ( MONTH FROM DATE_COMMANDE)         \nORDER BY EXTRACT ( YEAR FROM DATE_COMMANDE)          \n        , EXTRACT ( MONTH FROM DATE_COMMANDE)\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-24T18:59:24+0200",
+      "config": {
+        "colWidth": 11,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "scatterChart",
+              "height": 577.417,
+              "optionOpen": true,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "ANNEE": "string",
+                      "MOIS": "string",
+                      "NB_COMMANDES": "string",
+                      "PORT": "string",
+                      "QUANTITE": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default",
+                  "stacked": true
+                },
+                "pieChart": {},
+                "stackedAreaChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default",
+                  "style": "stack"
+                },
+                "scatterChart": {
+                  "yAxis": {
+                    "name": "QUANTITE",
+                    "index": 4,
+                    "aggr": "sum"
+                  },
+                  "group": {
+                    "name": "ANNEE",
+                    "index": 0,
+                    "aggr": "sum"
+                  },
+                  "xAxis": {
+                    "name": "MOIS",
+                    "index": 1,
+                    "aggr": "sum"
+                  },
+                  "size": {
+                    "name": "NB_COMMANDES",
+                    "index": 2,
+                    "aggr": "sum"
+                  }
+                }
+              },
+              "keys": [
+                {
+                  "name": "MOIS",
+                  "index": 1,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [
+                {
+                  "name": "ANNEE",
+                  "index": 0,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [
+                {
+                  "name": "PORT",
+                  "index": 3,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "QUANTITE",
+                  "index": 4,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=39",
+              "$$hashKey": "object:22592"
+            },
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=40",
+              "$$hashKey": "object:22593"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598287032946_860128148",
+      "id": "paragraph_1598287032946_860128148",
+      "dateCreated": "2020-08-24T18:37:12+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:16373",
+      "dateFinished": "2020-08-24T18:46:56+0200",
+      "dateStarted": "2020-08-24T18:46:48+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "ANNEE\tMOIS\tNB_COMMANDES\tPORT\tQUANTITE\n2017\t1\t15\t33240.60\t53814\n2017\t2\t18\t49995.30\t66740\n2017\t3\t20\t53990.80\t83924\n2017\t4\t19\t52025.10\t73460\n2017\t5\t26\t80794.40\t109110\n2017\t6\t4\t10263.90\t14951\n2017\t7\t30\t87767.10\t116165\n2017\t8\t5\t13105.40\t22761\n2017\t9\t22\t58342.40\t85236\n2017\t10\t14\t36736.10\t53364\n2017\t11\t10\t25426.60\t40266\n2017\t12\t13\t31244.20\t44967\n2018\t1\t23\t63329.00\t93751\n2018\t2\t14\t31090.00\t49403\n2018\t3\t24\t66878.40\t97325\n2018\t4\t31\t95767.40\t128492\n2018\t5\t19\t42673.70\t73481\n2018\t6\t18\t49599.50\t74311\n2018\t7\t33\t82084.70\t123020\n2018\t8\t34\t87534.40\t139312\n2018\t9\t22\t53070.30\t81845\n2018\t10\t24\t55713.10\t92948\n2018\t11\t17\t43643.70\t64591\n2018\t12\t27\t73296.40\t106291\n2019\t1\t23\t75428.70\t100143\n2019\t2\t17\t43660.00\t65256\n2019\t3\t10\t25193.80\t38479\n2019\t4\t10\t25142.00\t34193\n2019\t5\t26\t69473.90\t101361\n2019\t6\t20\t54943.90\t84539\n2019\t7\t3\t9286.50\t12097\n2019\t8\t14\t37259.00\t49652\n2019\t9\t21\t57074.60\t85734\n2019\t10\t13\t37369.20\t54881\n2019\t11\t13\t41312.40\t56936\n2019\t12\t18\t48645.40\t72247\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-24T18:46:36+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598287596051_1340572410",
+      "id": "paragraph_1598287596051_1340572410",
+      "dateCreated": "2020-08-24T18:46:36+0200",
+      "status": "READY",
+      "focus": true,
+      "$$hashKey": "object:19069"
+    }
+  ],
+  "name": "Analyse de données avec SQL",
+  "id": "2FFPJWPAG",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.9.0-SNAPSHOT",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {},
+  "path": "/Analyse de données avec SQL"
+}
