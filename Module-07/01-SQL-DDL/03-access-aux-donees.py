@@ -1,4 +1,3 @@
-
 spark.sql('show databases').show()
 spark.sql('use gest_comm')
 
