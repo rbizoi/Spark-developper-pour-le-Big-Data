@@ -67,7 +67,3 @@ for dataset in ['boucles_sportives_vitaboucle',
                 'stations-velhop',
                 'vente_a_la_ferme']:
     ecrireJsonHDFS(url,dataset)
-
-
-
-url = 'https://data.strasbourg.eu/api/records/1.0/search/?dataset='
