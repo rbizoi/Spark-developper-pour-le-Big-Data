@@ -3,7 +3,7 @@
 #version = 3.0.0
 # --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.0.0
 
-from pyspark.sql import SparkSession
+
 from pyspark.sql.functions import explode,split,length,lower,regexp_replace
 
 spark = SparkSession.builder.\
