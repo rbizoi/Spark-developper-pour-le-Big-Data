@@ -83,10 +83,14 @@ LOCATION "/user/spark/donnees/parquet/EMPLOYES_parquet";
 ADD JAR "/usr/share/spark/jars/delta-core_2.12-0.8.0-SNAPSHOT.jar";
 ADD JAR "hdfs://jupiter.olimp.fr:8020/spark-jars/delta-core_2.12-0.8.0-SNAPSHOT.jar";
 
-CREATE EXTERNAL TABLE fournisseurs
+CREATE TABLE fournisseurs
 USING DELTA
 LOCATION "/user/spark/donnees/delta/FOURNISSEURS_delta";
 
+SELECT count(*) FROM employes;
+SELECT count(*) FROM parquet.`/user/spark/donnees/parquet/EMPLOYES_parquet`;
+SELECT count(*) FROM fournisseurs;
+SELECT count(*) FROM delta.`/user/spark/donnees/delta/FOURNISSEURS_delta`;
 
 CREATE DATABASE IF NOT EXISTs gest_comm
 LOCATION "hdfs:///user/spark/databases/gest_comm_db";
