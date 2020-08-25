@@ -12,21 +12,65 @@ SELECT 'Bonjour aujourd\'hui c\'est le :' AS C1, current_date() AS C2 ;
 SELECT * FROM
 VALUES  ("Razvan", array(55, 1.81)),
         ("Radu", array(54, 1.81))
-        AS data(Prenom, Age_Taille)
+        AS donnees(Prenom, Age_Taille);
 
 SELECT * FROM
 VALUES  ("Razvan", array(map("age",55),
           map("taille",1.81), map("poid",100))),
         ("Radu", array(map("age",54),
           map("taille",1.81), map("poid",150)))
-        AS data(Prenom, Infos);
+        AS donnees(Prenom, Infos);
+
+
+WITH donnees(Prenom, Infos) AS (
+  VALUES  ("Razvan", array(map("age",55),
+            map("taille",1.81), map("poid",100))),
+          ("Radu", array(map("age",54),
+            map("taille",1.81), map("poid",150)))
+)
+SELECT * FROM donnees;
 
 
 spark.sql("""
-
+  SELECT * FROM
+  VALUES  ("Razvan", array(map("age",55),
+            map("taille",1.81), map("poid",100))),
+          ("Radu", array(map("age",54),
+            map("taille",1.81), map("poid",150)))
+          AS donnees(Prenom, Infos);
 """).show(truncate=False)
 
 
 
+SELECT vv, t,
+       vv+t as calcul,
+       coalesce(vv,0) as nvl,
+       coalesce(vv,0) + t as clacul
+FROM coursspark3.meteoinitialep
 
-MapType
+SELECT vv, t
+FROM coursspark3.meteoinitialep
+WHERE vv != null ;
+
+SELECT vv, t
+FROM coursspark3.meteoinitialep
+WHERE vv is not null ;
+
+
+spark.sql("""
+  SELECT count(*)
+  FROM coursspark3.meteoinitialep
+""").show(truncate=False)
+
+spark.sql("""
+SELECT vv, t
+FROM coursspark3.meteoinitialep limit 3
+""").show(truncate=False)
+
+
+SELECT
+spark.sql("
+
+
+
+spark.sql("select vv, t, vv+t as calcul from coursspark3.meteoinitialep").show()
