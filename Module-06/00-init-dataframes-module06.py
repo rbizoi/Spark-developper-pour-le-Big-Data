@@ -66,6 +66,12 @@ meteoFance = meteo.where('id < 8000')\
              .select(initcap(regexp_replace('ville','-',' ')).alias('ville'),
                      'annee','mois','jour','temperature',
                      'humidite','visibilite','pression','precipitations')
+meteoFance.write.
+       mode('overwrite').
+       format('parquet').
+       partitionBy('annee').
+       option('path', '/user/spark/donnees/meteoFrance').
+       save()
 
 data = [('Ajaccio'     ,'dfa' ),
                   ('Angers'      ,'dfa' ),
