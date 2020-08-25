@@ -3,7 +3,7 @@
     {
       "text": "%sql\nshow databases;",
       "user": "anonymous",
-      "dateUpdated": "2020-08-25T08:42:19+0200",
+      "dateUpdated": "2020-08-25T15:37:05+0200",
       "config": {
         "colWidth": 12,
         "fontSize": 9,
@@ -64,16 +64,16 @@
       "jobName": "paragraph_1598286926406_537141955",
       "id": "paragraph_1598286926406_537141955",
       "dateCreated": "2020-08-24T18:35:26+0200",
-      "dateStarted": "2020-08-25T08:42:19+0200",
-      "dateFinished": "2020-08-25T08:42:19+0200",
+      "dateStarted": "2020-08-25T15:37:05+0200",
+      "dateFinished": "2020-08-25T15:37:26+0200",
       "status": "FINISHED",
       "focus": true,
-      "$$hashKey": "object:302"
+      "$$hashKey": "object:378"
     },
     {
       "text": "%sql\nuse deltacours;",
       "user": "anonymous",
-      "dateUpdated": "2020-08-25T08:42:19+0200",
+      "dateUpdated": "2020-08-25T15:37:26+0200",
       "config": {
         "colWidth": 12,
         "fontSize": 9,
@@ -101,15 +101,15 @@
       "jobName": "paragraph_1598286958143_1737301416",
       "id": "paragraph_1598286958143_1737301416",
       "dateCreated": "2020-08-24T18:35:58+0200",
-      "dateStarted": "2020-08-25T08:42:19+0200",
-      "dateFinished": "2020-08-25T08:42:20+0200",
+      "dateStarted": "2020-08-25T15:37:26+0200",
+      "dateFinished": "2020-08-25T15:37:26+0200",
       "status": "FINISHED",
-      "$$hashKey": "object:303"
+      "$$hashKey": "object:379"
     },
     {
       "text": "%sql\nSELECT  EXTRACT ( YEAR FROM DATE_COMMANDE) ANNEE    \n        , EXTRACT ( MONTH FROM DATE_COMMANDE) MOIS    \n        , COUNT(DISTINCT CO.NO_COMMANDE) NB_COMMANDES \n        , SUM(DC.PORT) PORT                           \n        , SUM(DC.QUANTITE) QUANTITE                   \nFROM CLIENTS CL                                       \n    JOIN MAGASINS  MA                                 \n             ON MA.CODE_CLIENT = CL.CODE_CLIENT       \n    JOIN ACHETEURS AC                                 \n             ON AC.NO_MAGASIN = MA.NO_MAGASIN         \n    JOIN COMMANDES CO                                 \n             ON CO.NO_ACHETEUR = AC.NO_ACHETEUR       \n    JOIN DETAILS_COMMANDES DC                         \n             ON DC.NO_COMMANDE = CO.NO_COMMANDE       \nWHERE CL.SOCIETE = \"Blondel père et fils\"          \nGROUP BY EXTRACT ( YEAR FROM DATE_COMMANDE)          \n        , EXTRACT ( MONTH FROM DATE_COMMANDE)         \nORDER BY EXTRACT ( YEAR FROM DATE_COMMANDE)          \n        , EXTRACT ( MONTH FROM DATE_COMMANDE)",
       "user": "anonymous",
-      "dateUpdated": "2020-08-25T08:42:20+0200",
+      "dateUpdated": "2020-08-25T15:37:26+0200",
       "config": {
         "colWidth": 12,
         "fontSize": 9,
@@ -177,12 +177,32 @@
           "group": "spark",
           "values": [
             {
-              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=49",
-              "$$hashKey": "object:2398"
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=0",
+              "$$hashKey": "object:2820"
             },
             {
-              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=50",
-              "$$hashKey": "object:2399"
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=1",
+              "$$hashKey": "object:2821"
+            },
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=2",
+              "$$hashKey": "object:2822"
+            },
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=3",
+              "$$hashKey": "object:2823"
+            },
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=4",
+              "$$hashKey": "object:2824"
+            },
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=13",
+              "$$hashKey": "object:2825"
+            },
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=14",
+              "$$hashKey": "object:2826"
             }
           ],
           "interpreterSettingId": "spark"
@@ -192,15 +212,407 @@
       "jobName": "paragraph_1598286982190_422028812",
       "id": "paragraph_1598286982190_422028812",
       "dateCreated": "2020-08-24T18:36:22+0200",
-      "dateStarted": "2020-08-25T08:42:20+0200",
-      "dateFinished": "2020-08-25T08:42:26+0200",
+      "dateStarted": "2020-08-25T15:37:26+0200",
+      "dateFinished": "2020-08-25T15:38:14+0200",
       "status": "FINISHED",
-      "$$hashKey": "object:304"
+      "$$hashKey": "object:380"
+    },
+    {
+      "text": "%sql\nSELECT  EXTRACT ( YEAR FROM DATE_COMMANDE) ANNEE    \n        , EXTRACT ( MONTH FROM DATE_COMMANDE) MOIS    \n        , COUNT(DISTINCT CO.NO_COMMANDE) NB_COMMANDES \n        , SUM(DC.PORT) PORT                           \n        , SUM(DC.QUANTITE) QUANTITE                   \nFROM CLIENTS CL                                       \n    JOIN MAGASINS  MA                                 \n             ON MA.CODE_CLIENT = CL.CODE_CLIENT       \n    JOIN ACHETEURS AC                                 \n             ON AC.NO_MAGASIN = MA.NO_MAGASIN         \n    JOIN COMMANDES CO                                 \n             ON CO.NO_ACHETEUR = AC.NO_ACHETEUR       \n    JOIN DETAILS_COMMANDES DC                         \n             ON DC.NO_COMMANDE = CO.NO_COMMANDE       \nWHERE CL.SOCIETE = \"Blondel père et fils\"          \nGROUP BY EXTRACT ( YEAR FROM DATE_COMMANDE)          \n        , EXTRACT ( MONTH FROM DATE_COMMANDE)         \nORDER BY EXTRACT ( YEAR FROM DATE_COMMANDE)          \n        , EXTRACT ( MONTH FROM DATE_COMMANDE)",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-25T15:42:42+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "pieChart",
+              "height": 300,
+              "optionOpen": true,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "ANNEE": "string",
+                      "MOIS": "string",
+                      "NB_COMMANDES": "string",
+                      "PORT": "string",
+                      "QUANTITE": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "pieChart": {}
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "MOIS",
+                  "index": 1,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "QUANTITE",
+                  "index": 4,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=56",
+              "$$hashKey": "object:7465"
+            },
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=57",
+              "$$hashKey": "object:7466"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598362830659_1443447724",
+      "id": "paragraph_1598362830659_1443447724",
+      "dateCreated": "2020-08-25T15:40:30+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:5883",
+      "dateFinished": "2020-08-25T15:40:40+0200",
+      "dateStarted": "2020-08-25T15:40:34+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "ANNEE\tMOIS\tNB_COMMANDES\tPORT\tQUANTITE\n2017\t1\t15\t33240.60\t53814\n2017\t2\t18\t49995.30\t66740\n2017\t3\t20\t53990.80\t83924\n2017\t4\t19\t52025.10\t73460\n2017\t5\t26\t80794.40\t109110\n2017\t6\t4\t10263.90\t14951\n2017\t7\t30\t87767.10\t116165\n2017\t8\t5\t13105.40\t22761\n2017\t9\t22\t58342.40\t85236\n2017\t10\t14\t36736.10\t53364\n2017\t11\t10\t25426.60\t40266\n2017\t12\t13\t31244.20\t44967\n2018\t1\t23\t63329.00\t93751\n2018\t2\t14\t31090.00\t49403\n2018\t3\t24\t66878.40\t97325\n2018\t4\t31\t95767.40\t128492\n2018\t5\t19\t42673.70\t73481\n2018\t6\t18\t49599.50\t74311\n2018\t7\t33\t82084.70\t123020\n2018\t8\t34\t87534.40\t139312\n2018\t9\t22\t53070.30\t81845\n2018\t10\t24\t55713.10\t92948\n2018\t11\t17\t43643.70\t64591\n2018\t12\t27\t73296.40\t106291\n2019\t1\t23\t75428.70\t100143\n2019\t2\t17\t43660.00\t65256\n2019\t3\t10\t25193.80\t38479\n2019\t4\t10\t25142.00\t34193\n2019\t5\t26\t69473.90\t101361\n2019\t6\t20\t54943.90\t84539\n2019\t7\t3\t9286.50\t12097\n2019\t8\t14\t37259.00\t49652\n2019\t9\t21\t57074.60\t85734\n2019\t10\t13\t37369.20\t54881\n2019\t11\t13\t41312.40\t56936\n2019\t12\t18\t48645.40\t72247\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nSELECT  EXTRACT ( YEAR FROM DATE_COMMANDE) ANNEE    \n        , EXTRACT ( MONTH FROM DATE_COMMANDE) MOIS    \n        , COUNT(DISTINCT CO.NO_COMMANDE) NB_COMMANDES \n        , SUM(DC.PORT) PORT                           \n        , SUM(DC.QUANTITE) QUANTITE                   \nFROM CLIENTS CL                                       \n    JOIN MAGASINS  MA                                 \n             ON MA.CODE_CLIENT = CL.CODE_CLIENT       \n    JOIN ACHETEURS AC                                 \n             ON AC.NO_MAGASIN = MA.NO_MAGASIN         \n    JOIN COMMANDES CO                                 \n             ON CO.NO_ACHETEUR = AC.NO_ACHETEUR       \n    JOIN DETAILS_COMMANDES DC                         \n             ON DC.NO_COMMANDE = CO.NO_COMMANDE       \nWHERE CL.SOCIETE = \"Blondel père et fils\"          \nGROUP BY EXTRACT ( YEAR FROM DATE_COMMANDE)          \n        , EXTRACT ( MONTH FROM DATE_COMMANDE)         \nORDER BY EXTRACT ( YEAR FROM DATE_COMMANDE)          \n        , EXTRACT ( MONTH FROM DATE_COMMANDE)",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-25T15:40:05+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "ANNEE": "string",
+                      "MOIS": "string",
+                      "NB_COMMANDES": "string",
+                      "PORT": "string",
+                      "QUANTITE": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "ANNEE",
+                  "index": 0,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "MOIS",
+                  "index": 1,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "PORT",
+                  "index": 3,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "QUANTITE",
+                  "index": 4,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=46",
+              "$$hashKey": "object:5778"
+            },
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=47",
+              "$$hashKey": "object:5779"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598362771282_384771179",
+      "id": "paragraph_1598362771282_384771179",
+      "dateCreated": "2020-08-25T15:39:31+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:4613",
+      "dateFinished": "2020-08-25T15:39:39+0200",
+      "dateStarted": "2020-08-25T15:39:33+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "ANNEE\tMOIS\tNB_COMMANDES\tPORT\tQUANTITE\n2017\t1\t15\t33240.60\t53814\n2017\t2\t18\t49995.30\t66740\n2017\t3\t20\t53990.80\t83924\n2017\t4\t19\t52025.10\t73460\n2017\t5\t26\t80794.40\t109110\n2017\t6\t4\t10263.90\t14951\n2017\t7\t30\t87767.10\t116165\n2017\t8\t5\t13105.40\t22761\n2017\t9\t22\t58342.40\t85236\n2017\t10\t14\t36736.10\t53364\n2017\t11\t10\t25426.60\t40266\n2017\t12\t13\t31244.20\t44967\n2018\t1\t23\t63329.00\t93751\n2018\t2\t14\t31090.00\t49403\n2018\t3\t24\t66878.40\t97325\n2018\t4\t31\t95767.40\t128492\n2018\t5\t19\t42673.70\t73481\n2018\t6\t18\t49599.50\t74311\n2018\t7\t33\t82084.70\t123020\n2018\t8\t34\t87534.40\t139312\n2018\t9\t22\t53070.30\t81845\n2018\t10\t24\t55713.10\t92948\n2018\t11\t17\t43643.70\t64591\n2018\t12\t27\t73296.40\t106291\n2019\t1\t23\t75428.70\t100143\n2019\t2\t17\t43660.00\t65256\n2019\t3\t10\t25193.80\t38479\n2019\t4\t10\t25142.00\t34193\n2019\t5\t26\t69473.90\t101361\n2019\t6\t20\t54943.90\t84539\n2019\t7\t3\t9286.50\t12097\n2019\t8\t14\t37259.00\t49652\n2019\t9\t21\t57074.60\t85734\n2019\t10\t13\t37369.20\t54881\n2019\t11\t13\t41312.40\t56936\n2019\t12\t18\t48645.40\t72247\n"
+          }
+        ]
+      }
     },
     {
       "text": "%sql\nSELECT  EXTRACT ( YEAR FROM DATE_COMMANDE) ANNEE    \n        , EXTRACT ( MONTH FROM DATE_COMMANDE) MOIS    \n        , COUNT(DISTINCT CO.NO_COMMANDE) NB_COMMANDES \n        , SUM(DC.PORT) PORT                           \n        , SUM(DC.QUANTITE) QUANTITE                   \nFROM CLIENTS CL                                       \n    JOIN MAGASINS  MA                                 \n             ON MA.CODE_CLIENT = CL.CODE_CLIENT       \n    JOIN ACHETEURS AC                                 \n             ON AC.NO_MAGASIN = MA.NO_MAGASIN         \n    JOIN COMMANDES CO                                 \n             ON CO.NO_ACHETEUR = AC.NO_ACHETEUR       \n    JOIN DETAILS_COMMANDES DC                         \n             ON DC.NO_COMMANDE = CO.NO_COMMANDE       \nWHERE CL.SOCIETE = \"Blondel père et fils\"          \nGROUP BY EXTRACT ( YEAR FROM DATE_COMMANDE)          \n        , EXTRACT ( MONTH FROM DATE_COMMANDE)         \nORDER BY EXTRACT ( YEAR FROM DATE_COMMANDE)          \n        , EXTRACT ( MONTH FROM DATE_COMMANDE)\n",
       "user": "anonymous",
-      "dateUpdated": "2020-08-25T08:42:26+0200",
+      "dateUpdated": "2020-08-25T15:40:11+0200",
+      "config": {
+        "colWidth": 11,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "stackedAreaChart",
+              "height": 577.417,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "ANNEE": "string",
+                      "MOIS": "string",
+                      "NB_COMMANDES": "string",
+                      "PORT": "string",
+                      "QUANTITE": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default",
+                  "stacked": true
+                },
+                "pieChart": {},
+                "stackedAreaChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default",
+                  "style": "stack"
+                },
+                "scatterChart": {
+                  "yAxis": {
+                    "name": "QUANTITE",
+                    "index": 4,
+                    "aggr": "sum"
+                  },
+                  "group": {
+                    "name": "ANNEE",
+                    "index": 0,
+                    "aggr": "sum"
+                  },
+                  "xAxis": {
+                    "name": "MOIS",
+                    "index": 1,
+                    "aggr": "sum"
+                  },
+                  "size": {
+                    "name": "NB_COMMANDES",
+                    "index": 2,
+                    "aggr": "sum"
+                  }
+                }
+              },
+              "keys": [
+                {
+                  "name": "MOIS",
+                  "index": 1,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [
+                {
+                  "name": "ANNEE",
+                  "index": 0,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [
+                {
+                  "name": "PORT",
+                  "index": 3,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "QUANTITE",
+                  "index": 4,
+                  "aggr": "sum"
+                }
+              ],
+              "commonSetting": {}
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=36",
+              "$$hashKey": "object:5808"
+            },
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=37",
+              "$$hashKey": "object:5809"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598362735342_317312603",
+      "id": "paragraph_1598362735342_317312603",
+      "dateCreated": "2020-08-25T15:38:55+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:4236",
+      "dateFinished": "2020-08-25T15:39:05+0200",
+      "dateStarted": "2020-08-25T15:38:58+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "ANNEE\tMOIS\tNB_COMMANDES\tPORT\tQUANTITE\n2017\t1\t15\t33240.60\t53814\n2017\t2\t18\t49995.30\t66740\n2017\t3\t20\t53990.80\t83924\n2017\t4\t19\t52025.10\t73460\n2017\t5\t26\t80794.40\t109110\n2017\t6\t4\t10263.90\t14951\n2017\t7\t30\t87767.10\t116165\n2017\t8\t5\t13105.40\t22761\n2017\t9\t22\t58342.40\t85236\n2017\t10\t14\t36736.10\t53364\n2017\t11\t10\t25426.60\t40266\n2017\t12\t13\t31244.20\t44967\n2018\t1\t23\t63329.00\t93751\n2018\t2\t14\t31090.00\t49403\n2018\t3\t24\t66878.40\t97325\n2018\t4\t31\t95767.40\t128492\n2018\t5\t19\t42673.70\t73481\n2018\t6\t18\t49599.50\t74311\n2018\t7\t33\t82084.70\t123020\n2018\t8\t34\t87534.40\t139312\n2018\t9\t22\t53070.30\t81845\n2018\t10\t24\t55713.10\t92948\n2018\t11\t17\t43643.70\t64591\n2018\t12\t27\t73296.40\t106291\n2019\t1\t23\t75428.70\t100143\n2019\t2\t17\t43660.00\t65256\n2019\t3\t10\t25193.80\t38479\n2019\t4\t10\t25142.00\t34193\n2019\t5\t26\t69473.90\t101361\n2019\t6\t20\t54943.90\t84539\n2019\t7\t3\t9286.50\t12097\n2019\t8\t14\t37259.00\t49652\n2019\t9\t21\t57074.60\t85734\n2019\t10\t13\t37369.20\t54881\n2019\t11\t13\t41312.40\t56936\n2019\t12\t18\t48645.40\t72247\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nSELECT  EXTRACT ( YEAR FROM DATE_COMMANDE) ANNEE    \n        , EXTRACT ( MONTH FROM DATE_COMMANDE) MOIS    \n        , COUNT(DISTINCT CO.NO_COMMANDE) NB_COMMANDES \n        , SUM(DC.PORT) PORT                           \n        , SUM(DC.QUANTITE) QUANTITE                   \nFROM CLIENTS CL                                       \n    JOIN MAGASINS  MA                                 \n             ON MA.CODE_CLIENT = CL.CODE_CLIENT       \n    JOIN ACHETEURS AC                                 \n             ON AC.NO_MAGASIN = MA.NO_MAGASIN         \n    JOIN COMMANDES CO                                 \n             ON CO.NO_ACHETEUR = AC.NO_ACHETEUR       \n    JOIN DETAILS_COMMANDES DC                         \n             ON DC.NO_COMMANDE = CO.NO_COMMANDE       \nWHERE CL.SOCIETE = \"Blondel père et fils\"          \nGROUP BY EXTRACT ( YEAR FROM DATE_COMMANDE)          \n        , EXTRACT ( MONTH FROM DATE_COMMANDE)         \nORDER BY EXTRACT ( YEAR FROM DATE_COMMANDE)          \n        , EXTRACT ( MONTH FROM DATE_COMMANDE)\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-25T15:40:16+0200",
       "config": {
         "colWidth": 11,
         "fontSize": 9,
@@ -210,7 +622,7 @@
             "graph": {
               "mode": "scatterChart",
               "height": 577.417,
-              "optionOpen": true,
+              "optionOpen": false,
               "setting": {
                 "table": {
                   "tableGridState": {},
@@ -331,12 +743,12 @@
           "group": "spark",
           "values": [
             {
-              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=59",
-              "$$hashKey": "object:3240"
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=23",
+              "$$hashKey": "object:5838"
             },
             {
-              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=60",
-              "$$hashKey": "object:3241"
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=24",
+              "$$hashKey": "object:5839"
             }
           ],
           "interpreterSettingId": "spark"
@@ -346,15 +758,15 @@
       "jobName": "paragraph_1598287032946_860128148",
       "id": "paragraph_1598287032946_860128148",
       "dateCreated": "2020-08-24T18:37:12+0200",
-      "dateStarted": "2020-08-25T08:42:26+0200",
-      "dateFinished": "2020-08-25T08:42:33+0200",
+      "dateStarted": "2020-08-25T15:38:14+0200",
+      "dateFinished": "2020-08-25T15:38:23+0200",
       "status": "FINISHED",
-      "$$hashKey": "object:305"
+      "$$hashKey": "object:381"
     },
     {
       "text": "\nval donnees = spark.sql(\"select * from parquet.`/user/spark/donnees/meteoFrance`\").cache()\ndonnees.createOrReplaceGlobalTempView(\"donneesMeteo\") ",
       "user": "anonymous",
-      "dateUpdated": "2020-08-25T09:40:42+0200",
+      "dateUpdated": "2020-08-25T15:38:23+0200",
       "config": {
         "colWidth": 12,
         "fontSize": 9,
@@ -372,6 +784,15 @@
         "params": {},
         "forms": {}
       },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mdonnees\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m = [ville: string, mois: int ... 7 more fields]\n"
+          }
+        ]
+      },
       "apps": [],
       "runtimeInfos": {
         "jobUrl": {
@@ -381,8 +802,8 @@
           "group": "spark",
           "values": [
             {
-              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=99",
-              "$$hashKey": "object:19226"
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=25",
+              "$$hashKey": "object:4000"
             }
           ],
           "interpreterSettingId": "spark"
@@ -392,22 +813,15 @@
       "jobName": "paragraph_1598287596051_1340572410",
       "id": "paragraph_1598287596051_1340572410",
       "dateCreated": "2020-08-24T18:46:36+0200",
+      "dateStarted": "2020-08-25T15:38:23+0200",
+      "dateFinished": "2020-08-25T15:38:24+0200",
       "status": "FINISHED",
-      "$$hashKey": "object:306",
-      "dateFinished": "2020-08-25T09:40:43+0200",
-      "dateStarted": "2020-08-25T09:40:42+0200",
-      "results": {
-        "code": "SUCCESS",
-        "msg": [
-          {
-            "type": "TEXT",
-            "data": "\u001b[1m\u001b[34mdonnees\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m = [ville: string, mois: int ... 7 more fields]\n"
-          }
-        ]
-      }
+      "$$hashKey": "object:382"
     },
     {
+      "text": "%sql\nselect * from global_temp.donneesMeteo\nwhere annee = 2020 and mois = 5 and ville = \"Strasbourg Entzheim\"",
       "user": "anonymous",
+      "dateUpdated": "2020-08-25T15:38:24+0200",
       "config": {
         "colWidth": 12,
         "fontSize": 9,
@@ -531,6 +945,15 @@
         "params": {},
         "forms": {}
       },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "ville\tmois\tjour\ttemperature\thumidite\tvisibilite\tpression\tprecipitations\tannee\nStrasbourg Entzheim\t5\t1\t11.5\t0.8\t60.0\t98.92\t0.4\t2020\nStrasbourg Entzheim\t5\t1\t10.6\t0.8\t60.0\t98.88\t-0.1\t2020\nStrasbourg Entzheim\t5\t1\t11.8\t0.76\t33.41\t98.86\t0.0\t2020\nStrasbourg Entzheim\t5\t1\t15.4\t0.66\t23.8\t98.77\t0.0\t2020\nStrasbourg Entzheim\t5\t1\t15.1\t0.56\t32.39\t98.7\t0.0\t2020\nStrasbourg Entzheim\t5\t1\t10.6\t0.84\t42.92\t98.75\t1.2\t2020\nStrasbourg Entzheim\t5\t1\t11.2\t0.92\t45.73\t98.79\t0.6\t2020\nStrasbourg Entzheim\t5\t1\t10.1\t0.94\t52.07\t98.91\t0.0\t2020\nStrasbourg Entzheim\t5\t2\t9.2\t0.9\t60.0\t99.1\t2.6\t2020\nStrasbourg Entzheim\t5\t2\t8.0\t0.95\t46.56\t99.26\t0.0\t2020\nStrasbourg Entzheim\t5\t2\t10.3\t0.86\t42.58\t99.37\t0.0\t2020\nStrasbourg Entzheim\t5\t2\t12.7\t0.66\t39.2\t99.41\t0.2\t2020\nStrasbourg Entzheim\t5\t2\t13.5\t0.55\t57.08\t99.4\t0.0\t2020\nStrasbourg Entzheim\t5\t2\t14.5\t0.67\t19.44\t99.44\t0.4\t2020\nStrasbourg Entzheim\t5\t2\t13.3\t0.55\t38.66\t99.61\t0.2\t2020\nStrasbourg Entzheim\t5\t2\t6.7\t0.82\t45.05\t99.84\t0.0\t2020\nStrasbourg Entzheim\t5\t3\t4.7\t0.9\t27.37\t99.95\t0.0\t2020\nStrasbourg Entzheim\t5\t3\t5.4\t0.97\t5.97\t100.02\t0.0\t2020\nStrasbourg Entzheim\t5\t3\t6.2\t1.0\t0.5\t100.15\t0.2\t2020\nStrasbourg Entzheim\t5\t3\t12.8\t0.73\t38.45\t100.16\t0.0\t2020\nStrasbourg Entzheim\t5\t3\t17.4\t0.45\t51.42\t100.09\t0.0\t2020\nStrasbourg Entzheim\t5\t3\t18.0\t0.4\t43.39\t99.97\t0.0\t2020\nStrasbourg Entzheim\t5\t3\t17.4\t0.43\t59.35\t99.94\t0.0\t2020\nStrasbourg Entzheim\t5\t3\t14.3\t0.61\t52.04\t99.96\t0.0\t2020\nStrasbourg Entzheim\t5\t4\t9.8\t0.81\t42.59\t99.98\t0.0\t2020\nStrasbourg Entzheim\t5\t4\t10.4\t0.81\t44.57\t99.89\t0.0\t2020\nStrasbourg Entzheim\t5\t4\t11.1\t0.94\t9.84\t99.95\t1.6\t2020\nStrasbourg Entzheim\t5\t4\t16.3\t0.83\t12.31\t99.93\t-0.1\t2020\nStrasbourg Entzheim\t5\t4\t21.6\t0.48\t19.77\t99.81\t0.0\t2020\nStrasbourg Entzheim\t5\t4\t20.9\t0.52\t14.12\t99.71\t0.0\t2020\nStrasbourg Entzheim\t5\t4\t19.1\t0.55\t11.19\t99.72\t0.0\t2020\nStrasbourg Entzheim\t5\t4\t13.6\t0.74\t17.86\t100.0\t0.0\t2020\nStrasbourg Entzheim\t5\t5\t12.0\t0.75\t17.0\t99.93\t0.0\t2020\nStrasbourg Entzheim\t5\t5\t10.8\t0.77\t20.39\t99.88\t0.0\t2020\nStrasbourg Entzheim\t5\t5\t9.9\t0.79\t10.71\t99.92\t0.0\t2020\nStrasbourg Entzheim\t5\t5\t11.0\t0.72\t4.97\t99.94\t0.0\t2020\nStrasbourg Entzheim\t5\t5\t13.4\t0.59\t13.96\t99.93\t0.0\t2020\nStrasbourg Entzheim\t5\t5\t15.4\t0.51\t48.06\t99.94\t0.0\t2020\nStrasbourg Entzheim\t5\t5\t14.7\t0.67\t38.48\t99.96\t0.0\t2020\nStrasbourg Entzheim\t5\t5\t12.6\t0.41\t59.98\t100.17\t0.0\t2020\nStrasbourg Entzheim\t5\t6\t8.5\t0.53\t59.21\t100.24\t0.0\t2020\nStrasbourg Entzheim\t5\t6\t6.6\t0.66\t52.53\t100.3\t0.0\t2020\nStrasbourg Entzheim\t5\t6\t6.6\t0.67\t1.43\t100.42\t0.0\t2020\nStrasbourg Entzheim\t5\t6\t14.5\t0.43\t4.23\t100.49\t0.0\t2020\nStrasbourg Entzheim\t5\t6\t17.4\t0.32\t33.95\t100.44\t0.0\t2020\nStrasbourg Entzheim\t5\t6\t18.8\t0.28\t13.17\t100.41\t0.0\t2020\nStrasbourg Entzheim\t5\t6\t16.4\t0.29\t23.89\t100.48\t0.0\t2020\nStrasbourg Entzheim\t5\t6\t10.9\t0.47\t60.0\t100.57\t0.0\t2020\nStrasbourg Entzheim\t5\t7\t7.0\t0.67\t55.06\t100.65\t0.0\t2020\nStrasbourg Entzheim\t5\t7\t4.2\t0.81\t49.44\t100.66\t0.0\t2020\nStrasbourg Entzheim\t5\t7\t9.7\t0.58\t26.31\t100.66\t0.0\t2020\nStrasbourg Entzheim\t5\t7\t16.8\t0.38\t17.8\t100.58\t0.0\t2020\nStrasbourg Entzheim\t5\t7\t21.4\t0.27\t19.46\t100.51\t0.0\t2020\nStrasbourg Entzheim\t5\t7\t23.3\t0.25\t20.55\t100.26\t0.0\t2020\nStrasbourg Entzheim\t5\t7\t21.2\t0.34\t30.57\t100.18\t0.0\t2020\nStrasbourg Entzheim\t5\t7\t14.1\t0.56\t43.59\t100.19\t0.0\t2020\nStrasbourg Entzheim\t5\t8\t11.4\t0.69\t40.78\t100.13\t0.0\t2020\nStrasbourg Entzheim\t5\t8\t8.2\t0.8\t44.38\t100.09\t0.0\t2020\nStrasbourg Entzheim\t5\t8\t12.3\t0.67\t6.71\t100.13\t0.0\t2020\nStrasbourg Entzheim\t5\t8\t20.7\t0.46\t2.08\t100.05\t0.0\t2020\nStrasbourg Entzheim\t5\t8\t24.6\t0.32\t18.44\t99.88\t0.0\t2020\nStrasbourg Entzheim\t5\t8\t25.1\t0.36\t44.27\t99.7\t0.0\t2020\nStrasbourg Entzheim\t5\t8\t23.5\t0.39\t14.32\t99.63\t0.0\t2020\nStrasbourg Entzheim\t5\t8\t18.6\t0.54\t44.88\t99.62\t0.0\t2020\nStrasbourg Entzheim\t5\t9\t16.8\t0.53\t38.17\t99.6\t0.0\t2020\nStrasbourg Entzheim\t5\t9\t13.1\t0.69\t33.35\t99.53\t0.0\t2020\nStrasbourg Entzheim\t5\t9\t16.0\t0.66\t35.59\t99.56\t0.0\t2020\nStrasbourg Entzheim\t5\t9\t18.6\t0.59\t18.76\t99.57\t-0.1\t2020\nStrasbourg Entzheim\t5\t9\t21.2\t0.58\t7.98\t99.42\t-0.1\t2020\nStrasbourg Entzheim\t5\t9\t23.9\t0.48\t38.76\t99.23\t0.0\t2020\nStrasbourg Entzheim\t5\t9\t20.4\t0.54\t35.48\t99.17\t0.0\t2020\nStrasbourg Entzheim\t5\t9\t17.1\t0.66\t31.6\t99.16\t0.0\t2020\nStrasbourg Entzheim\t5\t10\t15.4\t0.73\t15.29\t99.03\t0.0\t2020\nStrasbourg Entzheim\t5\t10\t14.7\t0.78\t12.47\t98.98\t0.0\t2020\nStrasbourg Entzheim\t5\t10\t16.3\t0.76\t10.87\t98.96\t0.0\t2020\nStrasbourg Entzheim\t5\t10\t20.9\t0.61\t18.88\t98.91\t0.2\t2020\nStrasbourg Entzheim\t5\t10\t26.2\t0.41\t18.67\t98.76\t0.0\t2020\nStrasbourg Entzheim\t5\t10\t26.4\t0.4\t40.22\t98.58\t0.0\t2020\nStrasbourg Entzheim\t5\t10\t24.5\t0.47\t18.6\t98.46\t0.0\t2020\nStrasbourg Entzheim\t5\t10\t19.1\t0.83\t53.81\t98.48\t0.6\t2020\nStrasbourg Entzheim\t5\t11\t17.2\t0.85\t34.5\t98.35\t1.2\t2020\nStrasbourg Entzheim\t5\t11\t16.1\t0.87\t35.84\t98.2\t0.0\t2020\nStrasbourg Entzheim\t5\t11\t12.7\t0.89\t6.47\t98.19\t0.8\t2020\nStrasbourg Entzheim\t5\t11\t8.0\t0.95\t5.79\t98.39\t9.7\t2020\nStrasbourg Entzheim\t5\t11\t5.5\t0.96\t3.88\t98.79\t15.3\t2020\nStrasbourg Entzheim\t5\t11\t5.5\t0.93\t10.7\t99.07\t4.9\t2020\nStrasbourg Entzheim\t5\t11\t5.7\t0.9\t45.17\t99.4\t2.0\t2020\nStrasbourg Entzheim\t5\t11\t5.4\t0.9\t34.33\t99.73\t0.0\t2020\nStrasbourg Entzheim\t5\t12\t3.7\t0.97\t12.05\t99.87\t0.0\t2020\nStrasbourg Entzheim\t5\t12\t2.2\t0.97\t7.8\t99.96\t0.0\t2020\nStrasbourg Entzheim\t5\t12\t6.4\t0.84\t12.76\t100.09\t0.2\t2020\nStrasbourg Entzheim\t5\t12\t10.2\t0.62\t41.03\t100.08\t0.0\t2020\nStrasbourg Entzheim\t5\t12\t12.3\t0.46\t24.12\t99.92\t0.0\t2020\nStrasbourg Entzheim\t5\t12\t13.4\t0.43\t39.1\t99.74\t0.0\t2020\nStrasbourg Entzheim\t5\t12\t11.9\t0.52\t50.6\t99.62\t0.0\t2020\nStrasbourg Entzheim\t5\t12\t8.7\t0.68\t55.59\t99.59\t0.0\t2020\nStrasbourg Entzheim\t5\t13\t6.6\t0.84\t27.01\t99.51\t0.0\t2020\nStrasbourg Entzheim\t5\t13\t6.1\t0.87\t33.89\t99.48\t0.0\t2020\nStrasbourg Entzheim\t5\t13\t8.1\t0.79\t28.31\t99.51\t0.0\t2020\nStrasbourg Entzheim\t5\t13\t11.1\t0.67\t29.46\t99.32\t0.0\t2020\nStrasbourg Entzheim\t5\t13\t10.7\t0.8\t7.78\t99.22\t2.4\t2020\nStrasbourg Entzheim\t5\t13\t11.7\t0.76\t25.51\t99.11\t0.2\t2020\nStrasbourg Entzheim\t5\t13\t10.8\t0.9\t8.12\t99.04\t0.6\t2020\nStrasbourg Entzheim\t5\t13\t9.8\t0.91\t12.47\t99.25\t1.0\t2020\nStrasbourg Entzheim\t5\t14\t9.4\t0.92\t9.05\t99.41\t-0.1\t2020\nStrasbourg Entzheim\t5\t14\t8.9\t0.96\t4.81\t99.53\t1.4\t2020\nStrasbourg Entzheim\t5\t14\t8.0\t0.83\t15.24\t99.7\t-0.1\t2020\nStrasbourg Entzheim\t5\t14\t11.0\t0.72\t16.8\t99.77\t0.0\t2020\nStrasbourg Entzheim\t5\t14\t13.8\t0.66\t12.1\t99.68\t0.0\t2020\nStrasbourg Entzheim\t5\t14\t14.3\t0.58\t22.42\t99.58\t0.0\t2020\nStrasbourg Entzheim\t5\t14\t13.6\t0.59\t28.57\t99.57\t0.0\t2020\nStrasbourg Entzheim\t5\t14\t12.5\t0.66\t35.75\t99.58\t0.0\t2020\nStrasbourg Entzheim\t5\t15\t11.3\t0.62\t41.61\t99.49\t0.0\t2020\nStrasbourg Entzheim\t5\t15\t10.3\t0.66\t29.18\t99.53\t0.0\t2020\nStrasbourg Entzheim\t5\t15\t10.2\t0.69\t21.62\t99.7\t0.0\t2020\nStrasbourg Entzheim\t5\t15\t13.5\t0.63\t28.14\t99.9\t0.0\t2020\nStrasbourg Entzheim\t5\t15\t17.9\t0.5\t26.38\t100.01\t0.0\t2020\nStrasbourg Entzheim\t5\t15\t17.4\t0.42\t34.9\t100.08\t0.0\t2020\nStrasbourg Entzheim\t5\t15\t16.9\t0.44\t32.79\t100.14\t0.0\t2020\nStrasbourg Entzheim\t5\t15\t12.4\t0.62\t25.77\t100.28\t0.0\t2020\nStrasbourg Entzheim\t5\t16\t9.4\t0.71\t21.73\t100.36\t0.0\t2020\nStrasbourg Entzheim\t5\t16\t6.5\t0.83\t31.89\t100.38\t0.0\t2020\nStrasbourg Entzheim\t5\t16\t10.4\t0.63\t40.53\t100.49\t0.0\t2020\nStrasbourg Entzheim\t5\t16\t15.0\t0.55\t13.6\t100.48\t0.0\t2020\nStrasbourg Entzheim\t5\t16\t19.6\t0.39\t27.68\t100.33\t0.0\t2020\nStrasbourg Entzheim\t5\t16\t21.3\t0.35\t15.65\t100.18\t0.0\t2020\nStrasbourg Entzheim\t5\t16\t18.9\t0.38\t51.6\t100.11\t0.0\t2020\nStrasbourg Entzheim\t5\t16\t13.7\t0.59\t59.54\t100.2\t0.0\t2020\nStrasbourg Entzheim\t5\t17\t10.5\t0.71\t53.49\t100.22\t0.0\t2020\nStrasbourg Entzheim\t5\t17\t9.1\t0.74\t49.49\t100.3\t0.0\t2020\nStrasbourg Entzheim\t5\t17\t11.9\t0.65\t39.09\t100.48\t0.0\t2020\nStrasbourg Entzheim\t5\t17\t16.4\t0.49\t19.64\t100.55\t0.0\t2020\nStrasbourg Entzheim\t5\t17\t20.1\t0.42\t19.98\t100.52\t0.0\t2020\nStrasbourg Entzheim\t5\t17\t21.7\t0.28\t36.38\t100.42\t0.0\t2020\nStrasbourg Entzheim\t5\t17\t20.4\t0.36\t50.6\t100.4\t0.0\t2020\nStrasbourg Entzheim\t5\t17\t15.0\t0.6\t56.36\t100.53\t0.0\t2020\nStrasbourg Entzheim\t5\t18\t11.1\t0.77\t34.98\t100.56\t0.0\t2020\nStrasbourg Entzheim\t5\t18\t8.7\t0.88\t26.76\t100.56\t0.0\t2020\nStrasbourg Entzheim\t5\t18\t14.0\t0.6\t19.89\t100.66\t0.0\t2020\nStrasbourg Entzheim\t5\t18\t19.4\t0.48\t19.82\t100.68\t0.0\t2020\nStrasbourg Entzheim\t5\t18\t24.3\t0.31\t30.3\t100.42\t0.0\t2020\nStrasbourg Entzheim\t5\t18\t22.7\t0.41\t38.84\t100.39\t0.0\t2020\nStrasbourg Entzheim\t5\t18\tnull\tnull\tnull\tnull\tnull\t2020\nStrasbourg Entzheim\t5\t19\t13.8\t0.75\t37.26\t100.42\t0.0\t2020\nStrasbourg Entzheim\t5\t19\t11.0\t0.85\t19.98\t100.37\t0.0\t2020\nStrasbourg Entzheim\t5\t19\t17.5\t0.64\t21.6\t100.38\t0.0\t2020\nStrasbourg Entzheim\t5\t19\t22.1\t0.47\t29.28\t100.37\t0.0\t2020\nStrasbourg Entzheim\t5\t19\t25.6\t0.35\t36.03\t100.25\t0.0\t2020\nStrasbourg Entzheim\t5\t19\t26.7\t0.32\t31.76\t100.1\t0.0\t2020\nStrasbourg Entzheim\t5\t19\t24.4\t0.34\t60.0\t100.11\t0.0\t2020\nStrasbourg Entzheim\t5\t19\t17.9\t0.54\t60.0\t100.23\t0.0\t2020\nStrasbourg Entzheim\t5\t20\t15.0\t0.68\t19.86\t100.25\t0.0\t2020\nStrasbourg Entzheim\t5\t20\t15.7\t0.67\t34.36\t100.19\t0.0\t2020\nStrasbourg Entzheim\t5\t20\t18.8\t0.61\t19.85\t100.26\t0.0\t2020\nStrasbourg Entzheim\t5\t20\t23.2\t0.47\t38.89\t100.28\t0.0\t2020\nStrasbourg Entzheim\t5\t20\t25.4\t0.37\t28.53\t100.21\t0.0\t2020\nStrasbourg Entzheim\t5\t20\t24.8\t0.43\t19.94\t100.15\t0.0\t2020\nStrasbourg Entzheim\t5\t20\t23.8\t0.44\t48.88\t100.14\t0.0\t2020\nStrasbourg Entzheim\t5\t20\t18.7\t0.61\t50.12\t100.23\t0.0\t2020\nStrasbourg Entzheim\t5\t21\t16.3\t0.73\t19.99\t100.26\t0.0\t2020\nStrasbourg Entzheim\t5\t21\t13.1\t0.85\t19.65\t100.27\t0.0\t2020\nStrasbourg Entzheim\t5\t21\t17.4\t0.71\t18.52\t100.36\t0.0\t2020\nStrasbourg Entzheim\t5\t21\t22.1\t0.57\t17.43\t100.37\t0.0\t2020\nStrasbourg Entzheim\t5\t21\t25.9\t0.43\t43.3\t100.29\t0.0\t2020\nStrasbourg Entzheim\t5\t21\t27.4\t0.35\t35.67\t100.21\t0.0\t2020\nStrasbourg Entzheim\t5\t21\t26.1\t0.35\t50.53\t100.22\t0.0\t2020\nStrasbourg Entzheim\t5\t21\t18.9\t0.64\t40.55\t100.31\t0.0\t2020\nStrasbourg Entzheim\t5\t22\t15.8\t0.78\t40.91\t100.32\t0.0\t2020\nStrasbourg Entzheim\t5\t22\t13.0\t0.84\t18.02\t100.27\t0.0\t2020\nStrasbourg Entzheim\t5\t22\t16.9\t0.74\t18.49\t100.33\t0.0\t2020\nStrasbourg Entzheim\t5\t22\t21.9\t0.61\t19.44\t100.38\t0.0\t2020\nStrasbourg Entzheim\t5\t22\t26.7\t0.46\t19.32\t100.32\t0.0\t2020\nStrasbourg Entzheim\t5\t22\t27.7\t0.42\t50.91\t100.24\t0.0\t2020\nStrasbourg Entzheim\t5\t22\t25.6\t0.51\t55.96\t100.23\t0.0\t2020\nStrasbourg Entzheim\t5\t22\t22.7\t0.62\t56.03\t100.29\t0.0\t2020\nStrasbourg Entzheim\t5\t23\t21.4\t0.71\t44.58\t100.3\t0.0\t2020\nStrasbourg Entzheim\t5\t23\t19.1\t0.73\t56.96\t100.35\t0.0\t2020\nStrasbourg Entzheim\t5\t23\t18.1\t0.72\t60.0\t100.44\t0.0\t2020\nStrasbourg Entzheim\t5\t23\t12.7\t0.88\t6.26\t100.61\t4.4\t2020\nStrasbourg Entzheim\t5\t23\t11.7\t0.9\t10.68\t100.94\t3.3\t2020\nStrasbourg Entzheim\t5\t23\t13.0\t0.81\t51.35\t101.1\t0.8\t2020\nStrasbourg Entzheim\t5\t23\t13.4\t0.79\t48.48\t101.2\t0.0\t2020\nStrasbourg Entzheim\t5\t23\t11.9\t0.91\t50.78\t101.3\t0.0\t2020\nStrasbourg Entzheim\t5\t24\t10.7\t0.89\t55.48\t101.32\t0.0\t2020\nStrasbourg Entzheim\t5\t24\t8.5\t0.96\t41.5\t101.31\t0.0\t2020\nStrasbourg Entzheim\t5\t24\t11.5\t0.92\t19.99\t101.34\t0.0\t2020\nStrasbourg Entzheim\t5\t24\t17.0\t0.59\t38.21\t101.37\t0.0\t2020\nStrasbourg Entzheim\t5\t24\t19.3\t0.44\t35.45\t101.31\t0.0\t2020\nStrasbourg Entzheim\t5\t24\t20.1\t0.43\t20.21\t101.31\t0.0\t2020\nStrasbourg Entzheim\t5\t24\t17.8\t0.51\t32.06\t101.36\t0.0\t2020\nStrasbourg Entzheim\t5\t24\t13.4\t0.7\t60.0\t101.45\t0.0\t2020\nStrasbourg Entzheim\t5\t25\t11.5\t0.8\t54.13\t101.41\t0.0\t2020\nStrasbourg Entzheim\t5\t25\t9.6\t0.89\t37.66\t101.43\t0.0\t2020\nStrasbourg Entzheim\t5\t25\t13.4\t0.79\t19.73\t101.51\t0.0\t2020\nStrasbourg Entzheim\t5\t25\t18.1\t0.61\t31.05\t101.52\t0.0\t2020\nStrasbourg Entzheim\t5\t25\t19.1\t0.53\t51.05\t101.49\t0.0\t2020\nStrasbourg Entzheim\t5\t25\t19.9\t0.5\t59.52\t101.42\t0.0\t2020\nStrasbourg Entzheim\t5\t25\t19.8\t0.5\t48.51\t101.37\t0.0\t2020\nStrasbourg Entzheim\t5\t25\t14.2\t0.74\t57.99\t101.48\t0.0\t2020\nStrasbourg Entzheim\t5\t26\t10.9\t0.89\t32.5\t101.48\t0.0\t2020\nStrasbourg Entzheim\t5\t26\t10.9\t0.83\t31.19\t101.45\t0.0\t2020\nStrasbourg Entzheim\t5\t26\t13.9\t0.69\t19.94\t101.53\t0.0\t2020\nStrasbourg Entzheim\t5\t26\t19.5\t0.5\t30.41\t101.54\t0.0\t2020\nStrasbourg Entzheim\t5\t26\t21.6\t0.38\t29.36\t101.48\t0.0\t2020\nStrasbourg Entzheim\t5\t26\t23.3\t0.37\t19.99\t101.4\t0.0\t2020\nStrasbourg Entzheim\t5\t26\t20.5\t0.43\t30.94\t101.42\t0.0\t2020\nStrasbourg Entzheim\t5\t26\t15.9\t0.56\t60.0\t101.52\t0.0\t2020\nStrasbourg Entzheim\t5\t27\t11.4\t0.75\t55.27\t101.49\t0.0\t2020\nStrasbourg Entzheim\t5\t27\t9.9\t0.79\t43.71\t101.46\t0.0\t2020\nStrasbourg Entzheim\t5\t27\t14.2\t0.65\t24.92\t101.5\t0.0\t2020\nStrasbourg Entzheim\t5\t27\t20.2\t0.45\t19.81\t101.46\t0.0\t2020\nStrasbourg Entzheim\t5\t27\t22.9\t0.35\t30.46\t101.34\t0.0\t2020\nStrasbourg Entzheim\t5\t27\t24.1\t0.32\t29.26\t101.2\t0.0\t2020\nStrasbourg Entzheim\t5\t27\t22.8\t0.33\t36.71\t101.16\t0.0\t2020\nStrasbourg Entzheim\t5\t27\t16.4\t0.53\t59.7\t101.2\t0.0\t2020\nStrasbourg Entzheim\t5\t28\t12.7\t0.73\t59.01\t101.15\t0.0\t2020\nStrasbourg Entzheim\t5\t28\t11.2\t0.76\t17.19\t101.08\t0.0\t2020\nStrasbourg Entzheim\t5\t28\t15.1\t0.68\t25.52\t101.13\t0.0\t2020\nStrasbourg Entzheim\t5\t28\t20.0\t0.53\t24.81\t101.11\t0.0\t2020\nStrasbourg Entzheim\t5\t28\t23.4\t0.48\t18.18\t100.99\t0.0\t2020\nStrasbourg Entzheim\t5\t28\t23.8\t0.32\t15.29\t100.84\t0.0\t2020\nStrasbourg Entzheim\t5\t28\t21.4\t0.33\t29.19\t100.81\t0.0\t2020\nStrasbourg Entzheim\t5\t28\t17.1\t0.33\t60.0\t100.86\t0.0\t2020\nStrasbourg Entzheim\t5\t29\t13.1\t0.47\t60.0\t100.84\t0.0\t2020\nStrasbourg Entzheim\t5\t29\t9.7\t0.65\t60.0\t100.84\t0.0\t2020\nStrasbourg Entzheim\t5\t29\t14.4\t0.53\t19.79\t100.84\t0.0\t2020\nStrasbourg Entzheim\t5\t29\t19.3\t0.44\t43.85\t100.76\t0.0\t2020\nStrasbourg Entzheim\t5\t29\t21.4\t0.37\t41.96\t100.58\t0.0\t2020\nStrasbourg Entzheim\t5\t29\t22.0\t0.34\t36.69\t100.43\t0.0\t2020\nStrasbourg Entzheim\t5\t29\t20.8\t0.34\t41.21\t100.34\t0.0\t2020\nStrasbourg Entzheim\t5\t29\t16.3\t0.46\t60.0\t100.35\t0.0\t2020\nStrasbourg Entzheim\t5\t30\t11.9\t0.63\t60.0\t100.35\t0.0\t2020\nStrasbourg Entzheim\t5\t30\t10.2\t0.71\t60.0\t100.32\t0.0\t2020\nStrasbourg Entzheim\t5\t30\t15.2\t0.54\t39.41\t100.37\t0.0\t2020\nStrasbourg Entzheim\t5\t30\t19.7\t0.4\t26.62\t100.34\t0.0\t2020\nStrasbourg Entzheim\t5\t30\t22.1\t0.33\t30.71\t100.21\t0.0\t2020\nStrasbourg Entzheim\t5\t30\t22.7\t0.32\t35.0\t100.13\t0.0\t2020\nStrasbourg Entzheim\t5\t30\t20.4\t0.34\t25.44\t100.1\t0.0\t2020\nStrasbourg Entzheim\t5\t30\t16.0\t0.45\t60.0\t100.21\t0.0\t2020\nStrasbourg Entzheim\t5\t31\t12.5\t0.55\t60.0\t100.18\t0.0\t2020\nStrasbourg Entzheim\t5\t31\t10.6\t0.63\t60.0\t100.12\t0.0\t2020\nStrasbourg Entzheim\t5\t31\t14.5\t0.54\t3.74\t100.18\t0.0\t2020\nStrasbourg Entzheim\t5\t31\t18.9\t0.41\t15.48\t100.2\t0.0\t2020\nStrasbourg Entzheim\t5\t31\t21.2\t0.38\t24.78\t100.1\t0.0\t2020\nStrasbourg Entzheim\t5\t31\t22.7\t0.31\t18.74\t100.04\t0.0\t2020\nStrasbourg Entzheim\t5\t31\t20.9\t0.36\t39.96\t100.05\t0.0\t2020\nStrasbourg Entzheim\t5\t31\t17.7\t0.46\t60.0\t100.16\t0.0\t2020\n"
+          }
+        ]
+      },
       "apps": [],
       "runtimeInfos": {
         "jobUrl": {
@@ -540,12 +963,12 @@
           "group": "spark",
           "values": [
             {
-              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=102",
-              "$$hashKey": "object:19544"
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=26",
+              "$$hashKey": "object:4053"
             },
             {
-              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=103",
-              "$$hashKey": "object:19545"
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=27",
+              "$$hashKey": "object:4054"
             }
           ],
           "interpreterSettingId": "spark"
@@ -555,22 +978,10 @@
       "jobName": "paragraph_1598338102991_442969826",
       "id": "paragraph_1598338102991_442969826",
       "dateCreated": "2020-08-25T08:48:22+0200",
+      "dateStarted": "2020-08-25T15:38:24+0200",
+      "dateFinished": "2020-08-25T15:38:30+0200",
       "status": "FINISHED",
-      "focus": true,
-      "$$hashKey": "object:3519",
-      "text": "%sql\nselect * from global_temp.donneesMeteo\nwhere annee = 2020 and mois = 5 and ville = \"Strasbourg Entzheim\"",
-      "dateUpdated": "2020-08-25T09:41:04+0200",
-      "dateFinished": "2020-08-25T09:41:05+0200",
-      "dateStarted": "2020-08-25T09:41:04+0200",
-      "results": {
-        "code": "SUCCESS",
-        "msg": [
-          {
-            "type": "TABLE",
-            "data": "ville\tmois\tjour\ttemperature\thumidite\tvisibilite\tpression\tprecipitations\tannee\nStrasbourg Entzheim\t5\t1\t11.5\t0.8\t60.0\t98.92\t0.4\t2020\nStrasbourg Entzheim\t5\t1\t10.6\t0.8\t60.0\t98.88\t-0.1\t2020\nStrasbourg Entzheim\t5\t1\t11.8\t0.76\t33.41\t98.86\t0.0\t2020\nStrasbourg Entzheim\t5\t1\t15.4\t0.66\t23.8\t98.77\t0.0\t2020\nStrasbourg Entzheim\t5\t1\t15.1\t0.56\t32.39\t98.7\t0.0\t2020\nStrasbourg Entzheim\t5\t1\t10.6\t0.84\t42.92\t98.75\t1.2\t2020\nStrasbourg Entzheim\t5\t1\t11.2\t0.92\t45.73\t98.79\t0.6\t2020\nStrasbourg Entzheim\t5\t1\t10.1\t0.94\t52.07\t98.91\t0.0\t2020\nStrasbourg Entzheim\t5\t2\t9.2\t0.9\t60.0\t99.1\t2.6\t2020\nStrasbourg Entzheim\t5\t2\t8.0\t0.95\t46.56\t99.26\t0.0\t2020\nStrasbourg Entzheim\t5\t2\t10.3\t0.86\t42.58\t99.37\t0.0\t2020\nStrasbourg Entzheim\t5\t2\t12.7\t0.66\t39.2\t99.41\t0.2\t2020\nStrasbourg Entzheim\t5\t2\t13.5\t0.55\t57.08\t99.4\t0.0\t2020\nStrasbourg Entzheim\t5\t2\t14.5\t0.67\t19.44\t99.44\t0.4\t2020\nStrasbourg Entzheim\t5\t2\t13.3\t0.55\t38.66\t99.61\t0.2\t2020\nStrasbourg Entzheim\t5\t2\t6.7\t0.82\t45.05\t99.84\t0.0\t2020\nStrasbourg Entzheim\t5\t3\t4.7\t0.9\t27.37\t99.95\t0.0\t2020\nStrasbourg Entzheim\t5\t3\t5.4\t0.97\t5.97\t100.02\t0.0\t2020\nStrasbourg Entzheim\t5\t3\t6.2\t1.0\t0.5\t100.15\t0.2\t2020\nStrasbourg Entzheim\t5\t3\t12.8\t0.73\t38.45\t100.16\t0.0\t2020\nStrasbourg Entzheim\t5\t3\t17.4\t0.45\t51.42\t100.09\t0.0\t2020\nStrasbourg Entzheim\t5\t3\t18.0\t0.4\t43.39\t99.97\t0.0\t2020\nStrasbourg Entzheim\t5\t3\t17.4\t0.43\t59.35\t99.94\t0.0\t2020\nStrasbourg Entzheim\t5\t3\t14.3\t0.61\t52.04\t99.96\t0.0\t2020\nStrasbourg Entzheim\t5\t4\t9.8\t0.81\t42.59\t99.98\t0.0\t2020\nStrasbourg Entzheim\t5\t4\t10.4\t0.81\t44.57\t99.89\t0.0\t2020\nStrasbourg Entzheim\t5\t4\t11.1\t0.94\t9.84\t99.95\t1.6\t2020\nStrasbourg Entzheim\t5\t4\t16.3\t0.83\t12.31\t99.93\t-0.1\t2020\nStrasbourg Entzheim\t5\t4\t21.6\t0.48\t19.77\t99.81\t0.0\t2020\nStrasbourg Entzheim\t5\t4\t20.9\t0.52\t14.12\t99.71\t0.0\t2020\nStrasbourg Entzheim\t5\t4\t19.1\t0.55\t11.19\t99.72\t0.0\t2020\nStrasbourg Entzheim\t5\t4\t13.6\t0.74\t17.86\t100.0\t0.0\t2020\nStrasbourg Entzheim\t5\t5\t12.0\t0.75\t17.0\t99.93\t0.0\t2020\nStrasbourg Entzheim\t5\t5\t10.8\t0.77\t20.39\t99.88\t0.0\t2020\nStrasbourg Entzheim\t5\t5\t9.9\t0.79\t10.71\t99.92\t0.0\t2020\nStrasbourg Entzheim\t5\t5\t11.0\t0.72\t4.97\t99.94\t0.0\t2020\nStrasbourg Entzheim\t5\t5\t13.4\t0.59\t13.96\t99.93\t0.0\t2020\nStrasbourg Entzheim\t5\t5\t15.4\t0.51\t48.06\t99.94\t0.0\t2020\nStrasbourg Entzheim\t5\t5\t14.7\t0.67\t38.48\t99.96\t0.0\t2020\nStrasbourg Entzheim\t5\t5\t12.6\t0.41\t59.98\t100.17\t0.0\t2020\nStrasbourg Entzheim\t5\t6\t8.5\t0.53\t59.21\t100.24\t0.0\t2020\nStrasbourg Entzheim\t5\t6\t6.6\t0.66\t52.53\t100.3\t0.0\t2020\nStrasbourg Entzheim\t5\t6\t6.6\t0.67\t1.43\t100.42\t0.0\t2020\nStrasbourg Entzheim\t5\t6\t14.5\t0.43\t4.23\t100.49\t0.0\t2020\nStrasbourg Entzheim\t5\t6\t17.4\t0.32\t33.95\t100.44\t0.0\t2020\nStrasbourg Entzheim\t5\t6\t18.8\t0.28\t13.17\t100.41\t0.0\t2020\nStrasbourg Entzheim\t5\t6\t16.4\t0.29\t23.89\t100.48\t0.0\t2020\nStrasbourg Entzheim\t5\t6\t10.9\t0.47\t60.0\t100.57\t0.0\t2020\nStrasbourg Entzheim\t5\t7\t7.0\t0.67\t55.06\t100.65\t0.0\t2020\nStrasbourg Entzheim\t5\t7\t4.2\t0.81\t49.44\t100.66\t0.0\t2020\nStrasbourg Entzheim\t5\t7\t9.7\t0.58\t26.31\t100.66\t0.0\t2020\nStrasbourg Entzheim\t5\t7\t16.8\t0.38\t17.8\t100.58\t0.0\t2020\nStrasbourg Entzheim\t5\t7\t21.4\t0.27\t19.46\t100.51\t0.0\t2020\nStrasbourg Entzheim\t5\t7\t23.3\t0.25\t20.55\t100.26\t0.0\t2020\nStrasbourg Entzheim\t5\t7\t21.2\t0.34\t30.57\t100.18\t0.0\t2020\nStrasbourg Entzheim\t5\t7\t14.1\t0.56\t43.59\t100.19\t0.0\t2020\nStrasbourg Entzheim\t5\t8\t11.4\t0.69\t40.78\t100.13\t0.0\t2020\nStrasbourg Entzheim\t5\t8\t8.2\t0.8\t44.38\t100.09\t0.0\t2020\nStrasbourg Entzheim\t5\t8\t12.3\t0.67\t6.71\t100.13\t0.0\t2020\nStrasbourg Entzheim\t5\t8\t20.7\t0.46\t2.08\t100.05\t0.0\t2020\nStrasbourg Entzheim\t5\t8\t24.6\t0.32\t18.44\t99.88\t0.0\t2020\nStrasbourg Entzheim\t5\t8\t25.1\t0.36\t44.27\t99.7\t0.0\t2020\nStrasbourg Entzheim\t5\t8\t23.5\t0.39\t14.32\t99.63\t0.0\t2020\nStrasbourg Entzheim\t5\t8\t18.6\t0.54\t44.88\t99.62\t0.0\t2020\nStrasbourg Entzheim\t5\t9\t16.8\t0.53\t38.17\t99.6\t0.0\t2020\nStrasbourg Entzheim\t5\t9\t13.1\t0.69\t33.35\t99.53\t0.0\t2020\nStrasbourg Entzheim\t5\t9\t16.0\t0.66\t35.59\t99.56\t0.0\t2020\nStrasbourg Entzheim\t5\t9\t18.6\t0.59\t18.76\t99.57\t-0.1\t2020\nStrasbourg Entzheim\t5\t9\t21.2\t0.58\t7.98\t99.42\t-0.1\t2020\nStrasbourg Entzheim\t5\t9\t23.9\t0.48\t38.76\t99.23\t0.0\t2020\nStrasbourg Entzheim\t5\t9\t20.4\t0.54\t35.48\t99.17\t0.0\t2020\nStrasbourg Entzheim\t5\t9\t17.1\t0.66\t31.6\t99.16\t0.0\t2020\nStrasbourg Entzheim\t5\t10\t15.4\t0.73\t15.29\t99.03\t0.0\t2020\nStrasbourg Entzheim\t5\t10\t14.7\t0.78\t12.47\t98.98\t0.0\t2020\nStrasbourg Entzheim\t5\t10\t16.3\t0.76\t10.87\t98.96\t0.0\t2020\nStrasbourg Entzheim\t5\t10\t20.9\t0.61\t18.88\t98.91\t0.2\t2020\nStrasbourg Entzheim\t5\t10\t26.2\t0.41\t18.67\t98.76\t0.0\t2020\nStrasbourg Entzheim\t5\t10\t26.4\t0.4\t40.22\t98.58\t0.0\t2020\nStrasbourg Entzheim\t5\t10\t24.5\t0.47\t18.6\t98.46\t0.0\t2020\nStrasbourg Entzheim\t5\t10\t19.1\t0.83\t53.81\t98.48\t0.6\t2020\nStrasbourg Entzheim\t5\t11\t17.2\t0.85\t34.5\t98.35\t1.2\t2020\nStrasbourg Entzheim\t5\t11\t16.1\t0.87\t35.84\t98.2\t0.0\t2020\nStrasbourg Entzheim\t5\t11\t12.7\t0.89\t6.47\t98.19\t0.8\t2020\nStrasbourg Entzheim\t5\t11\t8.0\t0.95\t5.79\t98.39\t9.7\t2020\nStrasbourg Entzheim\t5\t11\t5.5\t0.96\t3.88\t98.79\t15.3\t2020\nStrasbourg Entzheim\t5\t11\t5.5\t0.93\t10.7\t99.07\t4.9\t2020\nStrasbourg Entzheim\t5\t11\t5.7\t0.9\t45.17\t99.4\t2.0\t2020\nStrasbourg Entzheim\t5\t11\t5.4\t0.9\t34.33\t99.73\t0.0\t2020\nStrasbourg Entzheim\t5\t12\t3.7\t0.97\t12.05\t99.87\t0.0\t2020\nStrasbourg Entzheim\t5\t12\t2.2\t0.97\t7.8\t99.96\t0.0\t2020\nStrasbourg Entzheim\t5\t12\t6.4\t0.84\t12.76\t100.09\t0.2\t2020\nStrasbourg Entzheim\t5\t12\t10.2\t0.62\t41.03\t100.08\t0.0\t2020\nStrasbourg Entzheim\t5\t12\t12.3\t0.46\t24.12\t99.92\t0.0\t2020\nStrasbourg Entzheim\t5\t12\t13.4\t0.43\t39.1\t99.74\t0.0\t2020\nStrasbourg Entzheim\t5\t12\t11.9\t0.52\t50.6\t99.62\t0.0\t2020\nStrasbourg Entzheim\t5\t12\t8.7\t0.68\t55.59\t99.59\t0.0\t2020\nStrasbourg Entzheim\t5\t13\t6.6\t0.84\t27.01\t99.51\t0.0\t2020\nStrasbourg Entzheim\t5\t13\t6.1\t0.87\t33.89\t99.48\t0.0\t2020\nStrasbourg Entzheim\t5\t13\t8.1\t0.79\t28.31\t99.51\t0.0\t2020\nStrasbourg Entzheim\t5\t13\t11.1\t0.67\t29.46\t99.32\t0.0\t2020\nStrasbourg Entzheim\t5\t13\t10.7\t0.8\t7.78\t99.22\t2.4\t2020\nStrasbourg Entzheim\t5\t13\t11.7\t0.76\t25.51\t99.11\t0.2\t2020\nStrasbourg Entzheim\t5\t13\t10.8\t0.9\t8.12\t99.04\t0.6\t2020\nStrasbourg Entzheim\t5\t13\t9.8\t0.91\t12.47\t99.25\t1.0\t2020\nStrasbourg Entzheim\t5\t14\t9.4\t0.92\t9.05\t99.41\t-0.1\t2020\nStrasbourg Entzheim\t5\t14\t8.9\t0.96\t4.81\t99.53\t1.4\t2020\nStrasbourg Entzheim\t5\t14\t8.0\t0.83\t15.24\t99.7\t-0.1\t2020\nStrasbourg Entzheim\t5\t14\t11.0\t0.72\t16.8\t99.77\t0.0\t2020\nStrasbourg Entzheim\t5\t14\t13.8\t0.66\t12.1\t99.68\t0.0\t2020\nStrasbourg Entzheim\t5\t14\t14.3\t0.58\t22.42\t99.58\t0.0\t2020\nStrasbourg Entzheim\t5\t14\t13.6\t0.59\t28.57\t99.57\t0.0\t2020\nStrasbourg Entzheim\t5\t14\t12.5\t0.66\t35.75\t99.58\t0.0\t2020\nStrasbourg Entzheim\t5\t15\t11.3\t0.62\t41.61\t99.49\t0.0\t2020\nStrasbourg Entzheim\t5\t15\t10.3\t0.66\t29.18\t99.53\t0.0\t2020\nStrasbourg Entzheim\t5\t15\t10.2\t0.69\t21.62\t99.7\t0.0\t2020\nStrasbourg Entzheim\t5\t15\t13.5\t0.63\t28.14\t99.9\t0.0\t2020\nStrasbourg Entzheim\t5\t15\t17.9\t0.5\t26.38\t100.01\t0.0\t2020\nStrasbourg Entzheim\t5\t15\t17.4\t0.42\t34.9\t100.08\t0.0\t2020\nStrasbourg Entzheim\t5\t15\t16.9\t0.44\t32.79\t100.14\t0.0\t2020\nStrasbourg Entzheim\t5\t15\t12.4\t0.62\t25.77\t100.28\t0.0\t2020\nStrasbourg Entzheim\t5\t16\t9.4\t0.71\t21.73\t100.36\t0.0\t2020\nStrasbourg Entzheim\t5\t16\t6.5\t0.83\t31.89\t100.38\t0.0\t2020\nStrasbourg Entzheim\t5\t16\t10.4\t0.63\t40.53\t100.49\t0.0\t2020\nStrasbourg Entzheim\t5\t16\t15.0\t0.55\t13.6\t100.48\t0.0\t2020\nStrasbourg Entzheim\t5\t16\t19.6\t0.39\t27.68\t100.33\t0.0\t2020\nStrasbourg Entzheim\t5\t16\t21.3\t0.35\t15.65\t100.18\t0.0\t2020\nStrasbourg Entzheim\t5\t16\t18.9\t0.38\t51.6\t100.11\t0.0\t2020\nStrasbourg Entzheim\t5\t16\t13.7\t0.59\t59.54\t100.2\t0.0\t2020\nStrasbourg Entzheim\t5\t17\t10.5\t0.71\t53.49\t100.22\t0.0\t2020\nStrasbourg Entzheim\t5\t17\t9.1\t0.74\t49.49\t100.3\t0.0\t2020\nStrasbourg Entzheim\t5\t17\t11.9\t0.65\t39.09\t100.48\t0.0\t2020\nStrasbourg Entzheim\t5\t17\t16.4\t0.49\t19.64\t100.55\t0.0\t2020\nStrasbourg Entzheim\t5\t17\t20.1\t0.42\t19.98\t100.52\t0.0\t2020\nStrasbourg Entzheim\t5\t17\t21.7\t0.28\t36.38\t100.42\t0.0\t2020\nStrasbourg Entzheim\t5\t17\t20.4\t0.36\t50.6\t100.4\t0.0\t2020\nStrasbourg Entzheim\t5\t17\t15.0\t0.6\t56.36\t100.53\t0.0\t2020\nStrasbourg Entzheim\t5\t18\t11.1\t0.77\t34.98\t100.56\t0.0\t2020\nStrasbourg Entzheim\t5\t18\t8.7\t0.88\t26.76\t100.56\t0.0\t2020\nStrasbourg Entzheim\t5\t18\t14.0\t0.6\t19.89\t100.66\t0.0\t2020\nStrasbourg Entzheim\t5\t18\t19.4\t0.48\t19.82\t100.68\t0.0\t2020\nStrasbourg Entzheim\t5\t18\t24.3\t0.31\t30.3\t100.42\t0.0\t2020\nStrasbourg Entzheim\t5\t18\t22.7\t0.41\t38.84\t100.39\t0.0\t2020\nStrasbourg Entzheim\t5\t18\tnull\tnull\tnull\tnull\tnull\t2020\nStrasbourg Entzheim\t5\t19\t13.8\t0.75\t37.26\t100.42\t0.0\t2020\nStrasbourg Entzheim\t5\t19\t11.0\t0.85\t19.98\t100.37\t0.0\t2020\nStrasbourg Entzheim\t5\t19\t17.5\t0.64\t21.6\t100.38\t0.0\t2020\nStrasbourg Entzheim\t5\t19\t22.1\t0.47\t29.28\t100.37\t0.0\t2020\nStrasbourg Entzheim\t5\t19\t25.6\t0.35\t36.03\t100.25\t0.0\t2020\nStrasbourg Entzheim\t5\t19\t26.7\t0.32\t31.76\t100.1\t0.0\t2020\nStrasbourg Entzheim\t5\t19\t24.4\t0.34\t60.0\t100.11\t0.0\t2020\nStrasbourg Entzheim\t5\t19\t17.9\t0.54\t60.0\t100.23\t0.0\t2020\nStrasbourg Entzheim\t5\t20\t15.0\t0.68\t19.86\t100.25\t0.0\t2020\nStrasbourg Entzheim\t5\t20\t15.7\t0.67\t34.36\t100.19\t0.0\t2020\nStrasbourg Entzheim\t5\t20\t18.8\t0.61\t19.85\t100.26\t0.0\t2020\nStrasbourg Entzheim\t5\t20\t23.2\t0.47\t38.89\t100.28\t0.0\t2020\nStrasbourg Entzheim\t5\t20\t25.4\t0.37\t28.53\t100.21\t0.0\t2020\nStrasbourg Entzheim\t5\t20\t24.8\t0.43\t19.94\t100.15\t0.0\t2020\nStrasbourg Entzheim\t5\t20\t23.8\t0.44\t48.88\t100.14\t0.0\t2020\nStrasbourg Entzheim\t5\t20\t18.7\t0.61\t50.12\t100.23\t0.0\t2020\nStrasbourg Entzheim\t5\t21\t16.3\t0.73\t19.99\t100.26\t0.0\t2020\nStrasbourg Entzheim\t5\t21\t13.1\t0.85\t19.65\t100.27\t0.0\t2020\nStrasbourg Entzheim\t5\t21\t17.4\t0.71\t18.52\t100.36\t0.0\t2020\nStrasbourg Entzheim\t5\t21\t22.1\t0.57\t17.43\t100.37\t0.0\t2020\nStrasbourg Entzheim\t5\t21\t25.9\t0.43\t43.3\t100.29\t0.0\t2020\nStrasbourg Entzheim\t5\t21\t27.4\t0.35\t35.67\t100.21\t0.0\t2020\nStrasbourg Entzheim\t5\t21\t26.1\t0.35\t50.53\t100.22\t0.0\t2020\nStrasbourg Entzheim\t5\t21\t18.9\t0.64\t40.55\t100.31\t0.0\t2020\nStrasbourg Entzheim\t5\t22\t15.8\t0.78\t40.91\t100.32\t0.0\t2020\nStrasbourg Entzheim\t5\t22\t13.0\t0.84\t18.02\t100.27\t0.0\t2020\nStrasbourg Entzheim\t5\t22\t16.9\t0.74\t18.49\t100.33\t0.0\t2020\nStrasbourg Entzheim\t5\t22\t21.9\t0.61\t19.44\t100.38\t0.0\t2020\nStrasbourg Entzheim\t5\t22\t26.7\t0.46\t19.32\t100.32\t0.0\t2020\nStrasbourg Entzheim\t5\t22\t27.7\t0.42\t50.91\t100.24\t0.0\t2020\nStrasbourg Entzheim\t5\t22\t25.6\t0.51\t55.96\t100.23\t0.0\t2020\nStrasbourg Entzheim\t5\t22\t22.7\t0.62\t56.03\t100.29\t0.0\t2020\nStrasbourg Entzheim\t5\t23\t21.4\t0.71\t44.58\t100.3\t0.0\t2020\nStrasbourg Entzheim\t5\t23\t19.1\t0.73\t56.96\t100.35\t0.0\t2020\nStrasbourg Entzheim\t5\t23\t18.1\t0.72\t60.0\t100.44\t0.0\t2020\nStrasbourg Entzheim\t5\t23\t12.7\t0.88\t6.26\t100.61\t4.4\t2020\nStrasbourg Entzheim\t5\t23\t11.7\t0.9\t10.68\t100.94\t3.3\t2020\nStrasbourg Entzheim\t5\t23\t13.0\t0.81\t51.35\t101.1\t0.8\t2020\nStrasbourg Entzheim\t5\t23\t13.4\t0.79\t48.48\t101.2\t0.0\t2020\nStrasbourg Entzheim\t5\t23\t11.9\t0.91\t50.78\t101.3\t0.0\t2020\nStrasbourg Entzheim\t5\t24\t10.7\t0.89\t55.48\t101.32\t0.0\t2020\nStrasbourg Entzheim\t5\t24\t8.5\t0.96\t41.5\t101.31\t0.0\t2020\nStrasbourg Entzheim\t5\t24\t11.5\t0.92\t19.99\t101.34\t0.0\t2020\nStrasbourg Entzheim\t5\t24\t17.0\t0.59\t38.21\t101.37\t0.0\t2020\nStrasbourg Entzheim\t5\t24\t19.3\t0.44\t35.45\t101.31\t0.0\t2020\nStrasbourg Entzheim\t5\t24\t20.1\t0.43\t20.21\t101.31\t0.0\t2020\nStrasbourg Entzheim\t5\t24\t17.8\t0.51\t32.06\t101.36\t0.0\t2020\nStrasbourg Entzheim\t5\t24\t13.4\t0.7\t60.0\t101.45\t0.0\t2020\nStrasbourg Entzheim\t5\t25\t11.5\t0.8\t54.13\t101.41\t0.0\t2020\nStrasbourg Entzheim\t5\t25\t9.6\t0.89\t37.66\t101.43\t0.0\t2020\nStrasbourg Entzheim\t5\t25\t13.4\t0.79\t19.73\t101.51\t0.0\t2020\nStrasbourg Entzheim\t5\t25\t18.1\t0.61\t31.05\t101.52\t0.0\t2020\nStrasbourg Entzheim\t5\t25\t19.1\t0.53\t51.05\t101.49\t0.0\t2020\nStrasbourg Entzheim\t5\t25\t19.9\t0.5\t59.52\t101.42\t0.0\t2020\nStrasbourg Entzheim\t5\t25\t19.8\t0.5\t48.51\t101.37\t0.0\t2020\nStrasbourg Entzheim\t5\t25\t14.2\t0.74\t57.99\t101.48\t0.0\t2020\nStrasbourg Entzheim\t5\t26\t10.9\t0.89\t32.5\t101.48\t0.0\t2020\nStrasbourg Entzheim\t5\t26\t10.9\t0.83\t31.19\t101.45\t0.0\t2020\nStrasbourg Entzheim\t5\t26\t13.9\t0.69\t19.94\t101.53\t0.0\t2020\nStrasbourg Entzheim\t5\t26\t19.5\t0.5\t30.41\t101.54\t0.0\t2020\nStrasbourg Entzheim\t5\t26\t21.6\t0.38\t29.36\t101.48\t0.0\t2020\nStrasbourg Entzheim\t5\t26\t23.3\t0.37\t19.99\t101.4\t0.0\t2020\nStrasbourg Entzheim\t5\t26\t20.5\t0.43\t30.94\t101.42\t0.0\t2020\nStrasbourg Entzheim\t5\t26\t15.9\t0.56\t60.0\t101.52\t0.0\t2020\nStrasbourg Entzheim\t5\t27\t11.4\t0.75\t55.27\t101.49\t0.0\t2020\nStrasbourg Entzheim\t5\t27\t9.9\t0.79\t43.71\t101.46\t0.0\t2020\nStrasbourg Entzheim\t5\t27\t14.2\t0.65\t24.92\t101.5\t0.0\t2020\nStrasbourg Entzheim\t5\t27\t20.2\t0.45\t19.81\t101.46\t0.0\t2020\nStrasbourg Entzheim\t5\t27\t22.9\t0.35\t30.46\t101.34\t0.0\t2020\nStrasbourg Entzheim\t5\t27\t24.1\t0.32\t29.26\t101.2\t0.0\t2020\nStrasbourg Entzheim\t5\t27\t22.8\t0.33\t36.71\t101.16\t0.0\t2020\nStrasbourg Entzheim\t5\t27\t16.4\t0.53\t59.7\t101.2\t0.0\t2020\nStrasbourg Entzheim\t5\t28\t12.7\t0.73\t59.01\t101.15\t0.0\t2020\nStrasbourg Entzheim\t5\t28\t11.2\t0.76\t17.19\t101.08\t0.0\t2020\nStrasbourg Entzheim\t5\t28\t15.1\t0.68\t25.52\t101.13\t0.0\t2020\nStrasbourg Entzheim\t5\t28\t20.0\t0.53\t24.81\t101.11\t0.0\t2020\nStrasbourg Entzheim\t5\t28\t23.4\t0.48\t18.18\t100.99\t0.0\t2020\nStrasbourg Entzheim\t5\t28\t23.8\t0.32\t15.29\t100.84\t0.0\t2020\nStrasbourg Entzheim\t5\t28\t21.4\t0.33\t29.19\t100.81\t0.0\t2020\nStrasbourg Entzheim\t5\t28\t17.1\t0.33\t60.0\t100.86\t0.0\t2020\nStrasbourg Entzheim\t5\t29\t13.1\t0.47\t60.0\t100.84\t0.0\t2020\nStrasbourg Entzheim\t5\t29\t9.7\t0.65\t60.0\t100.84\t0.0\t2020\nStrasbourg Entzheim\t5\t29\t14.4\t0.53\t19.79\t100.84\t0.0\t2020\nStrasbourg Entzheim\t5\t29\t19.3\t0.44\t43.85\t100.76\t0.0\t2020\nStrasbourg Entzheim\t5\t29\t21.4\t0.37\t41.96\t100.58\t0.0\t2020\nStrasbourg Entzheim\t5\t29\t22.0\t0.34\t36.69\t100.43\t0.0\t2020\nStrasbourg Entzheim\t5\t29\t20.8\t0.34\t41.21\t100.34\t0.0\t2020\nStrasbourg Entzheim\t5\t29\t16.3\t0.46\t60.0\t100.35\t0.0\t2020\nStrasbourg Entzheim\t5\t30\t11.9\t0.63\t60.0\t100.35\t0.0\t2020\nStrasbourg Entzheim\t5\t30\t10.2\t0.71\t60.0\t100.32\t0.0\t2020\nStrasbourg Entzheim\t5\t30\t15.2\t0.54\t39.41\t100.37\t0.0\t2020\nStrasbourg Entzheim\t5\t30\t19.7\t0.4\t26.62\t100.34\t0.0\t2020\nStrasbourg Entzheim\t5\t30\t22.1\t0.33\t30.71\t100.21\t0.0\t2020\nStrasbourg Entzheim\t5\t30\t22.7\t0.32\t35.0\t100.13\t0.0\t2020\nStrasbourg Entzheim\t5\t30\t20.4\t0.34\t25.44\t100.1\t0.0\t2020\nStrasbourg Entzheim\t5\t30\t16.0\t0.45\t60.0\t100.21\t0.0\t2020\nStrasbourg Entzheim\t5\t31\t12.5\t0.55\t60.0\t100.18\t0.0\t2020\nStrasbourg Entzheim\t5\t31\t10.6\t0.63\t60.0\t100.12\t0.0\t2020\nStrasbourg Entzheim\t5\t31\t14.5\t0.54\t3.74\t100.18\t0.0\t2020\nStrasbourg Entzheim\t5\t31\t18.9\t0.41\t15.48\t100.2\t0.0\t2020\nStrasbourg Entzheim\t5\t31\t21.2\t0.38\t24.78\t100.1\t0.0\t2020\nStrasbourg Entzheim\t5\t31\t22.7\t0.31\t18.74\t100.04\t0.0\t2020\nStrasbourg Entzheim\t5\t31\t20.9\t0.36\t39.96\t100.05\t0.0\t2020\nStrasbourg Entzheim\t5\t31\t17.7\t0.46\t60.0\t100.16\t0.0\t2020\n"
-          }
-        ]
-      }
+      "$$hashKey": "object:383"
     }
   ],
   "name": "Analyse de données avec SQL",
