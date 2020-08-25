@@ -5,6 +5,7 @@ val spark = SparkSession.builder.
                         "io.delta:delta-core_2.12:0.8.0").
               config("spark.sql.extensions",
                         "io.delta.sql.DeltaSparkSessionExtension").
+              enableHiveSupport().
               getOrCreate()
 
 spark.sql("show databases").show()
@@ -47,3 +48,38 @@ spark.sql("SELECT CL.SOCIETE                           "+
 "ORDER BY CL.SOCIETE                                   "+
 "        , EXTRACT ( YEAR FROM DATE_COMMANDE)          "+
 "        , EXTRACT ( MONTH FROM DATE_COMMANDE)         ").show()
+
+
+
+import org.apache.spark.sql.SparkSession
+
+val spark = SparkSession.builder.
+              config("spark.jars.packages",
+                        "io.delta:delta-core_2.12:0.8.0").
+              config("spark.sql.extensions",
+                        "io.delta.sql.DeltaSparkSessionExtension").
+              enableHiveSupport().
+              getOrCreate()
+
+
+
+
+import org.apache.spark.sql.SparkSession
+
+val spark = SparkSession.builder.
+              enableHiveSupport().
+              getOrCreate()
+
+val donnees = spark.sql("select * from parquet.`donnees/meteoFrance`")
+donnees.createOrReplaceGlobalTempView("GVmeteoFrance")
+donnees.createOrReplaceTempView("TVmeteoFrance")
+
+spark.sql("select  ville,mois,jour,temperature,humidite,"+
+           "visibilite,pression from TVmeteoFrance").show(3)
+spark.sql("select  ville,mois,jour,temperature,humidite,"+
+           "visibilite,pression from global_temp.GVmeteoFrance").show(3)
+
+donnees.write.
+        mode("overwrite").
+        format("parquet").
+        saveAsTable("meteoFrance")
