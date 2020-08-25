@@ -1,6 +1,52 @@
 show databases;
 use coursspark3;
 
+DESCRIBE TABLE EXTENDED meteoInitiale;
+
+ALTER TABLE meteoInitiale SET FILEFORMAT PARQUET;
+
+ALTER TABLE meteoInitiale SET LOCATION
+  "hdfs://jupiter.olimp.fr:8020/user/spark/donnees/meteoinitiale";
+
+
+
+SHOW PARTITIONS meteopartitionannee;
+
+
+ALTER TABLE table_identifier ADD [IF NOT EXISTS]
+    ( partition_spec [ partition_spec ... ] )
+
+ALTER TABLE table_identifier DROP [ IF EXISTS ] partition_spec [PURGE]
+
+ALTER TABLE meteopartitionannee DROP
+         IF EXISTS  PARTITION (annee=1996);
+ALTER TABLE meteopartitionannee DROP
+         IF EXISTS  PARTITION (annee=1997);
+
+ALTER TABLE meteopartitionannee ADD
+         IF NOT EXISTS PARTITION (annee=2021);
+
+SELECT count(*) FROM meteopartitionannee
+WHERE annee < 1998;
+
+TRUNCATE TABLE meteopartitionannee PARTITION(annee=1998);
+
+SELECT count(*) FROM meteopartitionannee
+WHERE annee = 1998;
+
+
+TRUNCATE TABLE meteopartitionannee;
+SELECT count(*) FROM meteopartitionannee;
+
+INSERT INTO meteoPartitionAnnee
+  SELECT mois,jour,numer_sta,ff,t,u,vv,pres,tend,tend24,
+         rr1,rr3,rr6,rr12,rr24,date,annee
+  FROM parquet.`/user/spark/donnees/meteo_parquet`;
+
+SELECT count(*) FROM meteopartitionannee;
+
+
+
 CREATE TABLE IF NOT EXISTS meteoInitialeO
 STORED AS ORC
 AS
