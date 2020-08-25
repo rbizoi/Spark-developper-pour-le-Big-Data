@@ -58,6 +58,7 @@ spark.history.fs.cleaner.maxAge                90d
 spark.history.fs.logDirectory                  hdfs:///spark-history/
 #--------------------------------------------------------------------------------
 spark.sql.session.timeZone                     UTC
+spark.sql.warehouse.dir                        hdfs:///user/spark/referentiel-metadonnees
 #--------------------------------------------------------------------------------
 spark.sql.execution.arrow.enabled                    true
 spark.sql.execution.arrow.pyspark.enabled            true
@@ -146,6 +147,8 @@ mv arrow-performance-1.0.1.jar      /usr/share/spark/jars
 mv arrow-tools-1.0.1.jar            /usr/share/spark/jars
 mv arrow-vector-1.0.1.jar           /usr/share/spark/jars
 
+cp /usr/share/hadoop/etc/hadoop/core-site.xml /usr/share/spark/conf
+cp /usr/share/hadoop/etc/hadoop/hdfs-site.xml /usr/share/spark/conf
 chown -R spark:hadoop /usr/share/spark
 ls -al /usr/share/spark
 
