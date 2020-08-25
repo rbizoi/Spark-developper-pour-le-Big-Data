@@ -8,8 +8,6 @@ ALTER TABLE meteoInitiale SET FILEFORMAT PARQUET;
 ALTER TABLE meteoInitiale SET LOCATION
   "hdfs://jupiter.olimp.fr:8020/user/spark/donnees/meteoinitiale";
 
-
-
 SHOW PARTITIONS meteopartitionannee;
 
 
@@ -27,7 +25,7 @@ ALTER TABLE meteopartitionannee ADD
          IF NOT EXISTS PARTITION (annee=2021);
 
 SELECT count(*) FROM meteopartitionannee
-WHERE annee < 1998;
+WHERE annee <= 1998;
 
 TRUNCATE TABLE meteopartitionannee PARTITION(annee=1998);
 
@@ -44,6 +42,29 @@ INSERT INTO meteoPartitionAnnee
   FROM parquet.`/user/spark/donnees/meteo_parquet`;
 
 SELECT count(*) FROM meteopartitionannee;
+
+
+use coursspark3;
+ANALYZE TABLE meteoinitialep COMPUTE STATISTICS FOR ALL COLUMNS;
+DESCRIBE TABLE EXTENDED meteoinitialep;
+
+
+show partitions meteopartitionannee;
+
+ANALYZE TABLE meteopartitionannee PARTITION(annee=2020) COMPUTE STATISTICS FOR ALL COLUMNS;
+
+DESCRIBE TABLE EXTENDED meteoinitialep;
+ANALYZE TABLE meteopartitionannee COMPUTE STATISTICS FOR ALL COLUMNS;
+
+
+TRUNCATE TABLE meteopartitionannee PARTITION(annee=2020);
+
+INSERT INTO meteoPartitionAnnee
+  SELECT mois,jour,numer_sta,ff,t,u,vv,pres,tend,tend24,
+         rr1,rr3,rr6,rr12,rr24,date,annee
+  FROM parquet.`/user/spark/donnees/meteo_parquet`
+  WHERE annee = 2020;
+ANALYZE TABLE meteopartitionannee PARTITION(annee=2020) COMPUTE STATISTICS FOR ALL COLUMNS;
 
 
 
