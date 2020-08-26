@@ -41,8 +41,8 @@ VALUES  ("Razvan", array(map("age",55),
 
 SELECT vv, t,
        vv+t as calcul,
-       coalesce(vv,0) as nvl,
-       coalesce(vv,0) + t as clacul
+       COALESCE(vv,0) as nvl,
+       COALESCE(vv,0) + t as clacul
 FROM coursspark3.meteoinitialep
 
 SELECT vv, t
@@ -50,5 +50,31 @@ FROM coursspark3.meteoinitialep
 WHERE vv != null ;
 
 SELECT vv, t
-FROM coursspark3.meteoinitialep
+FROM coursspark3.meteopartitionannee
 WHERE vv is not null ;
+
+
+spark.sql("""
+  SELECT station, visibilite, precipitations24, tendpression24
+  FROM meteopartitionannee
+  ORDER BY station, visibilite DESC, precipitations24;
+""").show(20,truncate=False)
+
+
+spark.sql("""
+  SELECT station, visibilite, precipitations24, tendpression24
+  FROM meteopartitionannee
+  ORDER BY station, visibilite DESC,
+           precipitations24 NULLS LAST, tendpression24 DESC NULLS FIRST;
+""").show(20,truncate=False)
+
+
+
+
+spark.sql("""
+show tables;
+""").show(200,truncate=False)
+
+spark.sql("""
+use coursspark3;
+""").show(200,truncate=False)
