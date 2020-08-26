@@ -12,6 +12,10 @@ spark-shell \
     --executor-cores 4 \
     --executor-memory 10g
 
+spark-sql \
+--master spark://jupiter.olimp.fr:7077 \
+--executor-cores 4 \
+--executor-memory 10g
 
 # seul
 
