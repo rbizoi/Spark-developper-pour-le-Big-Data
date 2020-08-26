@@ -1,0 +1,2070 @@
+﻿{
+  "paragraphs": [
+    {
+      "user": "anonymous",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "namespace": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598433504997_1219766384",
+      "id": "paragraph_1598433504997_1219766384",
+      "dateCreated": "2020-08-26T11:18:24+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:7842",
+      "text": "%sql\nshow databases;\nuse gest_comm;",
+      "dateUpdated": "2020-08-26T11:18:37+0200",
+      "dateFinished": "2020-08-26T11:18:37+0200",
+      "dateStarted": "2020-08-26T11:18:36+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "namespace\ncoursspark3\ndefault\ndeltacours\ngest_comm\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nSELECT NOM, PRENOM, REND_COMPTE FROM EMPLOYES WHERE REND_COMPTE = 18;",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-26T11:18:50+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "NOM": "string",
+                      "PRENOM": "string",
+                      "REND_COMPTE": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=6",
+              "$$hashKey": "object:8889"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598433516989_1308358848",
+      "id": "paragraph_1598433516989_1308358848",
+      "dateCreated": "2020-08-26T11:18:36+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:7916",
+      "dateFinished": "2020-08-26T11:18:49+0200",
+      "dateStarted": "2020-08-26T11:18:48+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "NOM\tPRENOM\tREND_COMPTE\nRagon\tAndré\t18\nLeger\tPierre\t18\nBelin\tChantal\t18\nChambaud\tAxelle\t18\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nSELECT NOM, PRENOM, SALAIRE FROM EMPLOYES WHERE REND_COMPTE IS NULL;",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-26T11:18:58+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "NOM": "string",
+                      "PRENOM": "string",
+                      "SALAIRE": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=7",
+              "$$hashKey": "object:9607"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598433528044_1435205433",
+      "id": "paragraph_1598433528044_1435205433",
+      "dateCreated": "2020-08-26T11:18:48+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:8337",
+      "dateFinished": "2020-08-26T11:18:58+0200",
+      "dateStarted": "2020-08-26T11:18:57+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "NOM\tPRENOM\tSALAIRE\nGuerdon\tBéatrice\t1700.00\nDevie\tThérèse\t1540.00\nPouetre\tCamille-Hélène\t2000.00\nZiliox\tFrancoise\t1900.00\nLampis\tGabrielle\t1300.00\nFuller\tAndrew\t96000.00\nBrasseur\tHervé\t147000.00\nPoupard\tClaudette\t1800.00\nMaurer\tVéronique\t1400.00\nGiroux\tJean-Claude\t150000.00\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nSELECT NOM, PRENOM, SALAIRE FROM EMPLOYES WHERE SALAIRE > 13000;",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-26T11:19:05+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "NOM": "string",
+                      "PRENOM": "string",
+                      "SALAIRE": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=8",
+              "$$hashKey": "object:10220"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598433537632_2066175407",
+      "id": "paragraph_1598433537632_2066175407",
+      "dateCreated": "2020-08-26T11:18:57+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:8927",
+      "dateFinished": "2020-08-26T11:19:05+0200",
+      "dateStarted": "2020-08-26T11:19:05+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "NOM\tPRENOM\tSALAIRE\nLeger\tPierre\t19000.00\nFuller\tAndrew\t96000.00\nBrasseur\tHervé\t147000.00\nSplingart\tLydia\t16000.00\nGiroux\tJean-Claude\t150000.00\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nSELECT NOM_PRODUIT, NO_FOURNISSEUR FROM PRODUITS WHERE NO_FOURNISSEUR <= 2;",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-26T11:19:15+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "NOM_PRODUIT": "string",
+                      "NO_FOURNISSEUR": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=9",
+              "$$hashKey": "object:10859"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598433545320_357109039",
+      "id": "paragraph_1598433545320_357109039",
+      "dateCreated": "2020-08-26T11:19:05+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:9648",
+      "dateFinished": "2020-08-26T11:19:15+0200",
+      "dateStarted": "2020-08-26T11:19:15+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "NOM_PRODUIT\tNO_FOURNISSEUR\nAmandes\t2\nBrownie Mix\t2\nCherry Pie Filling\t2\nChai\t1\nChang\t1\nAniseed Syrup\t1\nChef Anton's Cajun Seasoning\t2\nLouisiana Hot Spiced Okra\t2\nChef Anton's Gumbo Mix\t2\nLouisiana Fiery Hot Pepper Sauce\t2\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nSELECT NOM, PRENOM, FONCTION FROM EMPLOYES WHERE FONCTION <>'Représentant(e)' ;\nSELECT NOM, PRENOM, FONCTION FROM EMPLOYES WHERE FONCTION != 'Représentant(e)' ;",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-26T11:19:34+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "NOM": "string",
+                      "PRENOM": "string",
+                      "FONCTION": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=11",
+              "$$hashKey": "object:11777"
+            },
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=12",
+              "$$hashKey": "object:11778"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598433555181_999098122",
+      "id": "paragraph_1598433555181_999098122",
+      "dateCreated": "2020-08-26T11:19:15+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:10264",
+      "dateFinished": "2020-08-26T11:19:35+0200",
+      "dateStarted": "2020-08-26T11:19:34+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "NOM\tPRENOM\tFONCTION\nGuerdon\tBéatrice\tAssistante commerciale\nDevie\tThérèse\tAssistante commerciale\nRagon\tAndré\tChef des ventes\nPouetre\tCamille-Hélène\tAssistante commerciale\nLeger\tPierre\tChef des ventes\nZiliox\tFrancoise\tAssistante commerciale\nLampis\tGabrielle\tAssistante commerciale\nBelin\tChantal\tChef des ventes\nFuller\tAndrew\tVice-Président\nBrasseur\tHervé\tVice-Président\nPoupard\tClaudette\tAssistante commerciale\nSplingart\tLydia\tChef des ventes\nBuchanan\tSteven\tChef des ventes\nMaurer\tVéronique\tAssistante commerciale\nChambaud\tAxelle\tChef des ventes\nGiroux\tJean-Claude\tPrésident\n"
+          },
+          {
+            "type": "TEXT",
+            "data": "%table NOM\tPRENOM\tFONCTION\nGuerdon\tBéatrice\tAssistante commerciale\nDevie\tThérèse\tAssistante commerciale\nRagon\tAndré\tChef des ventes\nPouetre\tCamille-Hélène\tAssistante commerciale\nLeger\tPierre\tChef des ventes\nZiliox\tFrancoise\tAssistante commerciale\nLampis\tGabrielle\tAssistante commerciale\nBelin\tChantal\tChef des ventes\nFuller\tAndrew\tVice-Président\nBrasseur\tHervé\tVice-Président\nPoupard\tClaudette\tAssistante commerciale\nSplingart\tLydia\tChef des ventes\nBuchanan\tSteven\tChef des ventes\nMaurer\tVéronique\tAssistante commerciale\nChambaud\tAxelle\tChef des ventes\nGiroux\tJean-Claude\tPrésident\n\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nSELECT NOM_PRODUIT, QUANTITE FROM PRODUITS WHERE QUANTITE LIKE '%boîtes%kg%' ;",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-26T11:19:58+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "NOM_PRODUIT": "string",
+                      "QUANTITE": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=13",
+              "$$hashKey": "object:12974"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598433562204_282034876",
+      "id": "paragraph_1598433562204_282034876",
+      "dateCreated": "2020-08-26T11:19:22+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:10885",
+      "dateFinished": "2020-08-26T11:19:57+0200",
+      "dateStarted": "2020-08-26T11:19:57+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "NOM_PRODUIT\tQUANTITE\nLong Grain Rice\t16 boîtes de 2 kg\nKonbu\t1 boîtes (2 kg)\nAlice Mutton\t20 boîtes (1 kg)\nFilo Mix\t16 boîtes (2 kg)\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nSELECT NOM_PRODUIT, QUANTITE FROM PRODUITS WHERE QUANTITE LIKE '___%pièces' ;",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-26T11:20:08+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "NOM_PRODUIT": "string",
+                      "QUANTITE": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=14",
+              "$$hashKey": "object:13564"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598433597593_348924009",
+      "id": "paragraph_1598433597593_348924009",
+      "dateCreated": "2020-08-26T11:19:57+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:12483",
+      "dateFinished": "2020-08-26T11:20:07+0200",
+      "dateStarted": "2020-08-26T11:20:07+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "NOM_PRODUIT\tQUANTITE\nChocolate Biscuits Mix\t10 boîtes de 12 pièces\nScones\t24 paquets de 4 pièces\nTeatime Chocolate Biscuits\t10 boîtes x 12 pièces\nSir Rodney's Scones\t24 cartons x 4 pièces\nPerth Pasties\t48 pièces\nEscargots de Bourgogne\t24 pièces\nWimmers gute Semmelknödel\t20 sacs x 4 pièces\nScottish Longbreads\t10 sacs x 8 pièces\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nSELECT NOM_PRODUIT, QUANTITE FROM PRODUITS WHERE QUANTITE LIKE '___pièces' ;",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-26T11:20:15+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "NOM_PRODUIT": "string",
+                      "QUANTITE": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=15",
+              "$$hashKey": "object:14055"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598433607541_1489995983",
+      "id": "paragraph_1598433607541_1489995983",
+      "dateCreated": "2020-08-26T11:20:07+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:13002",
+      "dateFinished": "2020-08-26T11:20:15+0200",
+      "dateStarted": "2020-08-26T11:20:14+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "NOM_PRODUIT\tQUANTITE\nPerth Pasties\t48 pièces\nEscargots de Bourgogne\t24 pièces\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nCREATE TABLE IF NOT EXISTS PRODUITS_LIKE(NOM_PRODUIT STRING, QUANTITE STRING);\nINSERT INTO PRODUITS_LIKE VALUES\n  (\"Fruit Cocktail\",\"430_g\"),\n  (\"Chocolate Biscuits Mix\",\"10 boîtes_de_12_pièces\"),\n  (\"Marmalade\",\"30 boîtes%cadeau\"),\n  (\"Scones\",\"24 paquets de 4_pièces\");",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-26T11:21:50+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=16",
+              "$$hashKey": "object:14748"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598433614801_294977993",
+      "id": "paragraph_1598433614801_294977993",
+      "dateCreated": "2020-08-26T11:20:14+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:13598",
+      "dateFinished": "2020-08-26T11:20:53+0200",
+      "dateStarted": "2020-08-26T11:20:51+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%sql\nSELECT NOM_PRODUIT, QUANTITE FROM PRODUITS_LIKE   WHERE QUANTITE LIKE '%/%%' ESCAPE '/'",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-26T11:21:16+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "NOM_PRODUIT": "string",
+                      "QUANTITE": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=17",
+              "$$hashKey": "object:14710"
+            },
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=18",
+              "$$hashKey": "object:14711"
+            },
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=19",
+              "$$hashKey": "object:14712"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598433632847_1666312103",
+      "id": "paragraph_1598433632847_1666312103",
+      "dateCreated": "2020-08-26T11:20:32+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:14083",
+      "dateFinished": "2020-08-26T11:21:16+0200",
+      "dateStarted": "2020-08-26T11:21:14+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "NOM_PRODUIT\tQUANTITE\nMarmalade\t30 boîtes%cadeau\nMarmalade\t30 boîtes%cadeau\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nSELECT NOM_PRODUIT, QUANTITE FROM PRODUITS_LIKE   WHERE QUANTITE LIKE '%#_%' ESCAPE '#'",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-26T11:21:59+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "NOM_PRODUIT": "string",
+                      "QUANTITE": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=20",
+              "$$hashKey": "object:15331"
+            },
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=21",
+              "$$hashKey": "object:15332"
+            },
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=22",
+              "$$hashKey": "object:15333"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598433674506_1744946487",
+      "id": "paragraph_1598433674506_1744946487",
+      "dateCreated": "2020-08-26T11:21:14+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:14206",
+      "dateFinished": "2020-08-26T11:21:58+0200",
+      "dateStarted": "2020-08-26T11:21:58+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "NOM_PRODUIT\tQUANTITE\nFruit Cocktail\t430_g\nFruit Cocktail\t430_g\nChocolate Biscuits Mix\t10 boîtes_de_12_pièces\nChocolate Biscuits Mix\t10 boîtes_de_12_pièces\nScones\t24 paquets de 4_pièces\nScones\t24 paquets de 4_pièces\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nSELECT QUANTITE FROM PRODUITS WHERE RLIKE (QUANTITE,'^(10).*(pièces)$');",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-26T11:22:07+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "QUANTITE": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=23",
+              "$$hashKey": "object:15789"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598433718208_1817223661",
+      "id": "paragraph_1598433718208_1817223661",
+      "dateCreated": "2020-08-26T11:21:58+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:14761",
+      "dateFinished": "2020-08-26T11:22:06+0200",
+      "dateStarted": "2020-08-26T11:22:06+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "QUANTITE\n10 boîtes de 12 pièces\n10 boîtes x 12 pièces\n10 sacs x 8 pièces\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nSELECT QUANTITE FROM PRODUITS WHERE RLIKE (QUANTITE,'^2.*(carton|pièces|bouteilles)');",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-26T11:22:15+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "QUANTITE": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=24",
+              "$$hashKey": "object:16443"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598433726203_1910676506",
+      "id": "paragraph_1598433726203_1910676506",
+      "dateCreated": "2020-08-26T11:22:06+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:15372",
+      "dateFinished": "2020-08-26T11:22:15+0200",
+      "dateStarted": "2020-08-26T11:22:14+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "QUANTITE\n24 paquets de 4 pièces\n24 bouteilles de 35 cl\n24 bouteilles (1 litre)\n24 cartons x 4 pièces\n24 cartons (500 g)\n24 cartons (200 g)\n24 bouteilles (70 cl)\n24 bouteilles (1 litre)\n24 cartons (50 g)\n24 cartons (250 g)\n24 bouteilles (12 onces)\n24 bouteilles (355 ml)\n24 cartons (200 g)\n24 bouteilles (250 ml)\n20 cartons (2 kg)\n24 cartons (250 g)\n24 pièces\n24 bouteilles (500 ml)\n20 sacs x 4 pièces\n24 bouteilles (0,5 litre)\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nSELECT QUANTITE FROM PRODUITS WHERE RLIKE (QUANTITE,'^[^1-3]');",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-26T11:22:24+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "QUANTITE": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=25",
+              "$$hashKey": "object:17011"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598433734769_1157902582",
+      "id": "paragraph_1598433734769_1157902582",
+      "dateCreated": "2020-08-26T11:22:14+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:15805",
+      "dateFinished": "2020-08-26T11:22:23+0200",
+      "dateStarted": "2020-08-26T11:22:23+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "QUANTITE\n430 g\n50 paquets de 300 g\nPaquet de 5 kg\nSac de 450 g\n4 boîtes\n430 g\n430 g\n430 g\n430 g\n400 g\n400 g\n400 g\n48 pots (6 onces)\n4 boîtes (250 g)\n50 cartons (300 g)\n48 pièces\n40 cartons (100 g)\n50 sacs x 30 saucisses\n48 tartes\n48 bocaux de 170 g\n40 paquets de 100 g.\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nSELECT QUANTITE FROM PRODUITS WHERE RLIKE(QUANTITE,\"^\\\\d{2,3}\\\\s\\\\w{3,6}\\\\s[\\\\(]\\\\d{1,3}\\\\s\\\\w?(g[\\\\)])$\");\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-26T11:22:33+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "QUANTITE": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=26",
+              "$$hashKey": "object:17499"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598433743805_144670954",
+      "id": "paragraph_1598433743805_144670954",
+      "dateCreated": "2020-08-26T11:22:23+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:16460",
+      "dateFinished": "2020-08-26T11:22:32+0200",
+      "dateStarted": "2020-08-26T11:22:32+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "QUANTITE\n12 pots (200 g)\n20 verres (450 g)\n24 pots (250 g)\n24 pots (150 g)\n100 sacs (250 g)\n10 verres (200 g)\n15 pots (625 g)\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nSELECT NOM_PRODUIT, NO_FOURNISSEUR FROM PRODUITS  WHERE NO_FOURNISSEUR BETWEEN 2 AND 3;\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-26T11:22:45+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "NOM_PRODUIT": "string",
+                      "NO_FOURNISSEUR": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=27",
+              "$$hashKey": "object:18108"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598433752547_1248226428",
+      "id": "paragraph_1598433752547_1248226428",
+      "dateCreated": "2020-08-26T11:22:32+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:17027",
+      "dateFinished": "2020-08-26T11:22:44+0200",
+      "dateStarted": "2020-08-26T11:22:44+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "NOM_PRODUIT\tNO_FOURNISSEUR\nAmandes\t2\nBrownie Mix\t2\nCherry Pie Filling\t2\nChef Anton's Cajun Seasoning\t2\nGrandma's Boysenberry Spread\t3\nUncle Bob's Organic Dried Pears\t3\nNorthwoods Cranberry Sauce\t3\nLouisiana Hot Spiced Okra\t2\nChef Anton's Gumbo Mix\t2\nLouisiana Fiery Hot Pepper Sauce\t2\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nSELECT NOM_PRODUIT, NO_FOURNISSEUR FROM PRODUITS  WHERE NO_FOURNISSEUR IN (1,3,6,8);",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-26T11:22:56+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "NOM_PRODUIT": "string",
+                      "NO_FOURNISSEUR": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=28",
+              "$$hashKey": "object:18848"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598433764751_1594885918",
+      "id": "paragraph_1598433764751_1594885918",
+      "dateCreated": "2020-08-26T11:22:44+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:17515",
+      "dateFinished": "2020-08-26T11:22:55+0200",
+      "dateStarted": "2020-08-26T11:22:55+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "NOM_PRODUIT\tNO_FOURNISSEUR\nLong Grain Rice - Gnocchi\t6\nDried Plums\t8\nPeaches\t6\nChai\t1\nChang\t1\nAniseed Syrup\t1\nGrandma's Boysenberry Spread\t3\nUncle Bob's Organic Dried Pears\t3\nNorthwoods Cranberry Sauce\t3\nKonbu\t6\nTeatime Chocolate Biscuits\t8\nSir Rodney's Marmalade\t8\nSir Rodney's Scones\t8\nTofu\t6\nGenen Shouyu\t6\nScottish Longbreads\t8\nLes Comptoirs  - Olive Oil\t6\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nSELECT VILLE FROM VILLES WHERE VILLE IN ('Paris','Strasbourg','Toulouse') ;",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-26T11:23:02+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "VILLE": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=29",
+              "$$hashKey": "object:19293"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598433775421_1586063644",
+      "id": "paragraph_1598433775421_1586063644",
+      "dateCreated": "2020-08-26T11:22:55+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:18136",
+      "dateFinished": "2020-08-26T11:23:02+0200",
+      "dateStarted": "2020-08-26T11:23:01+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "VILLE\nParis\nStrasbourg\nToulouse\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nSELECT NOM, FONCTION, SALAIRE FROM EMPLOYES WHERE SALAIRE > 2500 AND NOT FONCTION LIKE 'Rep%';",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-26T11:23:10+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "NOM": "string",
+                      "FONCTION": "string",
+                      "SALAIRE": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=30",
+              "$$hashKey": "object:19966"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598433781919_1335184737",
+      "id": "paragraph_1598433781919_1335184737",
+      "dateCreated": "2020-08-26T11:23:01+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:18876",
+      "dateFinished": "2020-08-26T11:23:09+0200",
+      "dateStarted": "2020-08-26T11:23:09+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "NOM\tFONCTION\tSALAIRE\nRagon\tChef des ventes\t13000.00\nLeger\tChef des ventes\t19000.00\nBelin\tChef des ventes\t10000.00\nFuller\tVice-Président\t96000.00\nBrasseur\tVice-Président\t147000.00\nSplingart\tChef des ventes\t16000.00\nBuchanan\tChef des ventes\t13000.00\nChambaud\tChef des ventes\t12000.00\nGiroux\tPrésident\t150000.00\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nSELECT NOM, FONCTION, SALAIRE FROM EMPLOYES WHERE SALAIRE > 2500 AND FONCTION NOT LIKE 'Rep%';",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-26T11:23:18+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "NOM": "string",
+                      "FONCTION": "string",
+                      "SALAIRE": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=31",
+              "$$hashKey": "object:20671"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598433789191_666683250",
+      "id": "paragraph_1598433789191_666683250",
+      "dateCreated": "2020-08-26T11:23:09+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:19309",
+      "dateFinished": "2020-08-26T11:23:17+0200",
+      "dateStarted": "2020-08-26T11:23:17+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "NOM\tFONCTION\tSALAIRE\nRagon\tChef des ventes\t13000.00\nLeger\tChef des ventes\t19000.00\nBelin\tChef des ventes\t10000.00\nFuller\tVice-Président\t96000.00\nBrasseur\tVice-Président\t147000.00\nSplingart\tChef des ventes\t16000.00\nBuchanan\tChef des ventes\t13000.00\nChambaud\tChef des ventes\t12000.00\nGiroux\tPrésident\t150000.00\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nSELECT NOM,PRENOM, TITRE  FROM EMPLOYES WHERE TITRE NOT IN ('M.','Mme');",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-26T11:23:26+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "NOM": "string",
+                      "PRENOM": "string",
+                      "TITRE": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=32",
+              "$$hashKey": "object:21263"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598433797213_1809504973",
+      "id": "paragraph_1598433797213_1809504973",
+      "dateCreated": "2020-08-26T11:23:17+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:20009",
+      "dateFinished": "2020-08-26T11:23:25+0200",
+      "dateStarted": "2020-08-26T11:23:24+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "NOM\tPRENOM\tTITRE\nDodsworth\tAnne\tMlle\nDavolio\tNancy\tMlle\nCallahan\tLaura\tMlle\nLeverling\tJanet\tMlle\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nSELECT NOM_PRODUIT, QUANTITE,NO_FOURNISSEUR,CODE_CATEGORIE\nFROM PRODUITS\nWHERE QUANTITE LIKE '%boîtes%'\n      AND  NO_FOURNISSEUR BETWEEN 2 AND 6\n      AND  CODE_CATEGORIE = 2;",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-26T11:23:32+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "NOM_PRODUIT": "string",
+                      "QUANTITE": "string",
+                      "NO_FOURNISSEUR": "string",
+                      "CODE_CATEGORIE": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=33",
+              "$$hashKey": "object:21891"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598433804926_400322599",
+      "id": "paragraph_1598433804926_400322599",
+      "dateCreated": "2020-08-26T11:23:24+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:20711",
+      "dateFinished": "2020-08-26T11:23:31+0200",
+      "dateStarted": "2020-08-26T11:23:31+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "NOM_PRODUIT\tQUANTITE\tNO_FOURNISSEUR\tCODE_CATEGORIE\nMustard\t12 boîtes\t4\t2\nChef Anton's Gumbo Mix\t36 boîtes\t2\t2\nLes Comptoirs  - Olive Oil\t36 boîtes\t6\t2\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\nSELECT NOM_PRODUIT, QUANTITE,NO_FOURNISSEUR,CODE_CATEGORIE\nFROM PRODUITS\nWHERE QUANTITE LIKE '%boîtes%'\n      AND  ( NO_FOURNISSEUR BETWEEN 2 AND 6\n             OR   CODE_CATEGORIE = 2 ) ;\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-26T11:23:42+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "NOM_PRODUIT": "string",
+                      "QUANTITE": "string",
+                      "NO_FOURNISSEUR": "string",
+                      "CODE_CATEGORIE": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://jupiter.olimp.fr:4041/jobs/job?id=34",
+              "$$hashKey": "object:22656"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598433811037_1486116256",
+      "id": "paragraph_1598433811037_1486116256",
+      "dateCreated": "2020-08-26T11:23:31+0200",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:21303",
+      "dateFinished": "2020-08-26T11:23:41+0200",
+      "dateStarted": "2020-08-26T11:23:40+0200",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "NOM_PRODUIT\tQUANTITE\tNO_FOURNISSEUR\tCODE_CATEGORIE\nClam Chowder\t12 boîtes de 340 g\t14\t2\nLong Grain Rice\t16 boîtes de 2 kg\t4\t7\nMustard\t12 boîtes\t4\t2\nBrownie Mix\t3 boîtes\t2\t3\nKonbu\t1 boîtes (2 kg)\t6\t8\nOriginal Frankfurter grüne Soße\t12 boîtes\t12\t2\nChef Anton's Gumbo Mix\t36 boîtes\t2\t2\nLes Comptoirs  - Olive Oil\t36 boîtes\t6\t2\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%sql\n",
+      "user": "anonymous",
+      "dateUpdated": "2020-08-26T11:23:40+0200",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1598433820916_405668016",
+      "id": "paragraph_1598433820916_405668016",
+      "dateCreated": "2020-08-26T11:23:40+0200",
+      "status": "READY",
+      "focus": true,
+      "$$hashKey": "object:21943"
+    }
+  ],
+  "name": "Restrictions-SQL",
+  "id": "2FJPX8Y1Q",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.9.0-SNAPSHOT",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {},
+  "path": "/Restrictions-SQL"
+}
