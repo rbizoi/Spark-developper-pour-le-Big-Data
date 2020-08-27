@@ -53,21 +53,33 @@ SELECT vv, t
 FROM coursspark3.meteopartitionannee
 WHERE vv is not null ;
 
+SELECT station, visibilite, precipitations24, tendpression24
+FROM meteopartitionannee
+ORDER BY station, visibilite DESC, precipitations24;
+
+SELECT station, visibilite, precipitations24, tendpression24
+FROM meteopartitionannee
+ORDER BY station, visibilite DESC,
+         precipitations24 NULLS LAST, tendpression24 DESC NULLS FIRST;
+
+SELECT station, visibilite, precipitations24, tendpression24
+FROM meteopartitionannee
+SORT BY station, visibilite DESC,
+        precipitations24 NULLS LAST, tendpression24 DESC NULLS FIRST;
+
 
 spark.sql("""
-  SELECT station, visibilite, precipitations24, tendpression24
-  FROM meteopartitionannee
-  ORDER BY station, visibilite DESC, precipitations24;
-""").show(20,truncate=False)
+  SELECT ville, ROUND(altitude,-2)
+  FROM meteo_villes;
+""").show(120,truncate=False)
 
 
 spark.sql("""
-  SELECT station, visibilite, precipitations24, tendpression24
-  FROM meteopartitionannee
-  ORDER BY station, visibilite DESC,
-           precipitations24 NULLS LAST, tendpression24 DESC NULLS FIRST;
+
 """).show(20,truncate=False)
 
+spark.sql("""
+""").show(20,truncate=False)
 
 
 
