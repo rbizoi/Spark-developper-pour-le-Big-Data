@@ -63,50 +63,26 @@ FROM fournisseurs fr
       JOIN adresses ad ON ad.no_adresse = fr.no_adresse
       JOIN villes   vl ON vl.no_ville = ad.no_ville;
 
-
-
-spark.sql("""
 SELECT COALESCE(c.client     ,'------------------') AS client,
        COALESCE(f.fournisseur,'------------------') AS fournisseur
 FROM clients_pos c INNER JOIN fournisseurs_pos f
      ON( c.ville = f.ville AND c.pays = f.pays)
 WHERE COALESCE(c.pays,f.pays) = 'France';
-""").show(2000,truncate=False)
 
-spark.sql("""
 SELECT COALESCE(c.client     ,'------------------') AS client,
        COALESCE(f.fournisseur,'------------------') AS fournisseur
 FROM clients_pos c LEFT OUTER JOIN fournisseurs_pos f
      ON( c.ville = f.ville AND c.pays = f.pays)
 WHERE COALESCE(c.pays,f.pays) = 'France';
-""").show(2000,truncate=False)
 
-spark.sql("""
 SELECT COALESCE(c.client     ,'------------------') AS client,
        COALESCE(f.fournisseur,'------------------') AS fournisseur
 FROM clients_pos c RIGHT OUTER JOIN fournisseurs_pos f
      ON( c.ville = f.ville AND c.pays = f.pays)
 WHERE COALESCE(c.pays,f.pays) = 'France';
-""").show(2000,truncate=False)
 
-spark.sql("""
 SELECT COALESCE(c.client     ,'------------------') AS client,
        COALESCE(f.fournisseur,'------------------') AS fournisseur
 FROM clients_pos c FULL OUTER JOIN fournisseurs_pos f
      ON( c.ville = f.ville AND c.pays = f.pays)
 WHERE COALESCE(c.pays,f.pays) = 'France';
-""").show(2000,truncate=False)
-
-
-
-spark.sql("""
-
-""").show(2000,truncate=False)
-
-
-
-
-SELECT COALESCE(C.SOCIETE,'------------------') CLIENT,
-       COALESCE(F.SOCIETE,'------------------') FOURNISSEUR
-FROM CLIENTS C LEFT OUTER JOIN FOURNISSEURS F
-     USING( VILLE,PAYS) WHERE PAYS = 'France';
