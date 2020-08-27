@@ -141,11 +141,16 @@ FROM parquet.`/user/spark/donnees/meteo_parquet`;
 
 SELECT count(*) from meteoClusterAnnee;
 
+CREATE TABLE meteo_villes
+USING PARQUET
+LOCATION "/user/spark/donnees/meteo_villes_parquet";
+SELECT count(*) FROM meteo_villes;
+SELECT count(*) FROM
+parquet.`/user/spark/donnees/meteo_villes_parquet`;
 
 CREATE TABLE employes
 USING PARQUET
 LOCATION "/user/spark/donnees/parquet/EMPLOYES_parquet";
-
 
 ADD JAR "/usr/share/spark/jars/delta-core_2.12-0.8.0-SNAPSHOT.jar";
 ADD JAR "hdfs://jupiter.olimp.fr:8020/spark-jars/delta-core_2.12-0.8.0-SNAPSHOT.jar";
