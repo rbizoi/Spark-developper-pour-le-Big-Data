@@ -12,7 +12,8 @@ FROM COMMANDES CO
 
 
 
-WITH sr1 as ( SELECT AVG(dc.port) port
+WITH sr1 as (
+  SELECT AVG(dc.port) port
   FROM COMMANDES CO
           JOIN details_commandes dc ON dc.no_commande = co.no_commande
           JOIN acheteurs ac         ON co.no_acheteur = ac.no_acheteur
