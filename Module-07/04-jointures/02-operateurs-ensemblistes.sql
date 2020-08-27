@@ -1,5 +1,4 @@
 use gest_comm;
-use gest_comm;
 show tables;
 
 CREATE OR REPLACE VIEW clients_pos
