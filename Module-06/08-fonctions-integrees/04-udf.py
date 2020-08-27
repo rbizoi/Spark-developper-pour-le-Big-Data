@@ -14,6 +14,17 @@ meteoHexagone.select('temperature',
                      round(celsiusFahrenheit('temperature'),2)\
                            .alias('t_fahrenheit')).show()
 
+@udf("string")
+def formatVille(ville):
+    return ville.title()
+
+villes.select( col('Id').alias('id'),
+               formatVille('ville').alias('ville'),
+               'latitude',
+               'longitude',
+               'altitude')\
+      .show(5,truncate=False)
+
 import pandas as pd
 from pyspark.sql.functions import *
 from sklearn.preprocessing import scale
