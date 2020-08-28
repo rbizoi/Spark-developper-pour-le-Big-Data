@@ -1,4 +1,29 @@
+--spark.sql("""
+--  """).show(120,truncate=False)
 use gest_comm;
+
+CREATE VIEW paysAnneeMoisPort
+AS
+    SELECT vl.pays                                    ,
+         EXTRACT ( year  FROM date_commande) AS annee ,
+         EXTRACT ( month FROM date_commande) AS mois  ,
+         SUM(port)                           AS port
+    FROM COMMANDES CO
+          JOIN details_commandes dc ON dc.no_commande = co.no_commande
+          JOIN acheteurs ac         ON co.no_acheteur = ac.no_acheteur
+          JOIN magasins mg          ON ac.no_magasin  = mg.no_magasin
+          JOIN adresses ad          ON mg.no_adresse  = ad.no_adresse
+          JOIN villes vl            ON ad.no_ville    = vl.no_ville
+    WHERE EXTRACT ( year  FROM date_commande) IN (2017,2018)
+    AND EXTRACT ( month FROM date_commande) <= 5
+    AND vl.pays IN ('Allemagne','France')
+    GROUP BY  vl.pays,
+            EXTRACT ( year  FROM date_commande) ,
+            EXTRACT ( month FROM date_commande)
+    ORDER BY vl.pays,
+            EXTRACT ( year  FROM date_commande) ,
+            EXTRACT ( month FROM date_commande);
+
 
 SELECT no_employe, fonction, salaire,
     ROUND(salaire * 100 / SUM( salaire) OVER ( ),2) AS pct_sal,
@@ -31,24 +56,7 @@ FROM sr_initiale
 ORDER BY pays,annee
 LIMIT 15;
 
-WITH sr_initiale (
-  SELECT vl.pays                                      ,
-         EXTRACT ( year  FROM date_commande) AS annee ,
-         EXTRACT ( month FROM date_commande) AS mois  ,
-         SUM(port)                           AS port
-  FROM COMMANDES CO
-          JOIN details_commandes dc ON dc.no_commande = co.no_commande
-          JOIN acheteurs ac         ON co.no_acheteur = ac.no_acheteur
-          JOIN magasins mg          ON ac.no_magasin  = mg.no_magasin
-          JOIN adresses ad          ON mg.no_adresse  = ad.no_adresse
-          JOIN villes vl            ON ad.no_ville    = vl.no_ville
-  WHERE EXTRACT ( year  FROM date_commande) IN (2017,2018)
-    AND EXTRACT ( month FROM date_commande) <= 5
-    AND vl.pays IN ('Allemagne','France')
-  GROUP BY  vl.pays,
-            EXTRACT ( year  FROM date_commande) ,
-            EXTRACT ( month FROM date_commande)
-)
+
 SELECT pays  ,
        annee ,
        mois  ,
@@ -57,27 +65,9 @@ SELECT pays  ,
        SUM(port) OVER (PARTITION BY annee) AS t_annee,
        SUM(port) OVER (PARTITION BY mois ) AS t_mois,
        SUM(port) OVER (PARTITION BY pays ) AS t_pays
-FROM sr_initiale
+FROM paysAnneeMoisPort
 ORDER BY pays,annee,mois;
 
-WITH sr_initiale (
-  SELECT vl.pays                                      ,
-         EXTRACT ( year  FROM date_commande) AS annee ,
-         EXTRACT ( month FROM date_commande) AS mois  ,
-         SUM(port)                           AS port
-  FROM COMMANDES CO
-          JOIN details_commandes dc ON dc.no_commande = co.no_commande
-          JOIN acheteurs ac         ON co.no_acheteur = ac.no_acheteur
-          JOIN magasins mg          ON ac.no_magasin  = mg.no_magasin
-          JOIN adresses ad          ON mg.no_adresse  = ad.no_adresse
-          JOIN villes vl            ON ad.no_ville    = vl.no_ville
-  WHERE EXTRACT ( year  FROM date_commande) IN (2017,2018)
-    AND EXTRACT ( month FROM date_commande) <= 5
-    AND vl.pays IN ('Allemagne','France')
-  GROUP BY  vl.pays,
-            EXTRACT ( year  FROM date_commande) ,
-            EXTRACT ( month FROM date_commande)
-)
 SELECT pays  ,
        annee ,
        mois  ,
@@ -88,7 +78,7 @@ SELECT pays  ,
                         ORDER BY pays, mois) AS t_annee,
        SUM(port) OVER (PARTITION BY pays
                         ORDER BY annee, mois) AS t_pays
-FROM sr_initiale
+FROM paysAnneeMoisPort
 ORDER BY pays,annee,mois;
 
 WITH sr_initiale (
@@ -200,24 +190,6 @@ SELECT  date_commande ,
                     ROWS BETWEEN 1 PRECEDING AND 1 PRECEDING),2)  AS AP_ROWS
 FROM sr_finale;
 
-WITH sr_initiale (
-  SELECT vl.pays                                      ,
-         EXTRACT ( year  FROM date_commande) AS annee ,
-         EXTRACT ( month FROM date_commande) AS mois  ,
-         SUM(port)                           AS port
-  FROM COMMANDES CO
-          JOIN details_commandes dc ON dc.no_commande = co.no_commande
-          JOIN acheteurs ac         ON co.no_acheteur = ac.no_acheteur
-          JOIN magasins mg          ON ac.no_magasin  = mg.no_magasin
-          JOIN adresses ad          ON mg.no_adresse  = ad.no_adresse
-          JOIN villes vl            ON ad.no_ville    = vl.no_ville
-  WHERE EXTRACT ( year  FROM date_commande) IN (2017,2018)
-    AND EXTRACT ( month FROM date_commande) <= 5
-    AND vl.pays IN ('Allemagne','France')
-  GROUP BY  vl.pays,
-            EXTRACT ( year  FROM date_commande) ,
-            EXTRACT ( month FROM date_commande)
-)
 SELECT pays  ,
        annee ,
        mois  ,
@@ -231,27 +203,9 @@ SELECT pays  ,
                            ORDER BY annee, mois     ) AS rn4,
        ROW_NUMBER() OVER ( ORDER BY annee,mois,pays ) AS rn5,
        ROW_NUMBER() OVER ( ORDER BY pays,annee,mois ) AS rn6
-FROM sr_initiale
+FROM paysAnneeMoisPort
 ORDER BY pays,annee,mois;
 
-WITH sr_initiale (
-SELECT vl.pays                                      ,
-       EXTRACT ( year  FROM date_commande) AS annee ,
-       EXTRACT ( month FROM date_commande) AS mois  ,
-       SUM(port)                           AS port
-FROM COMMANDES CO
-        JOIN details_commandes dc ON dc.no_commande = co.no_commande
-        JOIN acheteurs ac         ON co.no_acheteur = ac.no_acheteur
-        JOIN magasins mg          ON ac.no_magasin  = mg.no_magasin
-        JOIN adresses ad          ON mg.no_adresse  = ad.no_adresse
-        JOIN villes vl            ON ad.no_ville    = vl.no_ville
-WHERE EXTRACT ( year  FROM date_commande) IN (2017,2018)
-  AND EXTRACT ( month FROM date_commande) <= 5
-  AND vl.pays IN ('Allemagne','France')
-GROUP BY  vl.pays,
-          EXTRACT ( year  FROM date_commande) ,
-          EXTRACT ( month FROM date_commande)
-)
 SELECT pays  ,
      annee ,
      mois  ,
@@ -265,30 +219,10 @@ SELECT pays  ,
                     ORDER BY annee,mois       ),2) AS c3,
      CUME_DIST() OVER ( PARTITION BY pays
                        ORDER BY annee,mois       ) AS c4
-FROM sr_initiale
+FROM paysAnneeMoisPort
 ORDER BY pays,annee,mois;
 
 
-WITH sr_initiale (
-  SELECT vl.pays                                      ,
-         EXTRACT ( year  FROM date_commande) AS annee ,
-         EXTRACT ( month FROM date_commande) AS mois  ,
-         SUM(port)                           AS port
-  FROM COMMANDES CO
-          JOIN details_commandes dc
-               ON dc.no_commande = co.no_commande
-          JOIN acheteurs ac
-               ON co.no_acheteur = ac.no_acheteur
-          JOIN magasins mg          ON ac.no_magasin  = mg.no_magasin
-          JOIN adresses ad          ON mg.no_adresse  = ad.no_adresse
-          JOIN villes vl            ON ad.no_ville    = vl.no_ville
-  WHERE EXTRACT ( year  FROM date_commande) IN (2017,2018)
-    AND EXTRACT ( month FROM date_commande) <= 5
-    AND vl.pays IN ('Allemagne','France')
-  GROUP BY  vl.pays,
-            EXTRACT ( year  FROM date_commande) ,
-            EXTRACT ( month FROM date_commande)
-)
 SELECT pays  ,
        annee ,
        mois  ,
@@ -305,29 +239,9 @@ SELECT pays  ,
                          ORDER BY annee,mois    ),2) AS c4,
        NTILE(4) OVER ( PARTITION BY pays
                          ORDER BY annee,mois       ) AS c5
-FROM sr_initiale
+FROM paysAnneeMoisPort
 ORDER BY pays,annee,mois;
 
-WITH sr_initiale (
-  SELECT vl.pays                                      ,
-         EXTRACT ( year  FROM date_commande) AS annee ,
-         EXTRACT ( month FROM date_commande) AS mois  ,
-         SUM(port)                           AS port
-  FROM COMMANDES CO
-          JOIN details_commandes dc
-               ON dc.no_commande = co.no_commande
-          JOIN acheteurs ac
-               ON co.no_acheteur = ac.no_acheteur
-          JOIN magasins mg          ON ac.no_magasin  = mg.no_magasin
-          JOIN adresses ad          ON mg.no_adresse  = ad.no_adresse
-          JOIN villes vl            ON ad.no_ville    = vl.no_ville
-  WHERE EXTRACT ( year  FROM date_commande) IN (2017,2018)
-    AND EXTRACT ( month FROM date_commande) <= 5
-    AND vl.pays IN ('Allemagne','France')
-  GROUP BY  vl.pays,
-            EXTRACT ( year  FROM date_commande) ,
-            EXTRACT ( month FROM date_commande)
-)
 SELECT pays  ,
        annee ,
        mois  ,
@@ -345,29 +259,9 @@ SELECT pays  ,
                  ORDER BY annee,mois
                  ROWS BETWEEN CURRENT ROW
                       AND 1 FOLLOWING) AS lv2
-FROM sr_initiale
+FROM paysAnneeMoisPort
 ORDER BY pays,annee,mois;
 
-WITH sr_initiale (
-  SELECT vl.pays                                      ,
-         EXTRACT ( year  FROM date_commande) AS annee ,
-         EXTRACT ( month FROM date_commande) AS mois  ,
-         SUM(port)                           AS port
-  FROM COMMANDES CO
-          JOIN details_commandes dc
-               ON dc.no_commande = co.no_commande
-          JOIN acheteurs ac
-               ON co.no_acheteur = ac.no_acheteur
-          JOIN magasins mg          ON ac.no_magasin  = mg.no_magasin
-          JOIN adresses ad          ON mg.no_adresse  = ad.no_adresse
-          JOIN villes vl            ON ad.no_ville    = vl.no_ville
-  WHERE EXTRACT ( year  FROM date_commande) IN (2017,2018)
-    AND EXTRACT ( month FROM date_commande) <= 5
-    AND vl.pays IN ('Allemagne','France')
-  GROUP BY  vl.pays,
-            EXTRACT ( year  FROM date_commande) ,
-            EXTRACT ( month FROM date_commande)
-)
 SELECT pays  ,
        annee ,
        mois  ,
@@ -385,29 +279,9 @@ SELECT pays  ,
                  ORDER BY annee,mois
                  ROWS BETWEEN CURRENT ROW
                       AND 1 FOLLOWING) AS lv2
-FROM sr_initiale
+FROM paysAnneeMoisPort
 ORDER BY pays,annee,mois;
 
-WITH sr_initiale (
-  SELECT vl.pays                                      ,
-         EXTRACT ( year  FROM date_commande) AS annee ,
-         EXTRACT ( month FROM date_commande) AS mois  ,
-         SUM(port)                           AS port
-  FROM COMMANDES CO
-          JOIN details_commandes dc
-               ON dc.no_commande = co.no_commande
-          JOIN acheteurs ac
-               ON co.no_acheteur = ac.no_acheteur
-          JOIN magasins mg          ON ac.no_magasin  = mg.no_magasin
-          JOIN adresses ad          ON mg.no_adresse  = ad.no_adresse
-          JOIN villes vl            ON ad.no_ville    = vl.no_ville
-  WHERE EXTRACT ( year  FROM date_commande) IN (2017,2018)
-    AND EXTRACT ( month FROM date_commande) <= 5
-    AND vl.pays IN ('Allemagne','France')
-  GROUP BY  vl.pays,
-            EXTRACT ( year  FROM date_commande) ,
-            EXTRACT ( month FROM date_commande)
-)
 SELECT pays  ,
        annee ,
        mois  ,
@@ -420,5 +294,5 @@ SELECT pays  ,
                         ORDER BY annee,mois ) AS lead1,
        LEAD(port,3,-9999) OVER ( PARTITION BY pays
                         ORDER BY annee,mois ) AS lead2
-FROM sr_initiale
+FROM paysAnneeMoisPort
 ORDER BY pays,annee,mois;
