@@ -161,3 +161,42 @@ descriptions_commandes.count()
 produits.count()
 vendeurs.count()
 categories.count()
+
+
+vendeurs.join(details_commandes,'seller_id')\
+        .join(commandes,'order_id')\
+        .join(produits,'product_id')\
+        .join(categories,'product_category_name')\
+        .join(paiements,'order_id')\
+        .join(clients,'customer_id')\
+        .join(descriptions_commandes,'order_id')\
+        .join(ventes,'seller_id')\
+        .join(mql,'mql_id')\
+        .join(geolocation.select(  col('geolocation_zip_code_prefix').alias('customer_zip_code_prefix'),
+                                   col('geolocation_lat').alias('customer_lat'),
+                                   col('geolocation_lng').alias('customer_lng'))
+                                   ,'customer_zip_code_prefix')\
+        .join(geolocation.select(  col('geolocation_zip_code_prefix').alias('seller_zip_code_prefix'),
+                                   col('geolocation_lat'  ).alias('seller_lat'),
+                                   col('geolocation_lng'  ).alias('seller_lng'))
+                                   ,'seller_zip_code_prefix')\
+           .show(1)
+
+vendeurs.join(details_commandes,'seller_id')\
+        .join(commandes,'order_id')\
+        .join(produits,'product_id')\
+        .join(categories,'product_category_name')\
+        .join(paiements,'order_id')\
+        .join(clients,'customer_id')\
+        .join(descriptions_commandes,'order_id')\
+        .join(ventes,'seller_id')\
+        .join(mql,'mql_id')\
+        .join(geolocation.select(  col('geolocation_zip_code_prefix').alias('customer_zip_code_prefix'),
+                                   col('geolocation_lat').alias('customer_lat'),
+                                   col('geolocation_lng').alias('customer_lng'))
+                                   ,'customer_zip_code_prefix')\
+        .join(geolocation.select(  col('geolocation_zip_code_prefix').alias('seller_zip_code_prefix'),
+                                   col('geolocation_lat'  ).alias('seller_lat'),
+                                   col('geolocation_lng'  ).alias('seller_lng'))
+                                   ,'seller_zip_code_prefix')\
+        .write.mode('overwrite').format('parquet').option('path','/user/spark/donnees/brazilian_e-commerce/parquet/jeuxcomplet').save()
