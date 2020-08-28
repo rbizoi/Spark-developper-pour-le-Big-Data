@@ -200,3 +200,8 @@ vendeurs.join(details_commandes,'seller_id')\
                                    col('geolocation_lng'  ).alias('seller_lng'))
                                    ,'seller_zip_code_prefix')\
         .write.mode('overwrite').format('parquet').option('path','/user/spark/donnees/brazilian_e-commerce/parquet/jeuxcomplet').save()
+
+
+
+spark.conf.set("spark.sql.shuffle.partitions",1)
+spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/jeuxcomplet`").write.mode('overwrite').format('parquet').option('path','/user/spark/donnees/brazilian_e-commerce/parquet/brasilianEC').save()
