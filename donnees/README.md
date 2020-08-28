@@ -3,18 +3,14 @@ repGitHub=https://raw.githubusercontent.com/rbizoi/Spark-developper-pour-le-Big-
 wget $repGitHub
 
 
+# google moteur de recherche datasets
+https://datasetsearch.research.google.com/
 
 
 
-
-
-
-
-
-
-
-
-
+# Recherche données
+## TRMM_3B41RT: TRMM (TMPA-RT) Near Real-Time IR precipitation estimate L3 1-hour 0.25 degree x 0.25 degree V7
+https://disc.gsfc.nasa.gov/datasets/TRMM_3B41RT_7/summary
 
 
 
