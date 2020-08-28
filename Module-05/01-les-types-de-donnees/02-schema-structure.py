@@ -23,10 +23,8 @@ donnees.columns
 schema ='etat int, etat_descriptif string, ident string, idsurfs string, infousager string, libre int, nom_parking string, total int'
 donnees = spark.read.json(sc.parallelize([x['fields'] for x in results]),schema)
 donnees.printSchema()
-donnees.select('ident','nom_parking','etat_descriptif', 
+donnees.select('ident','nom_parking','etat_descriptif',
                'libre', 'total').orderBy('libre',ascending=0).show(5)
-
-
 
 donnees.select('ident','nom_parking','etat_descriptif',
                'libre', 'total').orderBy('libre',ascending=0).show(24)
