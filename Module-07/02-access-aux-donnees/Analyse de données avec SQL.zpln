@@ -979,7 +979,7 @@
       "$$hashKey": "object:22039"
     },
     {
-      "text": "%sql\nselect * from global_temp.donneesMeteo\nwhere annee = 2020 and mois = 5 and ville = \"Strasbourg Entzheim\"",
+      "text": "%sql\nselect * from global_temp.donneesMeteo\nwhere annee = 2020 and mois = 5 and ville = \"Strasbourg\"",
       "user": "anonymous",
       "dateUpdated": "2020-08-25T15:38:24+0200",
       "config": {
