@@ -16,7 +16,14 @@ meteoHexagone.select('temperature',
 
 @udf("string")
 def formatVille(ville):
-    return ville.title()
+    if ville in ['CLERMONT-FD','MONT-DE-MARSAN',
+                                   'ST-PIERRE','ST-BARTHELEMY METEO'] :
+        return ville.title()
+    else :
+        if ville.find('-') != -1 :
+            return ville[0:ville.find('-')].title()
+        else:
+            return ville.title()
 
 villes.select( col('Id').alias('id'),
                formatVille('ville').alias('ville'),
