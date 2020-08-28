@@ -10,7 +10,6 @@ spark = SparkSession.builder\
                          "io.delta.sql.DeltaSparkSessionExtension")\
           .getOrCreate()
 
-
 meteoDataFrame  = spark.read.format('csv')\
     .option('sep',';')\
     .option('header','true')\
@@ -37,6 +36,24 @@ villes  = spark.read.format('csv')   \
       .load('/user/spark/donnees/postesSynop.csv')  \
       .cache()
 
+@udf("string")
+def formatVille(ville):
+    if ville in ['CLERMONT-FD','MONT-DE-MARSAN',
+                                   'ST-PIERRE','ST-BARTHELEMY METEO'] :
+        return ville.title()
+    else :
+        if ville.find('-') != -1 :
+            return ville[0:ville.find('-')].title()
+        else:
+            return ville.title()
+
+villesT  = villes.select(
+                col('Id').alias('id'),
+                formatVille('ville').alias('ville'),
+               'latitude',
+               'longitude',
+               'altitude')
+
 
 meteo = meteoDataFrame.select(
                  col('numer_sta'),
@@ -62,16 +79,28 @@ meteo.select('annee','mois','jour','temperature','humidite',
              'visibilite','pression').show(3)
 
 meteoFance = meteo.where('id < 8000')\
-             .join(villes.withColumnRenamed('Id', 'id'),'id')\
+             .join(villesT,'id')\
              .select(initcap(regexp_replace('ville','-',' ')).alias('ville'),
                      'annee','mois','jour','temperature',
                      'humidite','visibilite','pression','precipitations')
-meteoFance.write.
-       mode('overwrite').
-       format('parquet').
-       partitionBy('annee').
-       option('path', '/user/spark/donnees/meteoFrance').
-       save()
+
+meteoFance.write\
+       .mode('overwrite')\
+       .format('parquet')\
+       .partitionBy('annee')\
+       .option('path', '/user/spark/donnees/meteoFrance')\
+       .save()
+
+meteo.join(villesT,'id')\
+     .select(initcap(regexp_replace('ville','-',' ')).alias('ville'),
+                     'annee','mois','jour','temperature',
+                     'humidite','visibilite','pression','precipitations')\
+     .write\
+     .mode('overwrite')\
+     .format('parquet')\
+     .partitionBy('annee')\
+     .option('path', '/user/spark/donnees/meteoGlobal')\
+     .save()
 
 data = [('Ajaccio'     ,'dfa' ),
                   ('Angers'      ,'dfa' ),
