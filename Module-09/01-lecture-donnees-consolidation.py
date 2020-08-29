@@ -124,23 +124,24 @@ categories.printSchema()
 categories.show(5)
 categories.write.mode('overwrite').format('parquet').option('path','/user/spark/donnees/brazilian_e-commerce/parquet/categories').save()
 
-
-ventes                 = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/ventes`")
-clients                = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/clients`")
-geolocation            = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/geolocation`")
-mql                    = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/mql`")
-commandes              = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/commandes`")
-details_commandes      = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/details_commandes`")
-paiements              = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/paiements`")
-descriptions_commandes = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/descriptions_commandes`")
-produits               = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/produits`")
-vendeurs               = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/vendeurs`")
-categories             = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/categories`")
+#02-geolocalisation.py
+ventes                 = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/ventes`").cache()
+clients                = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/clients`").cache()
+#geolocation            = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/geolocation`")
+adresses               = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/adresses`").cache()
+mql                    = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/mql`").cache()
+commandes              = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/commandes`").cache()
+details_commandes      = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/details_commandes`").cache()
+paiements              = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/paiements`").cache()
+descriptions_commandes = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/descriptions_commandes`").cache()
+produits               = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/produits`").cache()
+vendeurs               = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/vendeurs`").cache()
+categories             = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/categories`").cache()
 
 
 ventes.show()
 clients.show()
-geolocation.show()
+adresses.show()
 mql.show()
 commandes.show()
 details_commandes.show()
@@ -152,7 +153,7 @@ categories.show()
 
 ventes.count()
 clients.count()
-geolocation.count()
+adresses.count()
 mql.count()
 commandes.count()
 details_commandes.count()
@@ -161,6 +162,11 @@ descriptions_commandes.count()
 produits.count()
 vendeurs.count()
 categories.count()
+
+
+
+
+commandes.join(details_commandes
 
 
 vendeurs.join(details_commandes,'seller_id')\
