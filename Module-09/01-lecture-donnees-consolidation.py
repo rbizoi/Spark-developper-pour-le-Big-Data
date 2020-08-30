@@ -80,7 +80,7 @@ paiements.printSchema()
 paiements.show(5)
 paiements.write.mode('overwrite').format('parquet').option('path','/user/spark/donnees/brazilian_e-commerce/parquet/paiements').save()
 
-schema = "review_id  string, order_id  string, review_score  string, review_comment_title  string, review_comment_message  string, review_creation_date  timestamp, review_answer_timestamp  timestamp"
+schema = "review_id  string, order_id  string, review_score  int, review_comment_title  string, review_comment_message  string, review_creation_date  timestamp, review_answer_timestamp  timestamp"
 descriptions_commandes  = spark.read.format('csv')\
           .option('header','true')\
           .option('nullValue','mq')\
@@ -89,7 +89,16 @@ descriptions_commandes  = spark.read.format('csv')\
           .load('donnees/brazilian_e-commerce/olist_order_reviews_dataset.csv')
 descriptions_commandes.printSchema()
 descriptions_commandes.show(5)
-descriptions_commandes.write.mode('overwrite').format('parquet').option('path','/user/spark/donnees/brazilian_e-commerce/parquet/descriptions_commandes').save()
+descriptions_commandes.join(commandes,'order_id')\
+        .select('review_id', 'order_id', 'review_score', 'review_comment_title',
+                'review_comment_message', 'review_creation_date',
+                'review_answer_timestamp',
+                 datediff('review_creation_date','order_purchase_timestamp').alias('creation_com'),
+                 datediff('review_answer_timestamp','review_creation_date').alias('reponse_com')
+                ).write.mode('overwrite')\
+        .format('parquet')\
+        .option('path','/user/spark/donnees/brazilian_e-commerce/parquet/descriptions_commandes').save()
+#descriptions_commandes.write.mode('overwrite').format('parquet').option('path','/user/spark/donnees/brazilian_e-commerce/parquet/descriptions_commandes').save()
 
 schema = "product_id  string, product_category_name  string, product_name_lenght  integer, product_description_lenght  integer, product_photos_qty  integer, product_weight_g  integer, product_length_cm  integer, product_height_cm  integer, product_width_cm  integer"
 produits  = spark.read.format('csv')\
@@ -124,6 +133,7 @@ categories.printSchema()
 categories.show(5)
 categories.write.mode('overwrite').format('parquet').option('path','/user/spark/donnees/brazilian_e-commerce/parquet/categories').save()
 
+spark.catalog.clearCache()
 #02-geolocalisation.py
 ventes                 = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/ventes`").cache()
 clients                = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/clients`").cache()
@@ -164,13 +174,65 @@ vendeurs.count()
 categories.count()
 
 
+#-------------------------------------------------------------------------------------
+# commandes.columns
+#-------------------------------------------------------------------------------------
+#[ 'order_id', 'customer_id', 'order_status', 'order_purchase_timestamp',
+#  'order_approved_at', 'order_delivered_carrier_date',
+# 'order_delivered_customer_date', 'order_estimated_delivery_date']
+
+#-------------------------------------------------------------------------------------
+# details_commandes.columns
+#-------------------------------------------------------------------------------------
+#[ 'order_id', 'order_item_id', 'product_id', 'seller_id',
+#  'shipping_limit_date', 'price', 'freight_value']
+#-------------------------------------------------------------------------------------
+# adresses.columns
+#-------------------------------------------------------------------------------------
+#['code_postal', 'min_latitude', 'max_latitude', 'min_longitude', 'max_longitude',
+# 'ville', 'etat', 'cpEV']
+#-------------------------------------------------------------------------------------
+# clients.columns
+#-------------------------------------------------------------------------------------
+#['customer_id', 'customer_unique_id', 'customer_zip_code_prefix',
+# 'customer_city', 'customer_state']
+#-------------------------------------------------------------------------------------
+# paiements.columns
+#-------------------------------------------------------------------------------------
+#['order_id', 'payment_sequential', 'payment_type', 'payment_installments', 'payment_value']
+#-------------------------------------------------------------------------------------
+# descriptions_commandes.columns
+#-------------------------------------------------------------------------------------
+#['review_id', 'order_id', 'review_score', 'review_comment_title', 'review_comment_message', 'review_creation_date', 'review_answer_timestamp']
+#-------------------------------------------------------------------------------------
+# produits.columns
+#-------------------------------------------------------------------------------------
+#['product_id', 'product_category_name', 'product_name_lenght', 'product_description_lenght', 'product_photos_qty', 'product_weight_g', 'product_length_cm', 'product_height_cm', 'product_width_cm']
+#-------------------------------------------------------------------------------------
+# vendeurs.columns
+#-------------------------------------------------------------------------------------
+#['seller_id', 'seller_zip_code_prefix', 'seller_city', 'seller_state']
+#-------------------------------------------------------------------------------------
+# categories.columns
+#-------------------------------------------------------------------------------------
+#['product_category_name', 'product_category_name_english']
+#-------------------------------------------------------------------------------------
+# ventes.columns
+#-------------------------------------------------------------------------------------
+#[ 'mql_id', 'seller_id', 'sdr_id', 'sr_id', 'won_date', 'business_segment', 'lead_type',
+# 'lead_behaviour_profile', 'has_company', 'has_gtin', 'average_stock', 'business_type',
+# 'declared_product_catalog_size', 'declared_monthly_revenue']
+#-------------------------------------------------------------------------------------
+# mql.columns
+#-------------------------------------------------------------------------------------
+#['mql_id', 'first_contact_date', 'landing_page_id', 'origin']
 
 
-commandes.join(details_commandes
+commandes.join(details_commandes,'order_id').show()
 
 
+.join(commandes,'order_id')\
 vendeurs.join(details_commandes,'seller_id')\
-        .join(commandes,'order_id')\
         .join(produits,'product_id')\
         .join(categories,'product_category_name')\
         .join(paiements,'order_id')\
