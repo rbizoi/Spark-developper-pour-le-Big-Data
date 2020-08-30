@@ -1,8 +1,4 @@
-from pyspark.sql.functions import *
-from pyspark.sql.types import *
-from pyspark.sql import Window
-import unicodedata
-
+import pickle
 from pyspark.sql import SparkSession
 spark = SparkSession.builder.\
         appName("Brazilian_E-Commerce").getOrCreate()
@@ -57,7 +53,7 @@ dictIntStrCat ={ i:cat for i,cat
 #-------------------------------------------------------------------------------------
 # vendeurs.columns
 #-------------------------------------------------------------------------------------
-commandeId = donnees5.select('order_id')\
+commandeId = commandes.select('order_id')\
                       .distinct()\
                       .orderBy('order_id')\
                       .toPandas()
@@ -65,7 +61,7 @@ commandeId = donnees5.select('order_id')\
 dictStrIntCommId ={ cat:i for i,cat
              in enumerate(commandeId.order_id.values)}
 
-vendeurId = donnees5.select('seller_id')\
+vendeurId = vendeurs.select('seller_id')\
                       .distinct()\
                       .orderBy('seller_id')\
                       .toPandas()
@@ -73,7 +69,7 @@ vendeurId = donnees5.select('seller_id')\
 dictStrIntVendId ={ cat:i for i,cat
              in enumerate(vendeurId.seller_id.values)}
 
-produitId = donnees5.select('product_id')\
+produitId = produits.select('product_id')\
                       .distinct()\
                       .orderBy('product_id')\
                       .toPandas()
@@ -81,13 +77,13 @@ produitId = donnees5.select('product_id')\
 dictStrIntProdId ={ cat:i for i,cat
              in enumerate(produitId.product_id.values)}
 
-clientUId = donnees5.select('client_uid')\
+clientUId = clients.select('customer_unique_id')\
                       .distinct()\
-                      .orderBy('client_uid')\
+                      .orderBy('customer_unique_id')\
                       .toPandas()
 
 dictStrIntCliUId ={ cat:i for i,cat
-             in enumerate(clientUId.client_uid.values)}
+             in enumerate(clientUId.customer_unique_id.values)}
 
 #-------------------------------------------------------------------------------------
 # mql.columns
@@ -159,3 +155,23 @@ dictIntStrComp ={ i:cat for i,cat
              in enumerate(typeComportements.lead_behaviour_profile.values)}
 
 #-------------------------------------------------------------------------------------
+pickle_file = "dictionnaires.pickle"
+
+with open(pickle_file, 'wb') as f:
+    pickle.dump( dictStrIntStatComm ,f)
+    pickle.dump( dictIntStrStatComm ,f)
+    pickle.dump( dictStrIntCat      ,f)
+    pickle.dump( dictIntStrCat      ,f)
+    pickle.dump( dictStrIntCommId   ,f)
+    pickle.dump( dictStrIntVendId   ,f)
+    pickle.dump( dictStrIntProdId   ,f)
+    pickle.dump( dictStrIntCliUId   ,f)
+    pickle.dump( dictStrIntOrig     ,f)
+    pickle.dump( dictIntStrOrig     ,f)
+    pickle.dump( dictStrIntPageId   ,f)
+    pickle.dump( dictStrIntSegm     ,f)
+    pickle.dump( dictIntStrSegm     ,f)
+    pickle.dump( dictStrIntProsp    ,f)
+    pickle.dump( dictIntStrProsp    ,f)
+    pickle.dump( dictStrIntComp     ,f)
+    pickle.dump( dictIntStrComp     ,f)
