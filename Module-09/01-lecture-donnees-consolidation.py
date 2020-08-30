@@ -1,7 +1,18 @@
 from pyspark.sql.functions import *
-from pyspark.sql.types     import StructType, \
-     StructField, FloatType, \
-     IntegerType, StringType
+from pyspark.sql.types import *
+from pyspark.sql import Window
+import unicodedata
+
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.\
+        appName("Brazilian_E-Commerce").getOrCreate()
+
+spark.catalog.clearCache()
+@udf("string")
+def nettoyer(colonne):
+    nk = unicodedata.normalize('NFKD', colonne)
+    return str(nk.encode('ASCII', 'ignore').decode('ASCII'))
+
 
 schema = "mql_id  string, seller_id  string, sdr_id  string, sr_id  string, won_date  timestamp, business_segment  string, lead_type  string, lead_behaviour_profile  string, has_company  boolean, has_gtin  boolean, average_stock  string, business_type  string, declared_product_catalog_size  double, declared_monthly_revenue  double"
 ventes  = spark.read.format('csv')\
@@ -10,8 +21,6 @@ ventes  = spark.read.format('csv')\
           .option('mergeSchema', 'true')\
           .schema(schema)\
           .load('donnees/brazilian_e-commerce/olist_closed_deals_dataset.csv')
-ventes.printSchema()
-ventes.show(5)
 ventes.write.mode('overwrite').format('parquet').option('path','/user/spark/donnees/brazilian_e-commerce/parquet/ventes').save()
 
 schema = "customer_id  string, customer_unique_id  string, customer_zip_code_prefix  integer, customer_city  string, customer_state  string"
@@ -21,8 +30,6 @@ clients  = spark.read.format('csv')\
           .option('mergeSchema', 'true')\
           .schema(schema)\
           .load('donnees/brazilian_e-commerce/olist_customers_dataset.csv')
-clients.printSchema()
-clients.show(5)
 clients.write.mode('overwrite').format('parquet').option('path','/user/spark/donnees/brazilian_e-commerce/parquet/clients').save()
 
 schema = "geolocation_zip_code_prefix  integer, geolocation_lat  double, geolocation_lng  double, geolocation_city  string, geolocation_state  string"
@@ -31,10 +38,27 @@ geolocation  = spark.read.format('csv')\
           .option('nullValue','mq')\
           .option('mergeSchema', 'true')\
           .schema(schema)\
-          .load('donnees/brazilian_e-commerce/olist_geolocation_dataset.csv')
-geolocation.printSchema()
-geolocation.show(5)
-geolocation.write.mode('overwrite').format('parquet').option('path','/user/spark/donnees/brazilian_e-commerce/parquet/geolocation').save()
+          .load('donnees/brazilian_e-commerce/olist_geolocation_dataset.csv')\
+                    .select(col('geolocation_zip_code_prefix').alias('code_postal'),
+                                nettoyer('geolocation_city').alias('ville'),
+                                nettoyer('geolocation_state').alias('etat'),
+                                col('geolocation_lat').alias('latitude'),
+                                col('geolocation_lng').alias('longitude'))
+
+cpEV       = Window.partitionBy('code_postal').orderBy('etat','ville')
+
+adresses = geolocation.groupBy('code_postal')\
+           .agg(
+                min('latitude').alias('min_latitude'),
+                max('latitude').alias('max_latitude'),
+                min('longitude').alias('min_longitude'),
+                max('longitude').alias('max_longitude'))\
+           .orderBy('code_postal')\
+           .join( geolocation.select('code_postal', 'ville', 'etat',
+                    row_number().over(cpEV).alias('cpEV'))
+                  .where('cpEV == 1'),'code_postal')
+
+adresses.write.mode('overwrite').format('parquet').option('path','/user/spark/donnees/brazilian_e-commerce/parquet/adresses').save()
 
 schema = "mql_id  string, first_contact_date  date, landing_page_id  string, origin  string"
 mql  = spark.read.format('csv')\
@@ -43,8 +67,6 @@ mql  = spark.read.format('csv')\
           .option('mergeSchema', 'true')\
           .schema(schema)\
           .load('donnees/brazilian_e-commerce/olist_marketing_qualified_leads_dataset.csv')
-mql.printSchema()
-mql.show(5)
 mql.write.mode('overwrite').format('parquet').option('path','/user/spark/donnees/brazilian_e-commerce/parquet/mql').save()
 
 schema = "order_id  string, customer_id  string, order_status  string, order_purchase_timestamp  timestamp, order_approved_at  timestamp, order_delivered_carrier_date  timestamp, order_delivered_customer_date  timestamp, order_estimated_delivery_date  timestamp"
@@ -54,8 +76,6 @@ commandes  = spark.read.format('csv')\
           .option('mergeSchema', 'true')\
           .schema(schema)\
           .load('donnees/brazilian_e-commerce/olist_orders_dataset.csv')
-commandes.printSchema()
-commandes.show(5)
 commandes.write.mode('overwrite').format('parquet').option('path','/user/spark/donnees/brazilian_e-commerce/parquet/commandes').save()
 
 schema = "order_id  string, order_item_id  integer, product_id  string, seller_id  string, shipping_limit_date  timestamp, price  double, freight_value  double"
@@ -65,8 +85,6 @@ details_commandes  = spark.read.format('csv')\
           .option('mergeSchema', 'true')\
           .schema(schema)\
           .load('donnees/brazilian_e-commerce/olist_order_items_dataset.csv')
-details_commandes.printSchema()
-details_commandes.show(5)
 details_commandes.write.mode('overwrite').format('parquet').option('path','/user/spark/donnees/brazilian_e-commerce/parquet/details_commandes').save()
 
 schema = "order_id  string, payment_sequential  integer, payment_type  string, payment_installments  integer, payment_value  double"
@@ -76,8 +94,6 @@ paiements  = spark.read.format('csv')\
           .option('mergeSchema', 'true')\
           .schema(schema)\
           .load('donnees/brazilian_e-commerce/olist_order_payments_dataset.csv')
-paiements.printSchema()
-paiements.show(5)
 paiements.write.mode('overwrite').format('parquet').option('path','/user/spark/donnees/brazilian_e-commerce/parquet/paiements').save()
 
 schema = "review_id  string, order_id  string, review_score  int, review_comment_title  string, review_comment_message  string, review_creation_date  timestamp, review_answer_timestamp  timestamp"
@@ -87,8 +103,7 @@ descriptions_commandes  = spark.read.format('csv')\
           .option('mergeSchema', 'true')\
           .schema(schema)\
           .load('donnees/brazilian_e-commerce/olist_order_reviews_dataset.csv')
-descriptions_commandes.printSchema()
-descriptions_commandes.show(5)
+
 descriptions_commandes.join(commandes,'order_id')\
         .select('review_id', 'order_id', 'review_score', 'review_comment_title',
                 'review_comment_message', 'review_creation_date',
@@ -98,7 +113,6 @@ descriptions_commandes.join(commandes,'order_id')\
                 ).write.mode('overwrite')\
         .format('parquet')\
         .option('path','/user/spark/donnees/brazilian_e-commerce/parquet/descriptions_commandes').save()
-#descriptions_commandes.write.mode('overwrite').format('parquet').option('path','/user/spark/donnees/brazilian_e-commerce/parquet/descriptions_commandes').save()
 
 schema = "product_id  string, product_category_name  string, product_name_lenght  integer, product_description_lenght  integer, product_photos_qty  integer, product_weight_g  integer, product_length_cm  integer, product_height_cm  integer, product_width_cm  integer"
 produits  = spark.read.format('csv')\
@@ -107,8 +121,6 @@ produits  = spark.read.format('csv')\
           .option('mergeSchema', 'true')\
           .schema(schema)\
           .load('donnees/brazilian_e-commerce/olist_products_dataset.csv')
-produits.printSchema()
-produits.show(5)
 produits.write.mode('overwrite').format('parquet').option('path','/user/spark/donnees/brazilian_e-commerce/parquet/produits').save()
 
 schema = "seller_id  string, seller_zip_code_prefix  integer, seller_city  string, seller_state  string"
@@ -118,8 +130,6 @@ vendeurs  = spark.read.format('csv')\
           .option('mergeSchema', 'true')\
           .schema(schema)\
           .load('donnees/brazilian_e-commerce/olist_sellers_dataset.csv')
-vendeurs.printSchema()
-vendeurs.show(5)
 vendeurs.write.mode('overwrite').format('parquet').option('path','/user/spark/donnees/brazilian_e-commerce/parquet/vendeurs').save()
 
 schema = "product_category_name  string, product_category_name_english  string"
@@ -129,15 +139,10 @@ categories  = spark.read.format('csv')\
           .option('mergeSchema', 'true')\
           .schema(schema)\
           .load('donnees/brazilian_e-commerce/product_category_name_translation.csv')
-categories.printSchema()
-categories.show(5)
 categories.write.mode('overwrite').format('parquet').option('path','/user/spark/donnees/brazilian_e-commerce/parquet/categories').save()
-
-spark.catalog.clearCache()
-#02-geolocalisation.py
+#-------------------------------------------------------------------------------------
 ventes                 = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/ventes`").cache()
 clients                = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/clients`").cache()
-#geolocation            = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/geolocation`")
 adresses               = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/adresses`").cache()
 mql                    = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/mql`").cache()
 commandes              = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/commandes`").cache()
@@ -147,129 +152,350 @@ descriptions_commandes = spark.sql("select * from parquet.`/user/spark/donnees/b
 produits               = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/produits`").cache()
 vendeurs               = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/vendeurs`").cache()
 categories             = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/categories`").cache()
-
-
-ventes.show()
-clients.show()
-adresses.show()
-mql.show()
-commandes.show()
-details_commandes.show()
-paiements.show()
-descriptions_commandes.show()
-produits.show()
-vendeurs.show()
-categories.show()
-
-ventes.count()
-clients.count()
-adresses.count()
-mql.count()
-commandes.count()
-details_commandes.count()
-paiements.count()
-descriptions_commandes.count()
-produits.count()
-vendeurs.count()
-categories.count()
-
-
 #-------------------------------------------------------------------------------------
 # commandes.columns
 #-------------------------------------------------------------------------------------
-#[ 'order_id', 'customer_id', 'order_status', 'order_purchase_timestamp',
-#  'order_approved_at', 'order_delivered_carrier_date',
-# 'order_delivered_customer_date', 'order_estimated_delivery_date']
+@udf("int")
+def majOrderStatus(colonne):
+    dictStrIntOS ={ 'shipped'    :0,
+                    'canceled'   :1,
+                    'approved'   :2,
+                    'invoiced'   :3,
+                    'created'    :4,
+                    'delivered'  :5,
+                    'unavailable':6,
+                    'processing' :7}
+    return int(dictStrIntOS[colonne])
+
+
+@udf("string")
+def affOrderStatus(colonne) :
+    dictIntStrOS ={ 0:'expediée',
+                    1:'annulée',
+                    2:'validée',
+                    3:'facturée',
+                    4:'créée',
+                    5:'livrée',
+                    6:'indisponible',
+                    7:'en cours'}
+    return str(dictIntStrOS[colonne])
 
 #-------------------------------------------------------------------------------------
 # details_commandes.columns
 #-------------------------------------------------------------------------------------
-#[ 'order_id', 'order_item_id', 'product_id', 'seller_id',
-#  'shipping_limit_date', 'price', 'freight_value']
-#-------------------------------------------------------------------------------------
-# adresses.columns
-#-------------------------------------------------------------------------------------
-#['code_postal', 'min_latitude', 'max_latitude', 'min_longitude', 'max_longitude',
-# 'ville', 'etat', 'cpEV']
+donnees0 = commandes.select('order_id',
+                 'customer_id',
+                 col('order_purchase_timestamp').alias('creee'),
+                 majOrderStatus('order_status').alias('statut'),
+                 unix_timestamp('order_purchase_timestamp').alias('creeeCalc'),
+                 datediff('order_approved_at',
+                          'order_purchase_timestamp').alias('validee'),
+                 datediff('order_delivered_carrier_date',
+                          'order_purchase_timestamp').alias('envoyee'),
+                 datediff('order_delivered_customer_date',
+                          'order_purchase_timestamp').alias('livree'),
+                 datediff('order_estimated_delivery_date',
+                          'order_purchase_timestamp').alias('estimation')).fillna(0)\
+         .join(details_commandes, "order_id","left")\
+         .select('order_id', 'product_id', 'seller_id', 'customer_id', 'creee', 'statut',
+                 'creeeCalc', 'validee', 'envoyee', 'livree', 'estimation',
+                 datediff('shipping_limit_date',
+                          'creee').alias('limite'),
+                 col('price').alias('prix'),
+                 col('freight_value').alias('assurance'))\
+         .cache()
 #-------------------------------------------------------------------------------------
 # clients.columns
 #-------------------------------------------------------------------------------------
-#['customer_id', 'customer_unique_id', 'customer_zip_code_prefix',
-# 'customer_city', 'customer_state']
-#-------------------------------------------------------------------------------------
-# paiements.columns
-#-------------------------------------------------------------------------------------
-#['order_id', 'payment_sequential', 'payment_type', 'payment_installments', 'payment_value']
-#-------------------------------------------------------------------------------------
-# descriptions_commandes.columns
-#-------------------------------------------------------------------------------------
-#['review_id', 'order_id', 'review_score', 'review_comment_title', 'review_comment_message', 'review_creation_date', 'review_answer_timestamp']
+donnees1 = donnees0.join(clients.select('customer_id',
+                         col('customer_unique_id').alias('client_uid'),
+                         col('customer_zip_code_prefix').alias('cp_client')),'customer_id')\
+                  .drop('customer_id').cache()
 #-------------------------------------------------------------------------------------
 # produits.columns
 #-------------------------------------------------------------------------------------
-#['product_id', 'product_category_name', 'product_name_lenght', 'product_description_lenght', 'product_photos_qty', 'product_weight_g', 'product_length_cm', 'product_height_cm', 'product_width_cm']
+catProduits = produits.select('product_category_name')\
+                      .distinct()\
+                      .orderBy('product_category_name')\
+                      .toPandas()
+
+dictStrIntCat ={ cat:i for i,cat
+             in enumerate(catProduits.product_category_name.values)}
+
+catProduits.fillna('non renseigné', inplace=True)
+
+dictIntStrCat ={ i:cat for i,cat
+             in enumerate(catProduits.product_category_name.values)}
+
+@udf("int")
+def majCategories(colonne):
+    return int(dictStrIntCat[colonne])
+
+
+@udf("string")
+def affCategories(colonne) :
+    return str(dictIntStrCat[colonne])
+
+
+donnees2 = donnees1.join(produits.withColumn('product_category_name'
+                                            ,majCategories('product_category_name'))
+                                .withColumnRenamed('product_category_name'
+                                                    ,'categorie')
+                                .withColumnRenamed('product_name_lenght'
+                                                    ,'longueur_nom')
+                                .withColumnRenamed('product_description_lenght'
+                                                    ,'longueur_desc')
+                                .withColumnRenamed('product_photos_qty'
+                                                    ,'nb_photos')
+                                .withColumnRenamed('product_weight_g'
+                                                    ,'poids_g')
+                                .withColumnRenamed('product_length_cm'
+                                                    ,'longueur_cm')
+                                .withColumnRenamed('product_height_cm'
+                                                    ,'hauteur_cm')
+                                .withColumnRenamed('product_width_cm'
+                                                    ,'largeur_cm').fillna(0),'product_id','left')
+#-------------------------------------------------------------------------------------
+# paiements.columns
+#-------------------------------------------------------------------------------------
+fenMens = Window.partitionBy('order_id')
+paiements1 = paiements.select('order_id',
+                 'payment_sequential',
+                 'payment_type',
+                 col('payment_installments').alias('versements'),
+                 col('payment_value').alias('montant'),
+                 count('payment_type').over(fenMens).alias('sequence'),
+                 min('payment_value').over(fenMens).alias('montant_min'),
+                 max('payment_value').over(fenMens).alias('montant_max'),
+                 round(avg('payment_value').over(fenMens),2).alias('montant_avg'))\
+         .groupBy('order_id','sequence','montant_min','montant_max','montant_avg')\
+         .pivot('payment_type')\
+         .agg(
+              sum('versements'),
+              avg('montant')
+              ).fillna(0)
+
+import re
+motif1 = re.compile('^([a-z_]+)(\(CAST\(|\()([a-z]+)\s(AS BIGINT\)\))$')
+motif2 = re.compile('^([a-z_]+)\(([a-z]+)\)$')
+lnoms = paiements1.columns
+lnoms = [ motif2.sub(r'\1_\2',motif1.sub(r'\1_\3',x))for x in lnoms]
+paiementsNew = paiements1.toDF(*lnoms)
+
+donnees3 = donnees2.join(paiementsNew,'order_id','left')
+#-------------------------------------------------------------------------------------
+# descriptions_commandes.columns
+#-------------------------------------------------------------------------------------
+donnees4 = donnees3.join(descriptions_commandes.groupBy('order_id')\
+                      .agg(
+                            count('review_id').alias('nb_comentaires'),
+                            min('review_score').alias('note_min'),
+                            max('review_score').alias('note_max'),
+                            round(avg('review_score'),2).alias('note_avg'),
+                            min('creation_com').alias('create_min'),
+                            max('creation_com').alias('create_max'),
+                            round(avg('creation_com'),2).alias('create_avg'),
+                            min('reponse_com').alias('reponse_min'),
+                            max('reponse_com').alias('reponse_max'),
+                            round(avg('reponse_com'),2).alias('reponse_avg')
+                            ),'order_id').fillna(0)
 #-------------------------------------------------------------------------------------
 # vendeurs.columns
 #-------------------------------------------------------------------------------------
-#['seller_id', 'seller_zip_code_prefix', 'seller_city', 'seller_state']
-#-------------------------------------------------------------------------------------
-# categories.columns
-#-------------------------------------------------------------------------------------
-#['product_category_name', 'product_category_name_english']
-#-------------------------------------------------------------------------------------
-# ventes.columns
-#-------------------------------------------------------------------------------------
-#[ 'mql_id', 'seller_id', 'sdr_id', 'sr_id', 'won_date', 'business_segment', 'lead_type',
-# 'lead_behaviour_profile', 'has_company', 'has_gtin', 'average_stock', 'business_type',
-# 'declared_product_catalog_size', 'declared_monthly_revenue']
+donnees5 = donnees4.join( vendeurs.select('seller_id',
+                          col('seller_zip_code_prefix').alias('cp_vendeur')),
+                          'seller_id','left')\
+                   .where('seller_id is not null')\
+                   .cache()
+
+
+
+
+
+
+commandeId = donnees5.select('order_id')\
+                      .distinct()\
+                      .orderBy('order_id')\
+                      .toPandas()
+
+dictStrIntCommId ={ cat:i for i,cat
+             in enumerate(commandeId.order_id.values)}
+
+@udf("int")
+def majCommandeId(colonne):
+    return int(dictStrIntCommId[colonne])
+
+
+vendeurId = donnees5.select('seller_id')\
+                      .distinct()\
+                      .orderBy('seller_id')\
+                      .toPandas()
+
+dictStrIntVendId ={ cat:i for i,cat
+             in enumerate(vendeurId.seller_id.values)}
+
+@udf("int")
+def majVendeurId(colonne):
+    return int(dictStrIntVendId[colonne])
+
+
+produitId = donnees5.select('product_id')\
+                      .distinct()\
+                      .orderBy('product_id')\
+                      .toPandas()
+
+dictStrIntProdId ={ cat:i for i,cat
+             in enumerate(produitId.product_id.values)}
+
+@udf("int")
+def majProduitId(colonne):
+    return int(dictStrIntProdId[colonne])
+
+clientUId = donnees5.select('client_uid')\
+                      .distinct()\
+                      .orderBy('client_uid')\
+                      .toPandas()
+
+dictStrIntCliUId ={ cat:i for i,cat
+             in enumerate(clientUId.client_uid.values)}
+
+@udf("int")
+def majClientUId(colonne):
+    return int(dictStrIntCliUId[colonne])
+
+
+donnees5.withColumn('order_id', majCommandeId('order_id'))\
+        .withColumn('seller_id', majVendeurId('seller_id'))\
+        .withColumn('product_id', majProduitId('product_id'))\
+        .withColumn('client_uid', majClientUId('client_uid'))\
+        .write.mode('overwrite').format('parquet')\
+        .option('path','/user/spark/donnees/brazilian_e-commerce/parquet/brazilian_ecommerce').save()
 #-------------------------------------------------------------------------------------
 # mql.columns
 #-------------------------------------------------------------------------------------
-#['mql_id', 'first_contact_date', 'landing_page_id', 'origin']
+typeOrigins = mql.select('origin')\
+                      .distinct()\
+                      .orderBy('origin')\
+                      .toPandas()
+
+dictStrIntOrig ={ cat:i for i,cat
+             in enumerate(typeOrigins.origin.values)}
+dictStrIntOrig['unknown']=0
+
+typeOrigins.fillna('unknown', inplace=True)
+
+dictIntStrOrig ={ i:cat for i,cat
+             in enumerate(typeOrigins.origin.values)}
+dictIntStrOrig[0] = 'non renseigné'
+
+@udf("int")
+def majOrigins(colonne):
+    return int(dictStrIntOrig[colonne])
 
 
-commandes.join(details_commandes,'order_id').show()
+@udf("string")
+def affOrigins(colonne) :
+    return str(dictIntStrOrig[colonne])
 
 
-.join(commandes,'order_id')\
-vendeurs.join(details_commandes,'seller_id')\
-        .join(produits,'product_id')\
-        .join(categories,'product_category_name')\
-        .join(paiements,'order_id')\
-        .join(clients,'customer_id')\
-        .join(descriptions_commandes,'order_id')\
-        .join(ventes,'seller_id')\
-        .join(mql,'mql_id')\
-        .join(geolocation.select(  col('geolocation_zip_code_prefix').alias('customer_zip_code_prefix'),
-                                   col('geolocation_lat').alias('customer_lat'),
-                                   col('geolocation_lng').alias('customer_lng'))
-                                   ,'customer_zip_code_prefix')\
-        .join(geolocation.select(  col('geolocation_zip_code_prefix').alias('seller_zip_code_prefix'),
-                                   col('geolocation_lat'  ).alias('seller_lat'),
-                                   col('geolocation_lng'  ).alias('seller_lng'))
-                                   ,'seller_zip_code_prefix')\
-           .show(1)
+pageId = mql.select('landing_page_id')\
+                      .distinct()\
+                      .orderBy('landing_page_id')\
+                      .toPandas()
 
-vendeurs.join(details_commandes,'seller_id')\
-        .join(commandes,'order_id')\
-        .join(produits,'product_id')\
-        .join(categories,'product_category_name')\
-        .join(paiements,'order_id')\
-        .join(clients,'customer_id')\
-        .join(descriptions_commandes,'order_id')\
-        .join(ventes,'seller_id')\
-        .join(mql,'mql_id')\
-        .join(geolocation.select(  col('geolocation_zip_code_prefix').alias('customer_zip_code_prefix'),
-                                   col('geolocation_lat').alias('customer_lat'),
-                                   col('geolocation_lng').alias('customer_lng'))
-                                   ,'customer_zip_code_prefix')\
-        .join(geolocation.select(  col('geolocation_zip_code_prefix').alias('seller_zip_code_prefix'),
-                                   col('geolocation_lat'  ).alias('seller_lat'),
-                                   col('geolocation_lng'  ).alias('seller_lng'))
-                                   ,'seller_zip_code_prefix')\
-        .write.mode('overwrite').format('parquet').option('path','/user/spark/donnees/brazilian_e-commerce/parquet/jeuxcomplet').save()
+dictStrIntPageId ={ cat:i for i,cat
+             in enumerate(pageId.landing_page_id.values)}
+
+@udf("int")
+def majPageId(colonne):
+    return int(dictStrIntPageId[colonne])
 
 
+#-------------------------------------------------------------------------------------
+# ventes.columns
+#-------------------------------------------------------------------------------------
+typeSegments = ventes.select('business_segment')\
+                      .distinct()\
+                      .orderBy('business_segment')\
+                      .toPandas()
 
-spark.conf.set("spark.sql.shuffle.partitions",1)
-spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/jeuxcomplet`").write.mode('overwrite').format('parquet').option('path','/user/spark/donnees/brazilian_e-commerce/parquet/brasilianEC').save()
+dictStrIntSegm ={ cat:i for i,cat
+             in enumerate(typeSegments.business_segment.values)}
+
+typeSegments.fillna('non renseigné', inplace=True)
+
+dictIntStrSegm ={ i:cat for i,cat
+             in enumerate(typeSegments.business_segment.values)}
+
+@udf("int")
+def majSegments(colonne):
+    return int(dictStrIntSegm[colonne])
+
+
+@udf("string")
+def affSegments(colonne) :
+    return str(dictIntStrSegm[colonne])
+
+
+typeProspects = ventes.select('lead_type')\
+                      .distinct()\
+                      .orderBy('lead_type')\
+                      .toPandas()
+
+dictStrIntProsp ={ cat:i for i,cat
+             in enumerate(typeProspects.lead_type.values)}
+
+typeProspects.fillna('non renseigné', inplace=True)
+
+dictIntStrProsp ={ i:cat for i,cat
+             in enumerate(typeProspects.lead_type.values)}
+
+@udf("int")
+def majProspects(colonne):
+    return int(dictStrIntProsp[colonne])
+
+
+@udf("string")
+def affProspects(colonne) :
+    return str(dictIntStrProsp[colonne])
+
+
+typeComportements = ventes.select('lead_behaviour_profile')\
+                      .distinct()\
+                      .orderBy('lead_behaviour_profile')\
+                      .toPandas()
+
+dictStrIntComp ={ cat:i for i,cat
+             in enumerate(typeComportements.lead_behaviour_profile.values)}
+
+typeComportements.fillna('non renseigné', inplace=True)
+
+dictIntStrComp ={ i:cat for i,cat
+             in enumerate(typeComportements.lead_behaviour_profile.values)}
+
+@udf("int")
+def majComportements(colonne):
+    return int(dictStrIntComp[colonne])
+
+
+@udf("string")
+def affComportements(colonne) :
+    return str(dictIntStrComp[colonne])
+
+
+ventes.select('seller_id',
+              'mql_id',
+              'won_date',
+               majSegments('business_segment').alias('segment'),
+               majProspects('lead_type').alias('prospect'),
+               majComportements('lead_behaviour_profile').alias('comportement'),
+               'has_company',
+               'has_gtin',
+               'average_stock',
+               'declared_product_catalog_size', 'declared_monthly_revenue')\
+       .join(mql.select('mql_id','first_contact_date',
+                   majOrigins('origin').alias('origine'),
+                   majPageId('landing_page_id').alias('pageId')),'mql_id')\
+       .write.mode('overwrite').format('parquet')\
+       .option('path','/user/spark/donnees/brazilian_e-commerce/parquet/ventes_mql').save()
+#-------------------------------------------------------------------------------------
