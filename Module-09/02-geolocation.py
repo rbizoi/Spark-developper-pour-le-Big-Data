@@ -107,3 +107,6 @@ adresses = geolocation.groupBy('code_postal')\
            .join( geolocation.select('code_postal', 'ville', 'etat',
                     row_number().over(cpEV).alias('cpEV'))
                   .where('cpEV == 1'),'code_postal')
+
+
+adresses.write.mode('overwrite').format('parquet').option('path','/user/spark/donnees/brazilian_e-commerce/parquet/adresses').save()
