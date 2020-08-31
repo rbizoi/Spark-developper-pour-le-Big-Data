@@ -385,7 +385,12 @@ donnees5.withColumn('order_id', majCommandeId('order_id'))\
         .option('path','/user/spark/donnees/brazilian_e-commerce/parquet/brazilian_ecommerce').save()
 
 
-donnees6 = donnees5.join(adresses.drop('cpEV').withColumnRenamed('code_postal','cp_client'),'cp_client','left')
+donnees6 = donnees5.withColumn('order_id', majCommandeId('order_id'))\
+                   .withColumn('seller_id', majVendeurId('seller_id'))\
+                   .withColumn('product_id', majProduitId('product_id'))\
+                   .withColumn('client_uid', majClientUId('client_uid'))\
+                   .join(adresses.drop('cpEV').withColumnRenamed('code_postal','cp_client'),
+                         'cp_client','left')
 lnoms = donnees6.columns
 remplacement = {'min_latitude'  :'cli_min_lat',
                 'max_latitude'  :'cli_max_lat',
@@ -399,7 +404,7 @@ donnees7 = donnees6.toDF(*lnoms)
 
 donnees8 = donnees7.join(adresses.drop('cpEV').withColumnRenamed('code_postal','cp_vendeur'),'cp_vendeur','left')
 lnoms = donnees8.columns
-remplacement = {'min_latitude'  :'vnd_min_lat', 
+remplacement = {'min_latitude'  :'vnd_min_lat',
                 'max_latitude'  :'vnd_max_lat',
                 'min_longitude' :'vnd_min_lng',
                 'max_longitude' :'vnd_max_lng',
