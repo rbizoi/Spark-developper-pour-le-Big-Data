@@ -1,6 +1,7 @@
 from pyspark.sql.functions import *
 from pyspark.sql.types import *
 from pyspark.sql import Window
+import re
 import unicodedata
 
 from pyspark.sql import SparkSession
@@ -275,11 +276,27 @@ paiements1 = paiements.select('order_id',
               avg('montant')
               ).fillna(0)
 
-import re
+
+
+lnoms = paiements1.columns
+remplacement = {'boleto':'es',
+                'credit_card':'cc',
+                'debit_card':'cb',
+                'voucher':'ba',
+                'not_defined':'nr',
+                'versements':'vers',
+                'montant':'mont'}
+
 motif1 = re.compile('^([a-z_]+)(\(CAST\(|\()([a-z]+)\s(AS BIGINT\)\))$')
 motif2 = re.compile('^([a-z_]+)\(([a-z]+)\)$')
-lnoms = paiements1.columns
-lnoms = [ motif2.sub(r'\1_\2',motif1.sub(r'\1_\3',x))for x in lnoms]
+
+def replace_all(chaine, dic_rempl, motif1, motif2):
+    chaine = motif2.sub(r'\1_\2',motif1.sub(r'\1_\3',chaine))
+    for i in dic_rempl:
+        chaine = chaine.replace(i, dic_rempl[i])
+    return chaine
+
+lnoms = [replace_all(x,remplacement, motif1, motif2)   for x in lnoms]
 paiementsNew = paiements1.toDF(*lnoms)
 
 donnees3 = donnees2.join(paiementsNew,'order_id','left')
