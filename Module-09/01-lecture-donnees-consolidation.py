@@ -384,13 +384,13 @@ donnees5.withColumn('order_id', majCommandeId('order_id'))\
         .write.mode('overwrite').format('parquet')\
         .option('path','/user/spark/donnees/brazilian_e-commerce/parquet/brazilian_ecommerce').save()
 
-
 donnees6 = donnees5.withColumn('order_id', majCommandeId('order_id'))\
                    .withColumn('seller_id', majVendeurId('seller_id'))\
                    .withColumn('product_id', majProduitId('product_id'))\
                    .withColumn('client_uid', majClientUId('client_uid'))\
                    .join(adresses.drop('cpEV').withColumnRenamed('code_postal','cp_client'),
                          'cp_client','left')
+
 lnoms = donnees6.columns
 remplacement = {'min_latitude'  :'cli_min_lat',
                 'max_latitude'  :'cli_max_lat',
@@ -409,7 +409,9 @@ remplacement = {'min_latitude'  :'vnd_min_lat',
                 'min_longitude' :'vnd_min_lng',
                 'max_longitude' :'vnd_max_lng',
                 'ville'         :'vnd_ville'  ,
-                'etat'          :'vnd_etat'     }
+                'etat'          :'vnd_etat'   ,
+                'cli_vnd_ville' : 'cli_ville',
+                'cli_vnd_etat'  : 'cli_etat'}
 
 lnoms = [replace_all(x,remplacement)   for x in lnoms]
 donnees9 = donnees8.toDF(*lnoms)
