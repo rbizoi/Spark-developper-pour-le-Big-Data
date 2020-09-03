@@ -205,6 +205,79 @@ donnees0 = commandes.select('order_id',
                  col('price').alias('prix'),
                  col('freight_value').alias('assurance'))\
          .cache()
+
+
+@udf("string")
+def majJoursSemaine(colonne) :
+    dictIntStrJours ={ 2:'lundi',
+                    3:'mardi',
+                    4:'mercredi',
+                    5:'jeudi',
+                    6:'vendredi',
+                    7:'samedi',
+                    1:'dimanche'}
+    return str(dictIntStrJours[colonne])
+
+@udf("string")
+def majJoursMois(colonne) :
+    dictIntStrMois ={1:'janvier',
+                        2:'février',
+                        3:'mars',
+                        4:'avril',
+                        5:'mai',
+                        6:'juin',
+                        7:'juillet',
+                        8:'août',
+                        9:'septembre',
+                        10:'octobre',
+                        11:'novembre',
+                        12:'décembre'}
+    return str(dictIntStrMois[colonne])
+
+import org.apache.spark.ml.feature.QuantileDiscretizer
+
+
+
+donnees0 = commandes.select('order_id',
+                 'customer_id',
+                 col('order_purchase_timestamp').alias('creee'),
+                 majOrderStatus('order_status').alias('statut'),
+                 year('order_purchase_timestamp').alias('annee'),
+                 month('order_purchase_timestamp').alias('mois12'),
+                 majJoursMois(month('order_purchase_timestamp')).alias('mois12s'),
+                 (year('order_purchase_timestamp')*100 + month('order_purchase_timestamp')).alias('mois'),
+                 dayofyear('order_purchase_timestamp').alias('jour365'),
+                 ( year('order_purchase_timestamp')*10000 +
+                   month('order_purchase_timestamp')*100 +
+                   dayofmonth('order_purchase_timestamp')).alias('jour'),
+                   dayofweek('order_purchase_timestamp').alias('jour7'),
+                   majJoursSemaine(dayofweek('order_purchase_timestamp')).alias('jour7s'),
+                 hour('order_purchase_timestamp').alias('heure24')
+                 )\
+                .orderBy(desc('creee'))
+
+
+from pyspark.ml.feature import QuantileDiscretizer
+discretizer3h = QuantileDiscretizer(numBuckets=8, inputCol="heure24", outputCol="heureQ3h")
+discretizer6h = QuantileDiscretizer(numBuckets=4, inputCol="heure24", outputCol="heureQ6h")
+
+donnees1 = discretizer3h.fit(donnees0).transform(donnees0)
+donnees2 = discretizer6h.fit(donnees1).transform(donnees1)
+
+
+meteo.orderBy(desc('timestamp'))\
+      .select('timestamp',
+              date_trunc ('year','date').cast('date').alias('y'),
+              date_trunc ('month','date').cast('date').alias('m'),
+              dayofyear ('timestamp').alias('dy'),
+              dayofmonth('timestamp').alias('dm'),
+              dayofweek ('timestamp').alias('dw'),
+              quarter   ('timestamp').alias('q'),
+              month     ('timestamp').alias('m'),
+              hour      ('timestamp').alias('h'),
+            ).show(1)
+
+
 #-------------------------------------------------------------------------------------
 # clients.columns
 #-------------------------------------------------------------------------------------
@@ -268,6 +341,7 @@ paiements1 = paiements.select('order_id',
                  count('payment_type').over(fenMens).alias('sequence'),
                  min('payment_value').over(fenMens).alias('montant_min'),
                  max('payment_value').over(fenMens).alias('montant_max'),
+                 round(sum('payment_value').over(fenMens),2).alias('montant_sum'),
                  round(avg('payment_value').over(fenMens),2).alias('montant_avg'))\
          .groupBy('order_id','sequence','montant_min','montant_max','montant_avg')\
          .pivot('payment_type')\
@@ -275,8 +349,6 @@ paiements1 = paiements.select('order_id',
               sum('versements'),
               avg('montant')
               ).fillna(0)
-
-
 
 lnoms = paiements1.columns
 remplacement = {'boleto':'es',
@@ -417,6 +489,7 @@ lnoms = [replace_all(x,remplacement)   for x in lnoms]
 donnees9 = donnees8.toDF(*lnoms)
 donnees9.write.mode('overwrite').format('parquet')\
         .option('path','/user/spark/donnees/brazilian_e-commerce/parquet/brazilian_ecommerce_adresses').save()
+
 
 #-------------------------------------------------------------------------------------
 # mql.columns
