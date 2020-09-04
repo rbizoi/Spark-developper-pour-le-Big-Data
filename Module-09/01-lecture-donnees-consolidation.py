@@ -184,27 +184,27 @@ def affOrderStatus(colonne) :
 #-------------------------------------------------------------------------------------
 # details_commandes.columns
 #-------------------------------------------------------------------------------------
-donnees0 = commandes.select('order_id',
-                 'customer_id',
-                 col('order_purchase_timestamp').alias('creee'),
-                 majOrderStatus('order_status').alias('statut'),
-                 unix_timestamp('order_purchase_timestamp').alias('creeeCalc'),
-                 datediff('order_approved_at',
-                          'order_purchase_timestamp').alias('validee'),
-                 datediff('order_delivered_carrier_date',
-                          'order_purchase_timestamp').alias('envoyee'),
-                 datediff('order_delivered_customer_date',
-                          'order_purchase_timestamp').alias('livree'),
-                 datediff('order_estimated_delivery_date',
-                          'order_purchase_timestamp').alias('estimation')).fillna(0)\
-         .join(details_commandes, "order_id","left")\
-         .select('order_id', 'product_id', 'seller_id', 'customer_id', 'creee', 'statut',
-                 'creeeCalc', 'validee', 'envoyee', 'livree', 'estimation',
-                 datediff('shipping_limit_date',
-                          'creee').alias('limite'),
-                 col('price').alias('prix'),
-                 col('freight_value').alias('assurance'))\
-         .cache()
+#donnees0 = commandes.select('order_id',
+#                 'customer_id',
+#                 col('order_purchase_timestamp').alias('creee'),
+#                 majOrderStatus('order_status').alias('statut'),
+#                 unix_timestamp('order_purchase_timestamp').alias('creeeCalc'),
+#                 datediff('order_approved_at',
+#                          'order_purchase_timestamp').alias('validee'),
+#                 datediff('order_delivered_carrier_date',
+#                          'order_purchase_timestamp').alias('envoyee'),
+#                 datediff('order_delivered_customer_date',
+#                          'order_purchase_timestamp').alias('livree'),
+#                 datediff('order_estimated_delivery_date',
+#                          'order_purchase_timestamp').alias('estimation')).fillna(0)\
+#         .join(details_commandes, "order_id","left")\
+#         .select('order_id', 'product_id', 'seller_id', 'customer_id', 'creee', 'statut',
+#                 'creeeCalc', 'validee', 'envoyee', 'livree', 'estimation',
+#                 datediff('shipping_limit_date',
+#                          'creee').alias('limite'),
+#                 col('price').alias('prix'),
+#                 col('freight_value').alias('assurance'))\
+#         .cache()
 
 
 @udf("string")
@@ -217,6 +217,7 @@ def majJoursSemaine(colonne) :
                     7:'samedi',
                     1:'dimanche'}
     return str(dictIntStrJours[colonne])
+
 
 @udf("string")
 def majJoursMois(colonne) :
@@ -234,9 +235,6 @@ def majJoursMois(colonne) :
                         12:'décembre'}
     return str(dictIntStrMois[colonne])
 
-import org.apache.spark.ml.feature.QuantileDiscretizer
-
-
 
 donnees0 = commandes.select('order_id',
                  'customer_id',
@@ -246,42 +244,46 @@ donnees0 = commandes.select('order_id',
                  month('order_purchase_timestamp').alias('mois12'),
                  majJoursMois(month('order_purchase_timestamp')).alias('mois12s'),
                  (year('order_purchase_timestamp')*100 + month('order_purchase_timestamp')).alias('mois'),
+                 (year('order_purchase_timestamp')*100 + weekofyear('order_purchase_timestamp')).alias('semaine'),
+                 weekofyear('order_purchase_timestamp').alias('semaine53'),
                  dayofyear('order_purchase_timestamp').alias('jour365'),
                  ( year('order_purchase_timestamp')*10000 +
                    month('order_purchase_timestamp')*100 +
                    dayofmonth('order_purchase_timestamp')).alias('jour'),
                    dayofweek('order_purchase_timestamp').alias('jour7'),
                    majJoursSemaine(dayofweek('order_purchase_timestamp')).alias('jour7s'),
-                 hour('order_purchase_timestamp').alias('heure24')
-                 )\
-                .orderBy(desc('creee'))
+                 hour('order_purchase_timestamp').alias('heure24'),
+                 datediff('order_approved_at',
+                          'order_purchase_timestamp').alias('validee'),
+                 datediff('order_delivered_carrier_date',
+                          'order_purchase_timestamp').alias('envoyee'),
+                 datediff('order_delivered_customer_date',
+                          'order_purchase_timestamp').alias('livree'),
+                 datediff('order_estimated_delivery_date',
+                          'order_purchase_timestamp').alias('estimation')).fillna(0)\
+         .join(details_commandes, "order_id","left")\
+         .select('order_id', 'product_id', 'seller_id', 'customer_id', 'creee', 'statut', 'annee',
+                 'mois12', 'mois12s', 'mois', 'semaine', 'semaine53', 'jour365',
+                 'jour', 'jour7', 'jour7s', 'heure24', 'validee',
+                 'envoyee', 'livree', 'estimation',
+                 datediff('shipping_limit_date',
+                          'creee').alias('limite'),
+                 col('price').alias('prix'),
+                 col('freight_value').alias('assurance'))\
+         .cache()
 
 
 from pyspark.ml.feature import QuantileDiscretizer
-discretizer3h = QuantileDiscretizer(numBuckets=8, inputCol="heure24", outputCol="heureQ3h")
-discretizer6h = QuantileDiscretizer(numBuckets=4, inputCol="heure24", outputCol="heureQ6h")
+discretizer3h = QuantileDiscretizer(numBuckets=8, inputCol="heure24", outputCol="periode3H")
+discretizer6h = QuantileDiscretizer(numBuckets=4, inputCol="heure24", outputCol="periode6H")
 
-donnees1 = discretizer3h.fit(donnees0).transform(donnees0)
-donnees2 = discretizer6h.fit(donnees1).transform(donnees1)
-
-
-meteo.orderBy(desc('timestamp'))\
-      .select('timestamp',
-              date_trunc ('year','date').cast('date').alias('y'),
-              date_trunc ('month','date').cast('date').alias('m'),
-              dayofyear ('timestamp').alias('dy'),
-              dayofmonth('timestamp').alias('dm'),
-              dayofweek ('timestamp').alias('dw'),
-              quarter   ('timestamp').alias('q'),
-              month     ('timestamp').alias('m'),
-              hour      ('timestamp').alias('h'),
-            ).show(1)
-
+donnees01 = discretizer3h.fit(donnees0).transform(donnees0)
+donnees02 = discretizer6h.fit(donnees01).transform(donnees01)
 
 #-------------------------------------------------------------------------------------
 # clients.columns
 #-------------------------------------------------------------------------------------
-donnees1 = donnees0.join(clients.select('customer_id',
+donnees1 = donnees02.join(clients.select('customer_id',
                          col('customer_unique_id').alias('client_uid'),
                          col('customer_zip_code_prefix').alias('cp_client')),'customer_id')\
                   .drop('customer_id').cache()
@@ -487,10 +489,9 @@ remplacement = {'min_latitude'  :'vnd_min_lat',
 
 lnoms = [replace_all(x,remplacement)   for x in lnoms]
 donnees9 = donnees8.toDF(*lnoms)
+
 donnees9.write.mode('overwrite').format('parquet')\
         .option('path','/user/spark/donnees/brazilian_e-commerce/parquet/brazilian_ecommerce_adresses').save()
-
-
 #-------------------------------------------------------------------------------------
 # mql.columns
 #-------------------------------------------------------------------------------------
