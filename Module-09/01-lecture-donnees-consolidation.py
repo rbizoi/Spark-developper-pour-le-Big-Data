@@ -1,6 +1,7 @@
 from pyspark.sql.functions import *
 from pyspark.sql.types import *
 from pyspark.sql import Window
+from pyspark.ml.feature import QuantileDiscretizer
 import re
 import unicodedata
 
@@ -156,57 +157,47 @@ categories             = spark.sql("select * from parquet.`/user/spark/donnees/b
 #-------------------------------------------------------------------------------------
 # commandes.columns
 #-------------------------------------------------------------------------------------
-@udf("int")
-def majOrderStatus(colonne):
-    dictStrIntOS ={ 'shipped'    :0,
-                    'canceled'   :1,
-                    'approved'   :2,
-                    'invoiced'   :3,
-                    'created'    :4,
-                    'delivered'  :5,
-                    'unavailable':6,
-                    'processing' :7}
-    return int(dictStrIntOS[colonne])
-
-
+#@udf("int")
+#def majOrderStatus(colonne):
+#    dictStrIntOS ={ 'shipped'    :0,
+#                    'canceled'   :1,
+#                    'approved'   :2,
+#                    'invoiced'   :3,
+#                    'created'    :4,
+#                    'delivered'  :5,
+#                    'unavailable':6,
+#                    'processing' :7}
+#    return int(dictStrIntOS[colonne])
+#
+#
+#@udf("string")
+#def affOrderStatus(colonne) :
+#    dictIntStrOS ={ 0:'expediée'    ,
+#                    1:'annulée'     ,
+#                    2:'validée'     ,
+#                    3:'facturée'    ,
+#                    4:'créée'       ,
+#                    5:'livrée'      ,
+#                    6:'indisponible',
+#                    7:'en cours'
+#            }
+#    return str(dictIntStrOS[colonne])
 @udf("string")
-def affOrderStatus(colonne) :
-    dictIntStrOS ={ 0:'expediée',
-                    1:'annulée',
-                    2:'validée',
-                    3:'facturée',
-                    4:'créée',
-                    5:'livrée',
-                    6:'indisponible',
-                    7:'en cours'}
-    return str(dictIntStrOS[colonne])
+def majOrderStatus(colonne):
+    dictStrIntOS ={ 'shipped'    :'expediée'    ,
+                    'canceled'   :'annulée'     ,
+                    'approved'   :'validée'     ,
+                    'invoiced'   :'facturée'    ,
+                    'created'    :'créée'       ,
+                    'delivered'  :'livrée'      ,
+                    'unavailable':'indisponible',
+                    'processing' :'en cours'
+                    }
+    return str(dictStrIntOS[colonne])
 
 #-------------------------------------------------------------------------------------
 # details_commandes.columns
 #-------------------------------------------------------------------------------------
-#donnees0 = commandes.select('order_id',
-#                 'customer_id',
-#                 col('order_purchase_timestamp').alias('creee'),
-#                 majOrderStatus('order_status').alias('statut'),
-#                 unix_timestamp('order_purchase_timestamp').alias('creeeCalc'),
-#                 datediff('order_approved_at',
-#                          'order_purchase_timestamp').alias('validee'),
-#                 datediff('order_delivered_carrier_date',
-#                          'order_purchase_timestamp').alias('envoyee'),
-#                 datediff('order_delivered_customer_date',
-#                          'order_purchase_timestamp').alias('livree'),
-#                 datediff('order_estimated_delivery_date',
-#                          'order_purchase_timestamp').alias('estimation')).fillna(0)\
-#         .join(details_commandes, "order_id","left")\
-#         .select('order_id', 'product_id', 'seller_id', 'customer_id', 'creee', 'statut',
-#                 'creeeCalc', 'validee', 'envoyee', 'livree', 'estimation',
-#                 datediff('shipping_limit_date',
-#                          'creee').alias('limite'),
-#                 col('price').alias('prix'),
-#                 col('freight_value').alias('assurance'))\
-#         .cache()
-
-
 @udf("string")
 def majJoursSemaine(colonne) :
     dictIntStrJours ={ 2:'lundi',
@@ -273,7 +264,7 @@ donnees0 = commandes.select('order_id',
          .cache()
 
 
-from pyspark.ml.feature import QuantileDiscretizer
+
 discretizer3h = QuantileDiscretizer(numBuckets=8, inputCol="heure24", outputCol="periode3H")
 discretizer6h = QuantileDiscretizer(numBuckets=4, inputCol="heure24", outputCol="periode6H")
 
@@ -290,18 +281,22 @@ donnees1 = donnees02.join(clients.select('customer_id',
 #-------------------------------------------------------------------------------------
 # produits.columns
 #-------------------------------------------------------------------------------------
-catProduits = produits.select('product_category_name')\
-                      .distinct()\
-                      .orderBy('product_category_name')\
-                      .toPandas()
+categories = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/categories`")\
+                  .join(produits.select('product_category_name').distinct(),'product_category_name','right')\
+                  .toPandas()
+
+categories.product_category_name_english [(categories.product_category_name_english.isnull())&
+           (categories.product_category_name == 'pc_gamer')]  = "pc_gamer"
+
+categories.product_category_name_english [(categories.product_category_name_english.isnull())&
+           (categories.product_category_name == 'portateis_cozinha_e_preparadores_de_alimentos')]  = "portable_kitchen_and_food_preparers"
 
 dictStrIntCat ={ cat:i for i,cat
-             in enumerate(catProduits.product_category_name.values)}
+             in enumerate(categories.sort_values('product_category_name').product_category_name.values)}
 
-catProduits.fillna('non renseigné', inplace=True)
-
-dictIntStrCat ={ i:cat for i,cat
-             in enumerate(catProduits.product_category_name.values)}
+dictIntStrCat ={ p:e for p,e
+             in zip(categories.product_category_name.values,
+                    categories.product_category_name_english.values)}
 
 @udf("int")
 def majCategories(colonne):
@@ -310,27 +305,29 @@ def majCategories(colonne):
 
 @udf("string")
 def affCategories(colonne) :
-    return str(dictIntStrCat[colonne])
+    ret = str(dictIntStrCat[colonne])
+    if ret == 'None' :
+        return 'not documented'
+    else :
+        return str(dictIntStrCat[colonne])
 
 
-donnees2 = donnees1.join(produits.withColumn('product_category_name'
-                                            ,majCategories('product_category_name'))
-                                .withColumnRenamed('product_category_name'
-                                                    ,'categorie')
-                                .withColumnRenamed('product_name_lenght'
-                                                    ,'longueur_nom')
-                                .withColumnRenamed('product_description_lenght'
-                                                    ,'longueur_desc')
-                                .withColumnRenamed('product_photos_qty'
-                                                    ,'nb_photos')
-                                .withColumnRenamed('product_weight_g'
-                                                    ,'poids_g')
-                                .withColumnRenamed('product_length_cm'
-                                                    ,'longueur_cm')
-                                .withColumnRenamed('product_height_cm'
-                                                    ,'hauteur_cm')
-                                .withColumnRenamed('product_width_cm'
-                                                    ,'largeur_cm').fillna(0),'product_id','left')
+produits01 = produits.withColumn('categorie',majCategories('product_category_name'))  \
+                    .withColumn('categorieEng',affCategories('product_category_name'))\
+                    .withColumnRenamed('product_category_name','categoriePor')        \
+                    .withColumnRenamed('product_name_lenght','longueur_nom')          \
+                    .withColumnRenamed('product_description_lenght','longueur_desc')  \
+                    .withColumnRenamed('product_photos_qty','nb_photos')              \
+                    .withColumnRenamed('product_weight_g','poids_g')                  \
+                    .withColumnRenamed('product_length_cm','longueur_cm')             \
+                    .withColumnRenamed('product_height_cm','hauteur_cm')              \
+                    .withColumnRenamed('product_width_cm','largeur_cm')               \
+                    .na.fill('not documented',['categoriePor'])                       \
+                    .na.fill(0,['longueur_nom', 'longueur_desc', 'nb_photos', 'poids_g', 'longueur_cm', 'hauteur_cm', 'largeur_cm'])
+
+
+donnees2 = donnees1.join( produits01,'product_id','left')
+
 #-------------------------------------------------------------------------------------
 # paiements.columns
 #-------------------------------------------------------------------------------------
@@ -345,7 +342,8 @@ paiements1 = paiements.select('order_id',
                  max('payment_value').over(fenMens).alias('montant_max'),
                  round(sum('payment_value').over(fenMens),2).alias('montant_sum'),
                  round(avg('payment_value').over(fenMens),2).alias('montant_avg'))\
-         .groupBy('order_id','sequence','montant_min','montant_max','montant_avg')\
+         .groupBy('order_id','sequence','montant_min',
+                  'montant_max','montant_sum','montant_avg')\
          .pivot('payment_type')\
          .agg(
               sum('versements'),
