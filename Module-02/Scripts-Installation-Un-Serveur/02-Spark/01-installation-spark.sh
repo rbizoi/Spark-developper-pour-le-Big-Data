@@ -38,7 +38,7 @@ export SPARK_PID_DIR=/var/run/spark/\$USER
 FIN_FICHIER
 
 cat <<FIN_FICHIER > $SPARK_HOME/conf/spark-defaults.conf
-#spark.serializer                               org.apache.spark.serializer.KryoSerializer
+spark.serializer                               org.apache.spark.serializer.KryoSerializer
 spark.io.compression.lz4.blockSize             128kb
 #--------------------------------------------------------------------------------
 spark.yarn.jars                                hdfs:///spark-jars
@@ -47,7 +47,7 @@ spark.master                                   yarn
 spark.driver.memory                            1g
 spark.executor.cores                           1
 spark.executor.memory                          1g
-spark.deploy.defaultCores                      4
+#spark.deploy.defaultCores                      4
 #--------------------------------------------------------------------------------
 spark.eventLog.dir                             hdfs:///spark-history/
 spark.eventLog.enabled                         true
@@ -60,11 +60,11 @@ spark.history.fs.logDirectory                  hdfs:///spark-history/
 spark.sql.session.timeZone                     UTC
 spark.sql.warehouse.dir                        hdfs:///user/spark/referentiel-metadonnees
 #--------------------------------------------------------------------------------
-spark.sql.execution.arrow.enabled                    true
-spark.sql.execution.arrow.pyspark.enabled            true
-spark.sql.execution.arrow.pyspark.fallback.enabled   true
-spark.sql.execution.pandas.convertToArrowArraySafely true
-spark.sql.execution.arrow.maxRecordsPerBatch         100000000
+spark.sql.execution.arrow.enabled                      true
+spark.sql.execution.arrow.pyspark.enabled              true
+spark.sql.execution.arrow.pyspark.fallback.enabled     true
+spark.sql.execution.arrow.maxRecordsPerBatch           100000000
+#spark.sql.execution.pandas.convertToArrowArraySafely  true
 FIN_FICHIER
 
 #--------------------------------------------------------------------------------
