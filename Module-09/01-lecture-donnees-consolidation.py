@@ -302,7 +302,6 @@ dictIntStrCat ={ p:e for p,e
 def majCategories(colonne):
     return int(dictStrIntCat[colonne])
 
-
 @udf("string")
 def affCategories(colonne) :
     ret = str(dictIntStrCat[colonne])
