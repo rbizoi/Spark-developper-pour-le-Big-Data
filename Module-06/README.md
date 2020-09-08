@@ -28,7 +28,11 @@ pyspark \
     --master spark://jupiter.olimp.fr:7077 \
     --executor-cores 8 \
     --executor-memory 20g \
-    --jars
+
+
+
+
+
 
 spark-shell \
     --master spark://jupiter.olimp.fr:7077 \
