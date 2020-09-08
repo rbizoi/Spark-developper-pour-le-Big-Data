@@ -47,7 +47,7 @@ spark.master                                   yarn
 spark.driver.memory                            1g
 spark.executor.cores                           1
 spark.executor.memory                          1g
-#spark.deploy.defaultCores                      4
+spark.deploy.defaultCores                      4
 #--------------------------------------------------------------------------------
 spark.eventLog.dir                             hdfs:///spark-history/
 spark.eventLog.enabled                         true
