@@ -9,6 +9,115 @@ from pyspark.sql import SparkSession
 spark = SparkSession.builder.\
         appName("Brazilian_E-Commerce").getOrCreate()
 
+
+@udf("string")
+def majOrderStatus(colonne):
+    dictStrIntOS ={ 'shipped'    :'expediée'    ,
+                    'canceled'   :'annulée'     ,
+                    'approved'   :'validée'     ,
+                    'invoiced'   :'facturée'    ,
+                    'created'    :'créée'       ,
+                    'delivered'  :'livrée'      ,
+                    'unavailable':'indisponible',
+                    'processing' :'en cours'
+                    }
+    return str(dictStrIntOS[colonne])
+
+@udf("string")
+def majJoursSemaine(colonne) :
+    dictIntStrJours = { 2:'lundi',
+                        3:'mardi',
+                        4:'mercredi',
+                        5:'jeudi',
+                        6:'vendredi',
+                        7:'samedi',
+                        1:'dimanche'}
+    return str(dictIntStrJours[colonne])
+
+
+@udf("string")
+def majJoursMois(colonne) :
+    dictIntStrMois = {  1:'janvier',
+                        2:'février',
+                        3:'mars',
+                        4:'avril',
+                        5:'mai',
+                        6:'juin',
+                        7:'juillet',
+                        8:'août',
+                        9:'septembre',
+                        10:'octobre',
+                        11:'novembre',
+                        12:'décembre'}
+    return str(dictIntStrMois[colonne])
+
+
+schema = "order_id  string, customer_id  string, order_status  string, order_purchase_timestamp  timestamp, order_approved_at  timestamp, order_delivered_carrier_date  timestamp, order_delivered_customer_date  timestamp, order_estimated_delivery_date  timestamp"
+commandes  = spark.read.format('csv')\
+                .option('header','true')\
+                .option('nullValue','mq')\
+                .option('mergeSchema', 'true')\
+                .schema(schema)\
+                .load('donnees/e-commerce/olist_orders_dataset.csv')\
+                .select('order_id',
+                        'customer_id',
+                        col('order_purchase_timestamp').alias('creee'),
+                        majOrderStatus('order_status').alias('statut'),
+                        year('order_purchase_timestamp').alias('annee'),
+                        month('order_purchase_timestamp').alias('mois12'),
+                        majJoursMois(month('order_purchase_timestamp')).alias('mois12s'),
+                        (year('order_purchase_timestamp')*100 +
+                                month('order_purchase_timestamp')).alias('mois'),
+                        (year('order_purchase_timestamp')*100 + weekofyear('order_purchase_timestamp')).alias('semaine'),
+                        weekofyear('order_purchase_timestamp').alias('semaine53'),
+                        dayofyear('order_purchase_timestamp').alias('jour365'),
+                        ( year('order_purchase_timestamp')*10000 +
+                        month('order_purchase_timestamp')*100 +
+                        dayofmonth('order_purchase_timestamp')).alias('jour'),
+                        dayofweek('order_purchase_timestamp').alias('jour7'),
+                        majJoursSemaine(dayofweek('order_purchase_timestamp')).alias('jour7s'),
+                        hour('order_purchase_timestamp').alias('heure24'),
+                        datediff('order_approved_at',
+                              'order_purchase_timestamp').alias('validee'),
+                        datediff('order_delivered_carrier_date',
+                              'order_purchase_timestamp').alias('envoyee'),
+                        datediff('order_delivered_customer_date',
+                              'order_purchase_timestamp').alias('livree'),
+                        datediff('order_estimated_delivery_date',
+                              'order_purchase_timestamp').alias('estimation')).fillna(0)\
+         .join(details_commandes, "order_id","left")\
+         .select('order_id', 'product_id', 'seller_id', 'customer_id', 'creee', 'statut', 'annee',
+                 'mois12', 'mois12s', 'mois', 'semaine', 'semaine53', 'jour365',
+                 'jour', 'jour7', 'jour7s', 'heure24', 'validee',
+                 'envoyee', 'livree', 'estimation',
+                 datediff('shipping_limit_date',
+                          'creee').alias('limite'),
+                 col('price').alias('prix'),
+                 col('freight_value').alias('assurance'))\
+         .cache()
+
+
+
+
+
+schema = "order_id  string, order_item_id  integer, product_id  string, seller_id  string, shipping_limit_date  timestamp, price  double, freight_value  double"
+details_commandes  = spark.read.format('csv')\
+          .option('header','true')\
+          .option('nullValue','mq')\
+          .option('mergeSchema', 'true')\
+          .schema(schema)\
+          .load('donnees/e-commerce/olist_order_items_dataset.csv')
+
+
+
+
+
+
+
+
+
+
+
 spark.catalog.clearCache()
 @udf("string")
 def nettoyer(colonne):
@@ -22,7 +131,7 @@ ventes  = spark.read.format('csv')\
           .option('nullValue','mq')\
           .option('mergeSchema', 'true')\
           .schema(schema)\
-          .load('donnees/brazilian_e-commerce/olist_closed_deals_dataset.csv')
+          .load('donnees/e-commerce/olist_closed_deals_dataset.csv')
 
 schema = "customer_id  string, customer_unique_id  string, customer_zip_code_prefix  integer, customer_city  string, customer_state  string"
 clients  = spark.read.format('csv')\
@@ -30,7 +139,7 @@ clients  = spark.read.format('csv')\
           .option('nullValue','mq')\
           .option('mergeSchema', 'true')\
           .schema(schema)\
-          .load('donnees/brazilian_e-commerce/olist_customers_dataset.csv')
+          .load('donnees/e-commerce/olist_customers_dataset.csv')
 
 schema = "geolocation_zip_code_prefix  integer, geolocation_lat  double, geolocation_lng  double, geolocation_city  string, geolocation_state  string"
 geolocation  = spark.read.format('csv')\
@@ -38,7 +147,7 @@ geolocation  = spark.read.format('csv')\
           .option('nullValue','mq')\
           .option('mergeSchema', 'true')\
           .schema(schema)\
-          .load('donnees/brazilian_e-commerce/olist_geolocation_dataset.csv')\
+          .load('donnees/e-commerce/olist_geolocation_dataset.csv')\
                     .select(col('geolocation_zip_code_prefix').alias('code_postal'),
                                 nettoyer('geolocation_city').alias('ville'),
                                 nettoyer('geolocation_state').alias('etat'),
@@ -64,23 +173,7 @@ mql  = spark.read.format('csv')\
           .option('nullValue','mq')\
           .option('mergeSchema', 'true')\
           .schema(schema)\
-          .load('donnees/brazilian_e-commerce/olist_marketing_qualified_leads_dataset.csv')
-
-schema = "order_id  string, customer_id  string, order_status  string, order_purchase_timestamp  timestamp, order_approved_at  timestamp, order_delivered_carrier_date  timestamp, order_delivered_customer_date  timestamp, order_estimated_delivery_date  timestamp"
-commandes  = spark.read.format('csv')\
-          .option('header','true')\
-          .option('nullValue','mq')\
-          .option('mergeSchema', 'true')\
-          .schema(schema)\
-          .load('donnees/brazilian_e-commerce/olist_orders_dataset.csv')
-
-schema = "order_id  string, order_item_id  integer, product_id  string, seller_id  string, shipping_limit_date  timestamp, price  double, freight_value  double"
-details_commandes  = spark.read.format('csv')\
-          .option('header','true')\
-          .option('nullValue','mq')\
-          .option('mergeSchema', 'true')\
-          .schema(schema)\
-          .load('donnees/brazilian_e-commerce/olist_order_items_dataset.csv')
+          .load('donnees/e-commerce/olist_marketing_qualified_leads_dataset.csv')
 
 schema = "order_id  string, payment_sequential  integer, payment_type  string, payment_installments  integer, payment_value  double"
 paiements  = spark.read.format('csv')\
@@ -88,7 +181,7 @@ paiements  = spark.read.format('csv')\
           .option('nullValue','mq')\
           .option('mergeSchema', 'true')\
           .schema(schema)\
-          .load('donnees/brazilian_e-commerce/olist_order_payments_dataset.csv')
+          .load('donnees/e-commerce/olist_order_payments_dataset.csv')
 
 schema = "review_id  string, order_id  string, review_score  int, review_comment_title  string, review_comment_message  string, review_creation_date  timestamp, review_answer_timestamp  timestamp"
 descriptions_commandes  = spark.read.format('csv')\
@@ -96,7 +189,7 @@ descriptions_commandes  = spark.read.format('csv')\
           .option('nullValue','mq')\
           .option('mergeSchema', 'true')\
           .schema(schema)\
-          .load('donnees/brazilian_e-commerce/olist_order_reviews_dataset.csv')
+          .load('donnees/e-commerce/olist_order_reviews_dataset.csv')
 
 descriptions_commandes.join(commandes,'order_id')\
         .select('review_id', 'order_id', 'review_score', 'review_comment_title',
@@ -106,7 +199,7 @@ descriptions_commandes.join(commandes,'order_id')\
                  datediff('review_answer_timestamp','review_creation_date').alias('reponse_com')
                 ).write.mode('overwrite')\
         .format('parquet')\
-        .option('path','/user/spark/donnees/brazilian_e-commerce/parquet/descriptions_commandes').save()
+        .option('path','/user/spark/donnees/e-commerce/parquet/descriptions_commandes').save()
 
 schema = "product_id  string, product_category_name  string, product_name_lenght  integer, product_description_lenght  integer, product_photos_qty  integer, product_weight_g  integer, product_length_cm  integer, product_height_cm  integer, product_width_cm  integer"
 produits  = spark.read.format('csv')\
@@ -114,7 +207,7 @@ produits  = spark.read.format('csv')\
           .option('nullValue','mq')\
           .option('mergeSchema', 'true')\
           .schema(schema)\
-          .load('donnees/brazilian_e-commerce/olist_products_dataset.csv')
+          .load('donnees/e-commerce/olist_products_dataset.csv')
 
 schema = "seller_id  string, seller_zip_code_prefix  integer, seller_city  string, seller_state  string"
 vendeurs  = spark.read.format('csv')\
@@ -122,7 +215,7 @@ vendeurs  = spark.read.format('csv')\
           .option('nullValue','mq')\
           .option('mergeSchema', 'true')\
           .schema(schema)\
-          .load('donnees/brazilian_e-commerce/olist_sellers_dataset.csv')
+          .load('donnees/e-commerce/olist_sellers_dataset.csv')
 
 schema = "product_category_name  string, product_category_name_english  string"
 categories  = spark.read.format('csv')\
@@ -130,22 +223,22 @@ categories  = spark.read.format('csv')\
           .option('nullValue','mq')\
           .option('mergeSchema', 'true')\
           .schema(schema)\
-          .load('donnees/brazilian_e-commerce/product_category_name_translation.csv')
+          .load('donnees/e-commerce/product_category_name_translation.csv')
 
 
 
 #-------------------------------------------------------------------------------------
-ventes                 = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/ventes`").cache()
-clients                = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/clients`").cache()
-adresses               = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/adresses`").cache()
-mql                    = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/mql`").cache()
-commandes              = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/commandes`").cache()
-details_commandes      = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/details_commandes`").cache()
-paiements              = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/paiements`").cache()
-descriptions_commandes = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/descriptions_commandes`").cache()
-produits               = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/produits`").cache()
-vendeurs               = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/vendeurs`").cache()
-categories             = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/categories`").cache()
+ventes                 = spark.sql("select * from parquet.`/user/spark/donnees/e-commerce/parquet/ventes`").cache()
+clients                = spark.sql("select * from parquet.`/user/spark/donnees/e-commerce/parquet/clients`").cache()
+adresses               = spark.sql("select * from parquet.`/user/spark/donnees/e-commerce/parquet/adresses`").cache()
+mql                    = spark.sql("select * from parquet.`/user/spark/donnees/e-commerce/parquet/mql`").cache()
+commandes              = spark.sql("select * from parquet.`/user/spark/donnees/e-commerce/parquet/commandes`").cache()
+details_commandes      = spark.sql("select * from parquet.`/user/spark/donnees/e-commerce/parquet/details_commandes`").cache()
+paiements              = spark.sql("select * from parquet.`/user/spark/donnees/e-commerce/parquet/paiements`").cache()
+descriptions_commandes = spark.sql("select * from parquet.`/user/spark/donnees/e-commerce/parquet/descriptions_commandes`").cache()
+produits               = spark.sql("select * from parquet.`/user/spark/donnees/e-commerce/parquet/produits`").cache()
+vendeurs               = spark.sql("select * from parquet.`/user/spark/donnees/e-commerce/parquet/vendeurs`").cache()
+categories             = spark.sql("select * from parquet.`/user/spark/donnees/e-commerce/parquet/categories`").cache()
 #-------------------------------------------------------------------------------------
 # commandes.columns
 #-------------------------------------------------------------------------------------
@@ -273,7 +366,7 @@ donnees1 = donnees02.join(clients.select('customer_id',
 #-------------------------------------------------------------------------------------
 # produits.columns
 #-------------------------------------------------------------------------------------
-categories = spark.sql("select * from parquet.`/user/spark/donnees/brazilian_e-commerce/parquet/categories`")\
+categories = spark.sql("select * from parquet.`/user/spark/donnees/e-commerce/parquet/categories`")\
                   .join(produits.select('product_category_name').distinct(),'product_category_name','right')\
                   .toPandas()
 
@@ -445,7 +538,7 @@ donnees5.withColumn('order_id', majCommandeId('order_id'))\
         .withColumn('product_id', majProduitId('product_id'))\
         .withColumn('client_uid', majClientUId('client_uid'))\
         .write.mode('overwrite').format('parquet')\
-        .option('path','/user/spark/donnees/brazilian_e-commerce/parquet/brazilian_ecommerce').save()
+        .option('path','/user/spark/donnees/e-commerce/parquet/brazilian_ecommerce').save()
 
 donnees6 = donnees5.withColumn('order_id', majCommandeId('order_id'))\
                    .withColumn('seller_id', majVendeurId('seller_id'))\
@@ -480,7 +573,7 @@ lnoms = [replace_all(x,remplacement)   for x in lnoms]
 donnees9 = donnees8.toDF(*lnoms)
 
 donnees9.write.mode('overwrite').format('parquet')\
-        .option('path','/user/spark/donnees/brazilian_e-commerce/parquet/brazilian_ecommerce_adresses').save()
+        .option('path','/user/spark/donnees/e-commerce/parquet/brazilian_ecommerce_adresses').save()
 #-------------------------------------------------------------------------------------
 # mql.columns
 #-------------------------------------------------------------------------------------
@@ -608,5 +701,5 @@ ventes.select('seller_id',
                    majOrigins('origin').alias('origine'),
                    majPageId('landing_page_id').alias('pageId')),'mql_id')\
        .write.mode('overwrite').format('parquet')\
-       .option('path','/user/spark/donnees/brazilian_e-commerce/parquet/ventes_mql').save()
+       .option('path','/user/spark/donnees/e-commerce/parquet/ventes_mql').save()
 #-------------------------------------------------------------------------------------
