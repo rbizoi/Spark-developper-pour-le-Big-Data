@@ -12,7 +12,7 @@ spark = SparkSession.builder.\
 
 @udf("string")
 def majOrderStatus(colonne):
-    dictStrIntOS ={ 'shipped'    :'expediée'    ,
+    dictStrIntOS ={ 'shipped'    :'expédiée'    ,
                     'canceled'   :'annulée'     ,
                     'approved'   :'validée'     ,
                     'invoiced'   :'facturée'    ,
@@ -54,59 +54,138 @@ def majJoursMois(colonne) :
 
 schema = "order_id  string, customer_id  string, order_status  string, order_purchase_timestamp  timestamp, order_approved_at  timestamp, order_delivered_carrier_date  timestamp, order_delivered_customer_date  timestamp, order_estimated_delivery_date  timestamp"
 commandes  = spark.read.format('csv')\
-                .option('header','true')\
-                .option('nullValue','mq')\
-                .option('mergeSchema', 'true')\
-                .schema(schema)\
-                .load('donnees/e-commerce/olist_orders_dataset.csv')\
-                .select('order_id',
-                        'customer_id',
-                        col('order_purchase_timestamp').alias('creee'),
-                        majOrderStatus('order_status').alias('statut'),
-                        year('order_purchase_timestamp').alias('annee'),
-                        month('order_purchase_timestamp').alias('mois12'),
-                        majJoursMois(month('order_purchase_timestamp')).alias('mois12s'),
-                        (year('order_purchase_timestamp')*100 +
-                                month('order_purchase_timestamp')).alias('mois'),
-                        (year('order_purchase_timestamp')*100 + weekofyear('order_purchase_timestamp')).alias('semaine'),
-                        weekofyear('order_purchase_timestamp').alias('semaine53'),
-                        dayofyear('order_purchase_timestamp').alias('jour365'),
-                        ( year('order_purchase_timestamp')*10000 +
-                        month('order_purchase_timestamp')*100 +
-                        dayofmonth('order_purchase_timestamp')).alias('jour'),
-                        dayofweek('order_purchase_timestamp').alias('jour7'),
-                        majJoursSemaine(dayofweek('order_purchase_timestamp')).alias('jour7s'),
-                        hour('order_purchase_timestamp').alias('heure24'),
-                        datediff('order_approved_at',
-                              'order_purchase_timestamp').alias('validee'),
-                        datediff('order_delivered_carrier_date',
-                              'order_purchase_timestamp').alias('envoyee'),
-                        datediff('order_delivered_customer_date',
-                              'order_purchase_timestamp').alias('livree'),
-                        datediff('order_estimated_delivery_date',
-                              'order_purchase_timestamp').alias('estimation')).fillna(0)\
-         .join(details_commandes, "order_id","left")\
-         .select('order_id', 'product_id', 'seller_id', 'customer_id', 'creee', 'statut', 'annee',
-                 'mois12', 'mois12s', 'mois', 'semaine', 'semaine53', 'jour365',
-                 'jour', 'jour7', 'jour7s', 'heure24', 'validee',
-                 'envoyee', 'livree', 'estimation',
-                 datediff('shipping_limit_date',
-                          'creee').alias('limite'),
-                 col('price').alias('prix'),
-                 col('freight_value').alias('assurance'))\
-         .cache()
+            .option('header','true')\
+            .option('nullValue','mq')\
+            .option('mergeSchema', 'true')\
+            .schema(schema)\
+            .load('donnees/e-commerce/olist_orders_dataset.csv')\
+            .select('order_id',
+                    'customer_id',
+                    col('order_purchase_timestamp').alias('creee'),
+                    majOrderStatus('order_status').alias('statut'),
+                    year('order_purchase_timestamp').alias('annee'),
+                    month('order_purchase_timestamp').alias('mois12'),
+                    majJoursMois(month('order_purchase_timestamp')
+                                ).alias('mois12s'),
+                    (year('order_purchase_timestamp')*100 +
+                            month('order_purchase_timestamp')
+                         ).alias('mois'),
+                    (year('order_purchase_timestamp')*100 +
+                           weekofyear('order_purchase_timestamp')
+                          ).alias('semaine'),
+                    weekofyear('order_purchase_timestamp'
+                               ).alias('semaine53'),
+                    dayofyear('order_purchase_timestamp'
+                               ).alias('jour365'),
+                    ( year('order_purchase_timestamp')*10000 +
+                    month('order_purchase_timestamp')*100 +
+                    dayofmonth('order_purchase_timestamp')
+                               ).alias('jour'),
+                    dayofweek('order_purchase_timestamp'
+                               ).alias('jour7'),
+                    majJoursSemaine(
+                           dayofweek('order_purchase_timestamp')
+                                    ).alias('jour7s'),
+                    hour('order_purchase_timestamp').alias('heure24'),
+                    datediff('order_approved_at',
+                             'order_purchase_timestamp'
+                             ).alias('validee'),
+                    datediff('order_delivered_carrier_date',
+                             'order_purchase_timestamp'
+                             ).alias('envoyee'),
+                    datediff('order_delivered_customer_date',
+                             'order_purchase_timestamp'
+                             ).alias('livree'),
+                    datediff('order_estimated_delivery_date',
+                             'order_purchase_timestamp'
+                             ).alias('estimation'))
+
+commandes.printSchema()
+commandes.agg(count('order_id'),min('creee'),max('creee')).show()
+commandes.select('annee', 'mois12', 'mois12s', \
+                 'mois', 'semaine', 'semaine53').show()
+commandes.select('jour365', 'jour', 'jour7', 'jour7s',\
+                 'heure24').show()
 
 
 
+schema = "order_id  string, order_item_id  integer, product_id  string, \
+          seller_id  string, shipping_limit_date  timestamp, \
+          price  double, freight_value  double"
 
-
-schema = "order_id  string, order_item_id  integer, product_id  string, seller_id  string, shipping_limit_date  timestamp, price  double, freight_value  double"
 details_commandes  = spark.read.format('csv')\
           .option('header','true')\
           .option('nullValue','mq')\
           .option('mergeSchema', 'true')\
           .schema(schema)\
           .load('donnees/e-commerce/olist_order_items_dataset.csv')
+
+details_commandes.printSchema()
+
+@udf("int")
+def majHeure24(colonne) :
+    if colonne < 5 : return colonne + 24
+    else :           return colonne
+
+donnees = commandes.join(details_commandes, "order_id","left")\
+          .select('order_id', 'product_id', 'seller_id', 'customer_id', 'creee',
+                  'statut', 'annee','mois12', 'mois12s', 'mois', 'semaine',
+                  'semaine53', 'jour365', 'jour', 'jour7', 'jour7s',
+                  'heure24', 'validee','envoyee', 'livree', 'estimation',
+                  datediff('shipping_limit_date',
+                           'creee').alias('limite'),
+                 col('price').alias('prix'),
+                 col('freight_value').alias('assurance'),
+                 )\
+          .cache()
+
+donnees.printSchema()
+
+donnees.where('product_id is null').select('order_id',\
+               'product_id','seller_id','statut','prix').show(3)
+
+donnees.where("product_id is null and customer_id is not null").show()
+donnees.where('product_id is null').select('statut').distinct().show()
+
+donnees.where("product_id is null and"+
+        " customer_id is not null").select('prix').distinct().show()
+
+
+
+donnees.select()
+
+
+
+
+discretizer8 = QuantileDiscretizer(numBuckets=8, inputCol="heure24", outputCol="periode3H")
+discretizer4 = QuantileDiscretizer(numBuckets=4, inputCol="heure24", outputCol="periode6H")
+
+donnees1 = discretizer8.fit(donnees).transform(donnees)
+donnees2 = discretizer4.fit(donnees1).transform(donnees1)
+
+donnees2.select('heure24','periode3H','periode6H'
+                 ).distinct().orderBy('heure24').show(24)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
