@@ -51,6 +51,14 @@ def majJoursMois(colonne) :
                         12:'décembre'}
     return str(dictIntStrMois[colonne])
 
+@udf("int")
+def majHeure24(colonne) :
+    if colonne < 5 : return colonne + 24
+    else :           return colonne
+
+#-------------------------------------------------------------------------------------
+# commandes.columns
+#-------------------------------------------------------------------------------------
 
 schema = "order_id  string, customer_id  string, order_status  string, order_purchase_timestamp  timestamp, order_approved_at  timestamp, order_delivered_carrier_date  timestamp, order_delivered_customer_date  timestamp, order_estimated_delivery_date  timestamp"
 commandes  = spark.read.format('csv')\
@@ -98,17 +106,33 @@ commandes  = spark.read.format('csv')\
                              ).alias('livree'),
                     datediff('order_estimated_delivery_date',
                              'order_purchase_timestamp'
-                             ).alias('estimation'))
+                             ).alias('estimation'),
+                    majHeure24(hour('order_purchase_timestamp')
+                            ).alias('heure28'))
 
+#commandes.write.mode('overwrite').format('parquet').option('path','/user/spark/donnees/e-commerce/parquet/commandes_01').save()
 commandes.printSchema()
 commandes.agg(count('order_id'),min('creee'),max('creee')).show()
 commandes.select('annee', 'mois12', 'mois12s', \
                  'mois', 'semaine', 'semaine53').show()
 commandes.select('jour365', 'jour', 'jour7', 'jour7s',\
-                 'heure24').show()
+                 'heure24','heure28').orderBy(desc('jour'), desc('heure28')).show()
 
 
+discretizer28_8 = QuantileDiscretizer(numBuckets=8, inputCol="heure28", outputCol="periode28Q8")
+discretizer28_4 = QuantileDiscretizer(numBuckets=4, inputCol="heure28", outputCol="periode28Q4")
 
+donnees1 = discretizer28_8.fit(commandes).transform(commandes)
+donnees2 = discretizer28_4.fit(donnees1).transform(donnees1)
+
+donnees2.select('heure28','periode28Q4','periode28Q8').distinct().orderBy('heure28').show(26)
+
+
+donnees2.write.mode('overwrite').format('parquet').option('path','/user/spark/donnees/e-commerce/parquet/donnees2').save()
+
+#-------------------------------------------------------------------------------------
+# details_commandes.columns
+#-------------------------------------------------------------------------------------
 schema = "order_id  string, order_item_id  integer, product_id  string, \
           seller_id  string, shipping_limit_date  timestamp, \
           price  double, freight_value  double"
@@ -121,50 +145,127 @@ details_commandes  = spark.read.format('csv')\
           .load('donnees/e-commerce/olist_order_items_dataset.csv')
 
 details_commandes.printSchema()
+details_commandes.agg(count('order_id'),\
+                      countDistinct('order_id')).show()
 
-@udf("int")
-def majHeure24(colonne) :
-    if colonne < 5 : return colonne + 24
-    else :           return colonne
-
-donnees = commandes.join(details_commandes, "order_id","left")\
+donnees = donnees2.join(details_commandes, "order_id","left")\
           .select('order_id', 'product_id', 'seller_id', 'customer_id', 'creee',
                   'statut', 'annee','mois12', 'mois12s', 'mois', 'semaine',
                   'semaine53', 'jour365', 'jour', 'jour7', 'jour7s',
-                  'heure24', 'validee','envoyee', 'livree', 'estimation',
+                  'heure24', 'periode28Q4', 'periode28Q8', 'validee',
+                  'envoyee', 'livree', 'estimation',
                   datediff('shipping_limit_date',
                            'creee').alias('limite'),
                  col('price').alias('prix'),
-                 col('freight_value').alias('assurance'),
-                 )\
+                 col('freight_value').alias('assurance'))\
           .cache()
 
 donnees.printSchema()
 
+donnees.where("product_id is null and "+
+              "customer_id is not null").count()
+
 donnees.where('product_id is null').select('order_id',\
                'product_id','seller_id','statut','prix').show(3)
 
-donnees.where("product_id is null and customer_id is not null").show()
+donnees.where('product_id is null and seller_id is not null').count()
+
 donnees.where('product_id is null').select('statut').distinct().show()
 
 donnees.where("product_id is null and"+
         " customer_id is not null").select('prix').distinct().show()
 
+from databricks import koalas as ks
+donnees.to_koalas().isna().sum()
 
 
-donnees.select()
+donnees.na.fill(0 ,['validee','envoyee','livree']).to_koalas().isna().sum()
+
+donnees3 = donnees.na.fill(0 ,['validee','envoyee','livree']).na.drop()
+
+#-------------------------------------------------------------------------------------
+# clients
+#-------------------------------------------------------------------------------------
+schema = "customer_id  string, customer_unique_id  string, \
+          customer_zip_code_prefix  integer, \
+          customer_city  string, customer_state  string"
+
+clients  = spark.read.format('csv')\
+          .option('header','true')\
+          .option('nullValue','mq')\
+          .option('mergeSchema', 'true')\
+          .schema(schema)\
+          .load('donnees/e-commerce/olist_customers_dataset.csv')\
+          .select('customer_id',
+                  col('customer_unique_id').alias('client_uid'),
+                  col('customer_zip_code_prefix').alias('cp_client'))
+clients.count()
+clients.select('customer_id').distinct().count()
+
+donnees4 = donnees.join(clients,'customer_id')\
+                   .drop('customer_id')
+
+#-------------------------------------------------------------------------------------
+# produits
+#-------------------------------------------------------------------------------------
+schema = "product_id  string, product_category_name  string, \
+          product_name_lenght  integer, product_description_lenght  \
+          integer, product_photos_qty  integer, product_weight_g  integer, \
+          product_length_cm  integer, product_height_cm  \
+          integer, product_width_cm  integer"
+produits  = spark.read.format('csv')\
+          .option('header','true')\
+          .option('nullValue','mq')\
+          .option('mergeSchema', 'true')\
+          .schema(schema)\
+          .load('donnees/e-commerce/olist_products_dataset.csv')
+
+schema = "product_category_name  string, product_category_name_english  string"
+categories  = spark.read.format('csv')\
+          .option('header','true')\
+          .option('nullValue','mq')\
+          .option('mergeSchema', 'true')\
+          .schema(schema)\
+          .load('donnees/e-commerce/product_category_name_translation.csv')\
+          .join( produits.select('product_category_name').distinct(),
+                 'product_category_name','right')\
+          .toPandas()
+
+categories[categories.product_category_name_english.isnull()]
+
+categories.product_category_name_english[
+           (categories.product_category_name_english.isnull())&
+           (categories.product_category_name == 'pc_gamer')] = "pc_gamer"
+
+categories.product_category_name_english [
+           (categories.product_category_name_english.isnull())&
+           (categories.product_category_name ==
+            'portateis_cozinha_e_preparadores_de_alimentos')] = \
+            "portable_kitchen_and_food_preparers"
+
+dictStrIntCat ={ cat:i for i,cat
+                 in enumerate(categories.sort_values('product_category_name')\
+                    .product_category_name.values)}
+
+dictIntStrCat ={ p:e for p,e
+             in zip(categories.product_category_name.values,
+                    categories.product_category_name_english.values)}
+
+@udf("int")
+def majCategories(colonne):
+    return int(dictStrIntCat[colonne])
+
+@udf("string")
+def affCategories(colonne) :
+    ret = str(dictIntStrCat[colonne])
+    if ret == 'None' :
+        return 'not documented'
+    else :
+        return str(dictIntStrCat[colonne])
 
 
 
 
-discretizer8 = QuantileDiscretizer(numBuckets=8, inputCol="heure24", outputCol="periode3H")
-discretizer4 = QuantileDiscretizer(numBuckets=4, inputCol="heure24", outputCol="periode6H")
-
-donnees1 = discretizer8.fit(donnees).transform(donnees)
-donnees2 = discretizer4.fit(donnees1).transform(donnees1)
-
-donnees2.select('heure24','periode3H','periode6H'
-                 ).distinct().orderBy('heure24').show(24)
 
 
 
@@ -173,6 +274,225 @@ donnees2.select('heure24','periode3H','periode6H'
 
 
 
+
+
+
+
+
+
+
+
+
+
+#-------------------------------------------------------------------------------------
+# produits.columns
+#-------------------------------------------------------------------------------------
+categories = spark.sql("select * from parquet.`/user/spark/donnees/e-commerce/parquet/categories`")\
+                  .join(produits.select('product_category_name').distinct(),'product_category_name','right')\
+                  .toPandas()
+
+categories.product_category_name_english [(categories.product_category_name_english.isnull())&
+           (categories.product_category_name == 'pc_gamer')]  = "pc_gamer"
+
+categories.product_category_name_english [(categories.product_category_name_english.isnull())&
+           (categories.product_category_name == 'portateis_cozinha_e_preparadores_de_alimentos')]  = "portable_kitchen_and_food_preparers"
+
+dictStrIntCat ={ cat:i for i,cat
+             in enumerate(categories.sort_values('product_category_name').product_category_name.values)}
+
+dictIntStrCat ={ p:e for p,e
+             in zip(categories.product_category_name.values,
+                    categories.product_category_name_english.values)}
+
+@udf("int")
+def majCategories(colonne):
+    return int(dictStrIntCat[colonne])
+
+@udf("string")
+def affCategories(colonne) :
+    ret = str(dictIntStrCat[colonne])
+    if ret == 'None' :
+        return 'not documented'
+    else :
+        return str(dictIntStrCat[colonne])
+
+
+produits01 = produits.withColumn('categorie',majCategories('product_category_name'))  \
+                    .withColumn('categorieEng',affCategories('product_category_name'))\
+                    .withColumnRenamed('product_category_name','categoriePor')        \
+                    .withColumnRenamed('product_name_lenght','longueur_nom')          \
+                    .withColumnRenamed('product_description_lenght','longueur_desc')  \
+                    .withColumnRenamed('product_photos_qty','nb_photos')              \
+                    .withColumnRenamed('product_weight_g','poids_g')                  \
+                    .withColumnRenamed('product_length_cm','longueur_cm')             \
+                    .withColumnRenamed('product_height_cm','hauteur_cm')              \
+                    .withColumnRenamed('product_width_cm','largeur_cm')               \
+                    .na.fill('not documented',['categoriePor'])                       \
+                    .na.fill(0,['longueur_nom', 'longueur_desc', 'nb_photos',
+                                'poids_g', 'longueur_cm', 'hauteur_cm', 'largeur_cm'])
+
+
+donnees2 = donnees1.join( produits01,'product_id','left')
+
+#-------------------------------------------------------------------------------------
+# paiements.columns
+#-------------------------------------------------------------------------------------
+fenMens = Window.partitionBy('order_id')
+paiements1 = paiements.select('order_id',
+                 'payment_sequential',
+                 'payment_type',
+                 col('payment_installments').alias('versements'),
+                 col('payment_value').alias('montant'),
+                 count('payment_type').over(fenMens).alias('sequence'),
+                 min('payment_value').over(fenMens).alias('montant_min'),
+                 max('payment_value').over(fenMens).alias('montant_max'),
+                 round(sum('payment_value').over(fenMens),2).alias('montant_sum'),
+                 round(avg('payment_value').over(fenMens),2).alias('montant_avg'))\
+         .groupBy('order_id','sequence','montant_min',
+                  'montant_max','montant_sum','montant_avg')\
+         .pivot('payment_type')\
+         .agg(
+              sum('versements'),
+              avg('montant')
+              ).fillna(0)
+
+lnoms = paiements1.columns
+remplacement = {'boleto':'es',
+                'credit_card':'cc',
+                'debit_card':'cb',
+                'voucher':'ba',
+                'not_defined':'nr',
+                'versements':'vers',
+                'montant':'mont'}
+
+motif1 = re.compile('^([a-z_]+)(\(CAST\(|\()([a-z]+)\s(AS BIGINT\)\))$')
+motif2 = re.compile('^([a-z_]+)\(([a-z]+)\)$')
+lnoms = [ motif2.sub(r'\1_\2',motif1.sub(r'\1_\3',x))for x in lnoms]
+
+def replace_all(chaine, dic_rempl):
+    for i in dic_rempl:
+        chaine = chaine.replace(i, dic_rempl[i])
+    return chaine
+
+lnoms = [replace_all(x,remplacement)   for x in lnoms]
+paiementsNew = paiements1.toDF(*lnoms)
+
+donnees3 = donnees2.join(paiementsNew.drop('nr_sum_vers','nr_avg_mont'),'order_id','left')
+#-------------------------------------------------------------------------------------
+# descriptions_commandes.columns
+#-------------------------------------------------------------------------------------
+donnees4 = donnees3.join(descriptions_commandes.groupBy('order_id')\
+                      .agg(
+                            count('review_id').alias('nb_comentaires'),
+                            min('review_score').alias('note_min'),
+                            max('review_score').alias('note_max'),
+                            round(avg('review_score'),2).alias('note_avg'),
+                            min('creation_com').alias('create_min'),
+                            max('creation_com').alias('create_max'),
+                            round(avg('creation_com'),2).alias('create_avg'),
+                            min('reponse_com').alias('reponse_min'),
+                            max('reponse_com').alias('reponse_max'),
+                            round(avg('reponse_com'),2).alias('reponse_avg')
+                            ),'order_id').fillna(0)
+#-------------------------------------------------------------------------------------
+# vendeurs.columns
+#-------------------------------------------------------------------------------------
+donnees5 = donnees4.join( vendeurs.select('seller_id',
+                          col('seller_zip_code_prefix').alias('cp_vendeur')),
+                          'seller_id','left')\
+                   .where('seller_id is not null')\
+                   .cache()
+
+
+commandeId = donnees5.select('order_id')\
+                      .distinct()\
+                      .orderBy('order_id')\
+                      .toPandas()
+
+dictStrIntCommId ={ cat:i for i,cat
+             in enumerate(commandeId.order_id.values)}
+
+@udf("int")
+def majCommandeId(colonne):
+    return int(dictStrIntCommId[colonne])
+
+
+vendeurId = donnees5.select('seller_id')\
+                      .distinct()\
+                      .orderBy('seller_id')\
+                      .toPandas()
+
+dictStrIntVendId ={ cat:i for i,cat
+             in enumerate(vendeurId.seller_id.values)}
+
+@udf("int")
+def majVendeurId(colonne):
+    return int(dictStrIntVendId[colonne])
+
+
+produitId = donnees5.select('product_id')\
+                      .distinct()\
+                      .orderBy('product_id')\
+                      .toPandas()
+
+dictStrIntProdId ={ cat:i for i,cat
+             in enumerate(produitId.product_id.values)}
+
+@udf("int")
+def majProduitId(colonne):
+    return int(dictStrIntProdId[colonne])
+
+clientUId = donnees5.select('client_uid')\
+                      .distinct()\
+                      .orderBy('client_uid')\
+                      .toPandas()
+
+dictStrIntCliUId ={ cat:i for i,cat
+             in enumerate(clientUId.client_uid.values)}
+
+@udf("int")
+def majClientUId(colonne):
+    return int(dictStrIntCliUId[colonne])
+
+
+donnees5.withColumn('order_id', majCommandeId('order_id'))\
+        .withColumn('seller_id', majVendeurId('seller_id'))\
+        .withColumn('product_id', majProduitId('product_id'))\
+        .withColumn('client_uid', majClientUId('client_uid'))\
+        .write.mode('overwrite').format('parquet')\
+        .option('path','/user/spark/donnees/e-commerce/parquet/brazilian_ecommerce').save()
+
+donnees6 = donnees5.withColumn('order_id', majCommandeId('order_id'))\
+                   .withColumn('seller_id', majVendeurId('seller_id'))\
+                   .withColumn('product_id', majProduitId('product_id'))\
+                   .withColumn('client_uid', majClientUId('client_uid'))\
+                   .join(adresses.drop('cpEV').withColumnRenamed('code_postal','cp_client'),
+                         'cp_client','left')
+
+lnoms = donnees6.columns
+remplacement = {'min_latitude'  :'cli_min_lat',
+                'max_latitude'  :'cli_max_lat',
+                'min_longitude' :'cli_min_lng',
+                'max_longitude' :'cli_max_lng',
+                'ville'         :'cli_ville'  ,
+                'etat'          :'cli_etat'     }
+
+lnoms = [replace_all(x,remplacement)   for x in lnoms]
+donnees7 = donnees6.toDF(*lnoms)
+
+donnees8 = donnees7.join(adresses.drop('cpEV').withColumnRenamed('code_postal','cp_vendeur'),'cp_vendeur','left')
+lnoms = donnees8.columns
+remplacement = {'min_latitude'  :'vnd_min_lat',
+                'max_latitude'  :'vnd_max_lat',
+                'min_longitude' :'vnd_min_lng',
+                'max_longitude' :'vnd_max_lng',
+                'ville'         :'vnd_ville'  ,
+                'etat'          :'vnd_etat'   ,
+                'cli_vnd_ville' : 'cli_ville',
+                'cli_vnd_etat'  : 'cli_etat'}
+
+lnoms = [replace_all(x,remplacement)   for x in lnoms]
+donnees9 = donnees8.toDF(*lnoms)
 
 
 
