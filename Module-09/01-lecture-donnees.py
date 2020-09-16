@@ -148,6 +148,82 @@ details_commandes.printSchema()
 details_commandes.agg(count('order_id'),\
                       countDistinct('order_id')).show()
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+commandes.where("order_id == '8272b63d03f5f79c56e9e4120aec44ef'" ).show(20,truncate=False)
+donnees.where("order_id == '8272b63d03f5f79c56e9e4120aec44ef'" ).show(20,truncate=False)
+
+
+
+details_commandes.printSchema()
+details_commandes.agg(count('order_id'),\
+                      countDistinct('order_id')).show(truncate=False)
+details_commandes.where("order_id == '8272b63d03f5f79c56e9e4120aec44ef'").orderBy('order_item_id').show(truncate=False)
+
+details_commandes.groupBy('order_id','product_id',
+                          'seller_id')\
+                 .agg(count('product_id').alias('quantites'),
+                      sum('price').alias('price'),
+                      sum('freight_value').alias('freight_value'))\
+                 .orderBy(desc('quantites'))\
+                 .show(truncate=False)
+
+details_commandes.groupBy('order_id','product_id',
+                          'seller_id')\
+                 .agg(count('product_id').alias('quantites'),
+                      sum('price').alias('price'),
+                      sum('freight_value').alias('freight_value'))\
+                 .orderBy(desc('quantites'))\
+                 .show(truncate=False)
+
+
+details_commandes.groupBy('order_id',
+                          'seller_id')\
+                 .agg(countDistinct('product_id').alias('produits'),
+                      sum('price').alias('price'),
+                      sum('freight_value').alias('freight_value'))\
+                 .orderBy(desc('produits'))\
+                 .show(120,truncate=False)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 donnees = donnees2.join(details_commandes, "order_id","left")\
           .select('order_id', 'product_id', 'seller_id', 'customer_id', 'creee',
                   'statut', 'annee','mois12', 'mois12s', 'mois', 'semaine',
@@ -231,7 +307,7 @@ categories  = spark.read.format('csv')\
                  'product_category_name','right')\
           .toPandas()
 
-categories[categories.product_category_name_english.isnull()]
+categories.product_category_name[categories.product_category_name_english.isnull()]
 
 categories.product_category_name_english[
            (categories.product_category_name_english.isnull())&
@@ -262,6 +338,170 @@ def affCategories(colonne) :
         return 'not documented'
     else :
         return str(dictIntStrCat[colonne])
+
+donnees5 = donnees4.join(
+           produits.withColumn('categorie',
+                        majCategories('product_category_name'))             \
+                   .withColumn('categorieEng',
+                        affCategories('product_category_name'))             \
+                   .withColumnRenamed('product_category_name',
+                        'categoriePor')                                     \
+                   .withColumnRenamed('product_name_lenght',
+                        'longueur_nom')                                     \
+                   .withColumnRenamed('product_description_lenght',
+                        'longueur_desc')                                    \
+                   .withColumnRenamed('product_photos_qty',
+                        'nb_photos')                                        \
+                   .withColumnRenamed('product_weight_g',
+                        'poids_g')                                          \
+                   .withColumnRenamed('product_length_cm',
+                        'longueur_cm')                                      \
+                   .withColumnRenamed('product_height_cm',
+                        'hauteur_cm')                                       \
+                   .withColumnRenamed('product_width_cm',
+                        'largeur_cm')                                       \
+                   .na.fill('not documented',['categoriePor'])              \
+                   .na.fill(0,['longueur_nom', 'longueur_desc', 'nb_photos',
+                                'poids_g', 'longueur_cm', 'hauteur_cm',
+                                'largeur_cm']),'product_id','left')
+
+
+
+['product_id', 'order_id', 'seller_id', 'creee', 'statut',
+'annee', 'mois12', 'mois12s', 'mois', 'semaine', 'semaine53', 'jour365', 'jour', 'jour7', 'jour7s',
+ 'heure24', 'periode28Q4', 'periode28Q8',
+ 'validee', 'envoyee', 'livree', 'estimation', 'limite', 'prix', 'assurance',
+ 'client_uid', 'cp_client', 'categoriePor', 'longueur_nom', 'longueur_desc',
+ 'nb_photos', 'poids_g', 'longueur_cm', 'hauteur_cm', 'largeur_cm', 'categorie', 'categorieEng']
+
+
+donnees5.select('order_id','product_id').groupBy('order_id').agg({'product_id':'count'}).orderBy(desc('count(product_id)')).show(20,truncate=False)
+donnees5.where("order_id == '8272b63d03f5f79c56e9e4120aec44ef'" ).select('order_id', 'product_id','prix', 'assurance','cp_client').show(20,truncate=False)
+
+8272b63d03f5f79c56e9e4120aec44ef
+1b15974a0141d54e36626dca3fdc731a
+ab14fdcfbe524636d65ee38360e22ce8
+
+
+
+
+commandes.where("order_id == '8272b63d03f5f79c56e9e4120aec44ef'" ).show(20,truncate=False)
+donnees.where("order_id == '8272b63d03f5f79c56e9e4120aec44ef'" ).show(20,truncate=False)
+
+
+
+details_commandes.printSchema()
+details_commandes.agg(count('order_id'),\
+                      countDistinct('order_id')).show(truncate=False)
+details_commandes.where("order_id == '8272b63d03f5f79c56e9e4120aec44ef'").orderBy('order_item_id').show(truncate=False)
+
+details_commandes.groupBy('order_id','product_id',
+                          'seller_id')\
+                 .agg(count('product_id').alias('quantites'),
+                      sum('price').alias('price'),
+                      sum('freight_value').alias('freight_value'))\
+                 .orderBy(desc('quantites'))\
+                 .show(truncate=False)
+
+details_commandes.groupBy('order_id','product_id',
+                          'seller_id')\
+                 .agg(count('product_id').alias('quantites'),
+                      sum('price').alias('price'),
+                      sum('freight_value').alias('freight_value'))\
+                 .orderBy(desc('quantites'))\
+                 .show(truncate=False)
+
+
+details_commandes.groupBy('order_id',
+                          'seller_id')\
+                 .agg(countDistinct('product_id').alias('produits'),
+                      sum('price').alias('price'),
+                      sum('freight_value').alias('freight_value'))\
+                 .orderBy(desc('produits'))\
+                 .show(120,truncate=False)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#-------------------------------------------------------------------------------------
+# paiements
+#-------------------------------------------------------------------------------------
+from pyspark.sql import Window
+import re
+
+schema = "order_id  string, payment_sequential  integer, payment_type  \
+          string, payment_installments  integer, payment_value  double"
+paiements  = spark.read.format('csv')\
+          .option('header','true')\
+          .option('nullValue','mq')\
+          .option('mergeSchema', 'true')\
+          .schema(schema)\
+          .load('donnees/e-commerce/olist_order_payments_dataset.csv')
+
+fenMens = Window.partitionBy('order_id')
+paiements1 = paiements.select('order_id',
+                 'payment_sequential',
+                 'payment_type',
+                 col('payment_installments').alias('versements'),
+                 col('payment_value').alias('montant'),
+                 count('payment_type').over(fenMens).alias('sequence'),
+                 min('payment_value').over(fenMens).alias('montant_min'),
+                 max('payment_value').over(fenMens).alias('montant_max'),
+                 round(sum('payment_value').over(fenMens),2).alias('montant_sum'),
+                 round(avg('payment_value').over(fenMens),2).alias('montant_avg'))\
+         .groupBy('order_id','sequence','montant_min',
+                  'montant_max','montant_sum','montant_avg')\
+         .pivot('payment_type')\
+         .agg(
+              sum('versements'),
+              avg('montant')
+              ).fillna(0)
+
+lnoms = paiements1.columns
+remplacement = {'boleto':'es',
+                'credit_card':'cc',
+                'debit_card':'cb',
+                'voucher':'ba',
+                'not_defined':'nr',
+                'versements':'vers',
+                'montant':'mont'}
+
+motif1 = re.compile('^([a-z_]+)(\(CAST\(|\()([a-z]+)\s(AS BIGINT\)\))$')
+motif2 = re.compile('^([a-z_]+)\(([a-z]+)\)$')
+lnoms = [ motif2.sub(r'\1_\2',motif1.sub(r'\1_\3',x))for x in lnoms]
+
+def replace_all(chaine, dic_rempl):
+    for i in dic_rempl:
+        chaine = chaine.replace(i, dic_rempl[i])
+    return chaine
+
+lnoms = [replace_all(x,remplacement)   for x in lnoms]
+paiementsNew = paiements1.toDF(*lnoms)
+
+donnees3 = donnees2.join(paiementsNew.drop('nr_sum_vers','nr_avg_mont'),'order_id','left')
+
+
+
+
+
+
+
+
+
+
+
 
 
 
