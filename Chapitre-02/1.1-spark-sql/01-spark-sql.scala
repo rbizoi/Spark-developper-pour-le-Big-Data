@@ -5,6 +5,7 @@ val parseVille: (String => String) = (arg: String) => {arg.toLowerCase.split(' '
                 split('-').map(_.capitalize).mkString(" ") }
 val sqlfV = udf(parseVille)
 
+
 val donneesStations = spark.read.json("donnees/json/postesSynop.json")
 val postesMeteo     = donneesStations.
                        withColumn("Nom", sqlfV(donneesStations("Nom")))
