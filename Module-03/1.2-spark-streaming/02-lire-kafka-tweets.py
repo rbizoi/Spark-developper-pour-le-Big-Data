@@ -20,6 +20,7 @@ words = tweets.select(explode(split(
                                regexp_replace(lower(tweets.value),
                                              '[^a-z]',' '), ' ')).\
                                alias('word'))
+
 wordsF = words.filter(length(words.word)>3)
 wordCounts = wordsF.groupBy('word').count()
 
