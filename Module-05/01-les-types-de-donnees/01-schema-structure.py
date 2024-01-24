@@ -19,7 +19,7 @@ stationsDF00  = spark.read.format('csv')   \
       .schema(customSchemaMeteo)           \
       .load('/user/spark/donnees/postesSynop.csv')   \
       .cache()
-stationsDF02.printSchema()
+stationsDF00.printSchema()
 stationsDF01  = spark.read.format('csv') \
       .option('sep',';')                   \
       .option('mergeSchema', 'true')       \
@@ -29,7 +29,7 @@ stationsDF01  = spark.read.format('csv') \
       .load('/user/spark/donnees/postesSynop.csv')   \
       .toDF('id','ville','latitude','longitude','altitude')\
       .cache()
-stationsDF02.printSchema()
+stationsDF01.printSchema()
 
 customSchemaMeteo = "id STRING, ville STRING, latitude FLOAT, longitude FLOAT, altitude INT"
 stationsDF02  = spark.read.format('csv')   \
