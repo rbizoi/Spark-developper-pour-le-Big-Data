@@ -1,7 +1,7 @@
 
-listeRelTab = spark.read.parquet('ListeRelationsTables.parquet').toPandas()
-listeTables = spark.read.parquet('ListeTables.parquet').toPandas()
-listeColTables = spark.read.parquet('ListeTablesColonnees.parquet').toPandas()
+listeRelTab = spark.read.parquet('/user/spark/donnees/etl/dictionnaireMetadonnees/Oracle/ListeRelationsTables.parquet').toPandas()
+listeTables = spark.read.parquet('/user/spark/donnees/etl/dictionnaireMetadonnees/Oracle/ListeTables.parquet').toPandas()
+listeColTables = spark.read.parquet('/user/spark/donnees/etl/dictionnaireMetadonnees/Oracle/ListeTablesColonnees.parquet').toPandas()
 
 
 hdfs dfs -ls donnees/etl/stagiaire/Oracle/EMPLOYES.parque
