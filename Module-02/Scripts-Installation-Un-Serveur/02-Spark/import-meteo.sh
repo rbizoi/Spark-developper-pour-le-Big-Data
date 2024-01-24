@@ -11,7 +11,7 @@ cd ~/donnees
 
 hdfs dfs -mkdir -p donnees/meteo
 
-for annee in `seq 1996 2020`
+for annee in `seq 1996 2021`
 do
     for mois in `seq 1 12`
     do
