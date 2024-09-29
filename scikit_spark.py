@@ -87,9 +87,6 @@ df_pred_b = df_unlabeled.select(
 )
 df_pred_b.take(5)
 
-
-
-
 @F.pandas_udf(returnType=ArrayType(DoubleType()))
 def predict_pandas_udf(*cols):
     X = pd.concat(cols, axis=1)
